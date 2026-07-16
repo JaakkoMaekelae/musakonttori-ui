@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-brand: #c9252d;
+  --color-brand-hover: #981f20;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+}
+
+:root,
+[data-theme="dark"] {
+  --mk-palette-bg-canvas: #0f1117;
+  --mk-palette-bg: #0D0F17;
+  --mk-palette-bg-surface: #1a1d27;
+  --mk-palette-bg-surface-hover: #2A2E3D;
+  --mk-palette-bg-muted: #2a2e3d;
+  --mk-palette-text-primary: #f0f0f3;
+  --mk-palette-text-secondary: #b0b3c1;
+  --mk-palette-text-tertiary: #7e8292;
+  --mk-palette-border-subtle: rgba(255, 255, 255, 0.08);
+  --mk-palette-border-default: rgba(255, 255, 255, 0.14);
+  --mk-palette-border-hover: rgba(255, 255, 255, 0.2);
+  --mk-palette-accent-primary: #f44242;
+  --mk-palette-accent-soft: rgba(244, 66, 66, 0.16);
+  --mk-palette-bg-brand: #DC2626;
+  --mk-palette-bg-brand-hover: #B91C1C;
+  --mk-palette-bg-brand-active: #991B1B;
+  --mk-palette-bg-elevated: #222633;
+  --mk-palette-bg-inset: #0b0d12;
+
+  background: var(--mk-palette-bg-canvas, #0f1117);
+  color: var(--mk-palette-text-primary, #f0f0f3);
+}
+
+body {
+  font-family: "Manrope Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--mk-palette-bg-canvas, #0f1117);
+  color: var(--mk-palette-text-primary, #f0f0f3);
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoom-in-95 {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-from-top-4 {
+  from { opacity: 0; transform: translateY(-1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+}
+
+.fade-in-0 { animation-name: fade-in; }
+.zoom-in-95 { animation-name: zoom-in-95; }
+.slide-in-from-top-4 { animation-name: slide-in-from-top-4; }
+
+@keyframes slide-in-from-left-1\/2 {
+  from { opacity: 0; transform: translateX(-50%) translateY(-50%) scale(0.95); }
+  to { opacity: 1; transform: translateX(-50%) translateY(-50%) scale(1); }
+}
+
+.data-\[state\=open\]\:animate-in[data-state="open"] {
+  animation: slide-in-from-left-1\/2 0.2s ease-out forwards;
+}
