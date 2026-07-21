@@ -9,34 +9,100 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./button": { "import": "./dist/Button.js", "types": "./dist/Button.d.ts" },
-    "./badge": { "import": "./dist/Badge.js", "types": "./dist/Badge.d.ts" },
-    "./input": { "import": "./dist/Input.js", "types": "./dist/Input.d.ts" },
-    "./card": { "import": "./dist/Card.js", "types": "./dist/Card.d.ts" },
-    "./dialog": { "import": "./dist/Dialog.js", "types": "./dist/Dialog.d.ts" },
-    "./table": { "import": "./dist/Table.js", "types": "./dist/Table.d.ts" },
-    "./select": { "import": "./dist/Select.js", "types": "./dist/Select.d.ts" },
-    "./skeleton": { "import": "./dist/Skeleton.js", "types": "./dist/Skeleton.d.ts" },
-    "./toast": { "import": "./dist/Toast.js", "types": "./dist/Toast.d.ts" },
-    "./empty-state": { "import": "./dist/EmptyState.js", "types": "./dist/EmptyState.d.ts" },
-    "./form-field": { "import": "./dist/FormField.js", "types": "./dist/FormField.d.ts" },
-    "./spinner": { "import": "./dist/Spinner.js", "types": "./dist/Spinner.d.ts" },
-    "./alert": { "import": "./dist/Alert.js", "types": "./dist/Alert.d.ts" },
-    "./tabs": { "import": "./dist/Tabs.js", "types": "./dist/Tabs.d.ts" },
-    "./modal": { "import": "./dist/Modal.js", "types": "./dist/Modal.d.ts" },
-    "./breadcrumb": { "import": "./dist/Breadcrumb.js", "types": "./dist/Breadcrumb.d.ts" },
-    "./cookie-consent-banner": { "import": "./dist/CookieConsentBanner.js", "types": "./dist/CookieConsentBanner.d.ts" },
-    "./locale-switcher-modal": { "import": "./dist/LocaleSwitcherModal.js", "types": "./dist/LocaleSwitcherModal.d.ts" },
-    "./theme-toggle": { "import": "./dist/ThemeToggle.js", "types": "./dist/ThemeToggle.d.ts" },
-    "./utils": { "import": "./dist/utils.js", "types": "./dist/utils.d.ts" }
+    "./button": {
+      "import": "./dist/Button.js",
+      "types": "./dist/Button.d.ts"
+    },
+    "./badge": {
+      "import": "./dist/Badge.js",
+      "types": "./dist/Badge.d.ts"
+    },
+    "./input": {
+      "import": "./dist/Input.js",
+      "types": "./dist/Input.d.ts"
+    },
+    "./card": {
+      "import": "./dist/Card.js",
+      "types": "./dist/Card.d.ts"
+    },
+    "./dialog": {
+      "import": "./dist/Dialog.js",
+      "types": "./dist/Dialog.d.ts"
+    },
+    "./table": {
+      "import": "./dist/Table.js",
+      "types": "./dist/Table.d.ts"
+    },
+    "./select": {
+      "import": "./dist/Select.js",
+      "types": "./dist/Select.d.ts"
+    },
+    "./skeleton": {
+      "import": "./dist/Skeleton.js",
+      "types": "./dist/Skeleton.d.ts"
+    },
+    "./toast": {
+      "import": "./dist/Toast.js",
+      "types": "./dist/Toast.d.ts"
+    },
+    "./empty-state": {
+      "import": "./dist/EmptyState.js",
+      "types": "./dist/EmptyState.d.ts"
+    },
+    "./form-field": {
+      "import": "./dist/FormField.js",
+      "types": "./dist/FormField.d.ts"
+    },
+    "./spinner": {
+      "import": "./dist/Spinner.js",
+      "types": "./dist/Spinner.d.ts"
+    },
+    "./alert": {
+      "import": "./dist/Alert.js",
+      "types": "./dist/Alert.d.ts"
+    },
+    "./tabs": {
+      "import": "./dist/Tabs.js",
+      "types": "./dist/Tabs.d.ts"
+    },
+    "./modal": {
+      "import": "./dist/Modal.js",
+      "types": "./dist/Modal.d.ts"
+    },
+    "./breadcrumb": {
+      "import": "./dist/Breadcrumb.js",
+      "types": "./dist/Breadcrumb.d.ts"
+    },
+    "./cookie-consent-banner": {
+      "import": "./dist/CookieConsentBanner.js",
+      "types": "./dist/CookieConsentBanner.d.ts"
+    },
+    "./locale-switcher-modal": {
+      "import": "./dist/LocaleSwitcherModal.js",
+      "types": "./dist/LocaleSwitcherModal.d.ts"
+    },
+    "./theme-toggle": {
+      "import": "./dist/ThemeToggle.js",
+      "types": "./dist/ThemeToggle.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils.js",
+      "types": "./dist/utils.d.ts"
+    }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "dev": "tsc -p tsconfig.build.json --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md}\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -53,6 +119,7 @@
     "tailwind-merge": "^3.0.2"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@radix-ui/react-dialog": "^1.1.0",
     "@radix-ui/react-select": "^2.3.0",
     "@radix-ui/react-slot": "^1.3.0",
@@ -68,9 +135,15 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^6.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-no-secrets": "^2.0.0",
+    "eslint-plugin-security": "^3.0.0",
     "jsdom": "^29.0.0",
+    "prettier": "^3.9.0",
     "storybook": "^8.6.18",
     "typescript": "^5.7.0",
+    "typescript-eslint": "^8.0.0",
+    "vite": "^8.1.5",
     "vitest": "^4.1.0"
   }
 }
