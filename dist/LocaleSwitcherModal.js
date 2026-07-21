@@ -145,6 +145,7 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
                 requestAnimationFrame(() => setVisible(true));
             });
             document.body.style.overflow = "hidden";
+            return;
         }
         else {
             setVisible(false);

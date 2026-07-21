@@ -22,7 +22,7 @@ function readConsent(): ConsentState | null {
   if (!match) return null;
 
   try {
-    return JSON.parse(decodeURIComponent(match[1])) as ConsentState;
+    return JSON.parse(decodeURIComponent(match[1]!)) as ConsentState;
   } catch {
     return null;
   }
@@ -56,6 +56,7 @@ export function CookieConsentBanner({ privacyHref }: CookieConsentBannerProps) {
       const timer = window.setTimeout(() => setVisible(true), 250);
       return () => window.clearTimeout(timer);
     }
+    return;
   }, []);
 
   const choose = useCallback((analytics: boolean, marketing: boolean) => {

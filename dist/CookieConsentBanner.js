@@ -36,6 +36,7 @@ export function CookieConsentBanner({ privacyHref }) {
             const timer = window.setTimeout(() => setVisible(true), 250);
             return () => window.clearTimeout(timer);
         }
+        return;
     }, []);
     const choose = useCallback((analytics, marketing) => {
         storeConsent(analytics, marketing);

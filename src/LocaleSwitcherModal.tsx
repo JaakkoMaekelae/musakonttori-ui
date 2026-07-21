@@ -165,6 +165,7 @@ export function LocaleSwitcherModal({
         requestAnimationFrame(() => setVisible(true));
       });
       document.body.style.overflow = "hidden";
+      return;
     } else {
       setVisible(false);
       const timer = setTimeout(() => setMounted(false), 300);
