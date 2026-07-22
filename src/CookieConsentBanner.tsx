@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { safeHref } from "./safeHref";
 
 const COOKIE_NAME = "mk_cookie_consent";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
@@ -37,7 +38,7 @@ function storeConsent(analytics: boolean, marketing: boolean) {
     decidedAt: new Date().toISOString(),
   };
 
-  document.cookie = `${COOKIE_NAME}=${encodeURIComponent(JSON.stringify(consent))}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
+  document.cookie = `${COOKIE_NAME}=${encodeURIComponent(JSON.stringify(consent))}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax; Secure`;
   window.dispatchEvent(
     new CustomEvent("mk-cookie-consent-changed", { detail: consent })
   );
@@ -91,7 +92,7 @@ export function CookieConsentBanner({ privacyHref }: CookieConsentBannerProps) {
             </div>
           ) : null}
           {privacyHref ? (
-            <a className="mk-cookie-link" href={privacyHref}>
+            <a className="mk-cookie-link" href={safeHref(privacyHref)}>
               Tietosuojaseloste
             </a>
           ) : null}

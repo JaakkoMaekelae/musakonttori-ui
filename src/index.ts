@@ -113,3 +113,4 @@ export {
   type BreadcrumbItem,
 } from "./Breadcrumb";
 export { cn } from "./utils";
+export { safeHref } from "./safeHref";

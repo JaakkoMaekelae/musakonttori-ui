@@ -3,6 +3,7 @@
 import type { ComponentType, AnchorHTMLAttributes } from "react";
 import { ChevronRight, Home } from "lucide-react";
 import { cn } from "./utils";
+import { safeHref } from "./safeHref";
 
 export interface BreadcrumbItem {
   label: string;
@@ -29,7 +30,7 @@ export function Breadcrumb({
   return (
     <nav aria-label="Murupolku" className={cn("flex items-center gap-1 text-sm text-text-muted", className)}>
       {homeHref ? (
-        <Link href={homeHref} className="hover:text-text-primary transition-colors" aria-label={homeLabel}>
+        <Link href={safeHref(homeHref)} className="hover:text-text-primary transition-colors" aria-label={homeLabel}>
           <Home className="h-4 w-4" />
         </Link>
       ) : (
@@ -41,7 +42,7 @@ export function Breadcrumb({
         <span key={i} className="flex items-center gap-1">
           <ChevronRight className="h-3 w-3" />
           {item.href ? (
-            <Link href={item.href} className="hover:text-text-primary transition-colors">
+            <Link href={safeHref(item.href)} className="hover:text-text-primary transition-colors">
               {item.label}
             </Link>
           ) : (
