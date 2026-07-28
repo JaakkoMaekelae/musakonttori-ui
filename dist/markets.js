@@ -60,13 +60,14 @@ export const APP_LOCALES = [
 export function getMarketByCountry(country) {
     if (!country)
         return MARKETS[0]; // FI default
-    const m = MARKETS.find((m) => m.country === country.toUpperCase());
-    return m ?? MARKETS[0];
+    const upper = country.toUpperCase();
+    const found = MARKETS.find((m) => m.country === upper);
+    return found ?? MARKETS[0];
 }
 /** Look up market by locale. Falls back to FI. */
 export function getMarketByLocale(locale) {
-    const m = MARKETS.find((m) => m.locale === locale);
-    return m ?? MARKETS[0];
+    const found = MARKETS.find((m) => m.locale === locale);
+    return found ?? MARKETS[0];
 }
 /** Get the default locale for a country. */
 export function getLocaleForCountry(country) {

@@ -17,25 +17,28 @@
  *   }
  */
 
-import type { NextRequest, NextResponse } from "../types";
 import { getLocaleForCountry, getCurrencyForCountry, COUNTRY_COOKIE, LOCALE_COOKIE, CURRENCY_COOKIE } from "./markets";
+
+interface GeoRequest {
+  headers: Headers | Record<string, string | null>;
+  cookies: { get(name: string): { value: string } | undefined };
+}
+
+interface GeoResponse {
+  cookies: {
+    set(name: string, value: string, opts?: { maxAge?: number; path?: string; sameSite?: "lax" | "strict" | "none"; httpOnly?: boolean }): void;
+  };
+}
 
 /**
  * Apply geo-detection cookies based on Vercel country header.
  * Only sets cookies if they don't already exist (respects user choice).
  */
-export function applyGeoDetection(
-  req: NextRequest | { headers: Headers; cookies: { get(name: string): { value: string } | undefined } },
-  res: { cookies: { set(name: string, value: string, opts?: Record<string, unknown>): void } },
-) {
+export function applyGeoDetection(req: GeoRequest, res: GeoResponse) {
   const existingCountry = req.cookies.get(COUNTRY_COOKIE)?.value;
   if (existingCountry) return; // user already has a preference
 
-  const country =
-    (req.headers instanceof Headers ? req.headers.get("x-vercel-ip-country") : null) ??
-    (req.headers as Headers).get("x-vercel-ip-country") ??
-    // Cloudflare fallback
-    (req.headers instanceof Headers ? req.headers.get("cf-ipcountry") : null);
+  const country = getHeader(req.headers, "x-vercel-ip-country") ?? getHeader(req.headers, "cf-ipcountry");
 
   if (!country || country === "XX") return; // unknown/private
 
@@ -52,4 +55,9 @@ export function applyGeoDetection(
   res.cookies.set(COUNTRY_COOKIE, country, cookieOpts);
   res.cookies.set(LOCALE_COOKIE, locale, cookieOpts);
   res.cookies.set(CURRENCY_COOKIE, currency, cookieOpts);
+}
+
+function getHeader(headers: Headers | Record<string, string | null>, name: string): string | null {
+  if (headers instanceof Headers) return headers.get(name);
+  return headers[name] ?? null;
 }

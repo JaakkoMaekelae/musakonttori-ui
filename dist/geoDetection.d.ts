@@ -16,21 +16,28 @@
  *     return res;
  *   }
  */
-import type { NextRequest } from "../types";
-/**
- * Apply geo-detection cookies based on Vercel country header.
- * Only sets cookies if they don't already exist (respects user choice).
- */
-export declare function applyGeoDetection(req: NextRequest | {
-    headers: Headers;
+interface GeoRequest {
+    headers: Headers | Record<string, string | null>;
     cookies: {
         get(name: string): {
             value: string;
         } | undefined;
     };
-}, res: {
+}
+interface GeoResponse {
     cookies: {
-        set(name: string, value: string, opts?: Record<string, unknown>): void;
+        set(name: string, value: string, opts?: {
+            maxAge?: number;
+            path?: string;
+            sameSite?: "lax" | "strict" | "none";
+            httpOnly?: boolean;
+        }): void;
     };
-}): void;
+}
+/**
+ * Apply geo-detection cookies based on Vercel country header.
+ * Only sets cookies if they don't already exist (respects user choice).
+ */
+export declare function applyGeoDetection(req: GeoRequest, res: GeoResponse): void;
+export {};
 //# sourceMappingURL=geoDetection.d.ts.map

@@ -25,10 +25,7 @@ export function applyGeoDetection(req, res) {
     const existingCountry = req.cookies.get(COUNTRY_COOKIE)?.value;
     if (existingCountry)
         return; // user already has a preference
-    const country = (req.headers instanceof Headers ? req.headers.get("x-vercel-ip-country") : null) ??
-        req.headers.get("x-vercel-ip-country") ??
-        // Cloudflare fallback
-        (req.headers instanceof Headers ? req.headers.get("cf-ipcountry") : null);
+    const country = getHeader(req.headers, "x-vercel-ip-country") ?? getHeader(req.headers, "cf-ipcountry");
     if (!country || country === "XX")
         return; // unknown/private
     const locale = getLocaleForCountry(country);
@@ -42,4 +39,9 @@ export function applyGeoDetection(req, res) {
     res.cookies.set(COUNTRY_COOKIE, country, cookieOpts);
     res.cookies.set(LOCALE_COOKIE, locale, cookieOpts);
     res.cookies.set(CURRENCY_COOKIE, currency, cookieOpts);
+}
+function getHeader(headers, name) {
+    if (headers instanceof Headers)
+        return headers.get(name);
+    return headers[name] ?? null;
 }
