@@ -1,16 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { MARKETS, MARKET_CURRENCIES, type CountryMarket } from "./markets";
+import { MARKETS, MARKET_CURRENCIES, APP_LOCALES, type CountryMarket } from "./markets";
 import { cn } from "./utils";
 
 interface MarketSwitcherProps {
   /** Current country code (ISO 3166-1 alpha-2). Defaults to FI. */
   country?: string;
+  /** Current locale code. Defaults to fi. */
+  locale?: string;
   /** Current currency code (ISO 4217). Defaults to EUR. */
   currency?: string;
   /** Called when country changes. */
   onCountryChange?: (country: string) => void;
+  /** Called when locale changes. */
+  onLocaleChange?: (locale: string) => void;
   /** Called when currency changes. */
   onCurrencyChange?: (currency: string) => void;
   /** Size variant. */
@@ -19,16 +23,19 @@ interface MarketSwitcherProps {
 }
 
 /**
- * Country and currency switcher.
+ * Country, language, and currency switcher.
  *
- * Displays current country flag + name, and currency.
- * Clicking opens a modal/dropdown to change country.
+ * Trigger shows: 🇫🇮 Suomi · €
+ * Dropdown has three sections: Valuutta, Kieli, Maa.
  * EUR is always available as a currency option.
+ * Language can be changed independently from country.
  */
 export function MarketSwitcher({
   country = "FI",
+  locale = "fi",
   currency = "EUR",
   onCountryChange,
+  onLocaleChange,
   onCurrencyChange,
   size = "md",
   className,
@@ -37,11 +44,17 @@ export function MarketSwitcher({
   const current = MARKETS.find((m) => m.country === country) ?? (MARKETS[0] as CountryMarket);
   const currencies = MARKET_CURRENCIES;
   const currentCurrency = currencies.find((c) => c.code === currency) ?? currencies[0]!;
+  const currentLocale = APP_LOCALES.find((l) => l.code === locale) ?? APP_LOCALES[0]!;
 
   const handleCountrySelect = (m: CountryMarket) => {
     onCountryChange?.(m.country);
+    onLocaleChange?.(m.locale);
     onCurrencyChange?.(m.currency);
     setOpen(false);
+  };
+
+  const handleLocaleSelect = (l: { code: string; flag: string; label: string }) => {
+    onLocaleChange?.(l.code);
   };
 
   const handleCurrencySelect = (c: { code: string; symbol: string }) => {
@@ -88,7 +101,7 @@ export function MarketSwitcher({
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div className="absolute top-full left-0 mt-1 z-50 w-72 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
-            {/* Currency selector — always show EUR first */}
+            {/* Currency selector — EUR always first */}
             <div className="p-2 border-b border-zinc-100 dark:border-zinc-700">
               <p className="px-3 py-1 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">
                 Valuutta
@@ -111,8 +124,31 @@ export function MarketSwitcher({
               </div>
             </div>
 
+            {/* Language selector */}
+            <div className="p-2 border-b border-zinc-100 dark:border-zinc-700">
+              <p className="px-3 py-1 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">
+                Kieli
+              </p>
+              <div className="flex flex-wrap gap-1 px-2 pb-1">
+                {APP_LOCALES.map((l) => (
+                  <button
+                    key={l.code}
+                    onClick={() => handleLocaleSelect(l)}
+                    className={cn(
+                      "px-2 py-0.5 rounded text-xs font-medium transition-colors",
+                      l.code === locale
+                        ? "bg-brand/10 text-brand font-semibold"
+                        : "text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700",
+                    )}
+                  >
+                    {l.flag} {l.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Country list */}
-            <div className="max-h-72 overflow-y-auto p-2">
+            <div className="max-h-64 overflow-y-auto p-2">
               <p className="px-3 py-1 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">
                 Maa
               </p>
