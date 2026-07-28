@@ -35,7 +35,7 @@ pnpm storybook     # storybook dev -p 6006
 - **Icons**: lucide-react
 - **Toast**: sonner
 - **Testing**: vitest + @testing-library/react + jsdom
-- **Brand**: #C9252D
+- **Brand**: #BF2227
 
 ## Verification checklist
 
