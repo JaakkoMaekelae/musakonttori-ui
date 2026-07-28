@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MARKETS, MARKET_CURRENCIES, type CountryMarket, type Market } from "./markets";
+import { MARKETS, MARKET_CURRENCIES, type CountryMarket } from "./markets";
 import { cn } from "./utils";
 
 interface MarketSwitcherProps {
