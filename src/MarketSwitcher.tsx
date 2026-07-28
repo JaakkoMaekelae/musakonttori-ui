@@ -36,7 +36,7 @@ export function MarketSwitcher({
   const [open, setOpen] = useState(false);
   const current = MARKETS.find((m) => m.country === country) ?? MARKETS[0];
   const currencies = MARKET_CURRENCIES;
-  const currentCurrency = currencies.find((c) => c.code === currency) ?? currencies[0];
+  const currentCurrency = currencies.find((c) => c.code === currency) ?? currencies[0]!;
 
   const handleCountrySelect = (m: CountryMarket) => {
     onCountryChange?.(m.country);
