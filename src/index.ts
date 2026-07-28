@@ -181,6 +181,7 @@ export {
 export { cn } from "./utils";
 export { safeHref } from "./safeHref";
 export { PageSkeleton } from "./PageSkeleton";
+export { MarketSwitcher } from "./MarketSwitcher";
 export {
   MARKETS,
   MARKET_CURRENCIES,

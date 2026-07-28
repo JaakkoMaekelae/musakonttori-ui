@@ -31,6 +31,7 @@ export { tokens, tokensCss, brand, status, light, dark, space, radius, type as t
 export { cn } from "./utils";
 export { safeHref } from "./safeHref";
 export { PageSkeleton } from "./PageSkeleton";
+export { MarketSwitcher } from "./MarketSwitcher";
 export { MARKETS, MARKET_CURRENCIES, APP_LOCALES, getMarketByCountry, getMarketByLocale, getLocaleForCountry, getCurrencyForCountry, COUNTRY_COOKIE, LOCALE_COOKIE, CURRENCY_COOKIE, type CountryMarket, type Market, } from "./markets";
 export { applyGeoDetection } from "./geoDetection";
 //# sourceMappingURL=index.d.ts.map
