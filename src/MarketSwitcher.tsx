@@ -34,7 +34,7 @@ export function MarketSwitcher({
   className,
 }: MarketSwitcherProps) {
   const [open, setOpen] = useState(false);
-  const current = MARKETS.find((m) => m.country === country) ?? MARKETS[0];
+  const current = MARKETS.find((m) => m.country === country) ?? (MARKETS[0] as CountryMarket);
   const currencies = MARKET_CURRENCIES;
   const currentCurrency = currencies.find((c) => c.code === currency) ?? currencies[0]!;
 
