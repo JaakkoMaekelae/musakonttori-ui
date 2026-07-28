@@ -72,7 +72,7 @@ export const APP_LOCALES: readonly { code: string; flag: string; label: string }
 
 /** Look up market by country code. Falls back to FI if not found. */
 export function getMarketByCountry(country: string | null | undefined): CountryMarket {
-  if (!country) return MARKETS[0]; // FI default
+  if (!country) return MARKETS[0] as CountryMarket; // FI default
   const upper = country.toUpperCase();
   const found = MARKETS.find((m) => m.country === upper);
   return found ?? (MARKETS[0] as CountryMarket);
