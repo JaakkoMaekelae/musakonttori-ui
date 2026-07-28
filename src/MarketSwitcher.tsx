@@ -77,7 +77,7 @@ export function MarketSwitcher({
       >
         <span className="leading-none">{current.flag}</span>
         <span className="font-medium text-zinc-700 dark:text-zinc-200">
-          {isSm ? current.country : current.name}
+          {isSm ? currentLocale.label : current.name}
         </span>
         <span className="text-zinc-400 dark:text-zinc-500 mx-0.5">·</span>
         <span className="font-medium text-zinc-600 dark:text-zinc-300">
