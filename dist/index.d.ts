@@ -30,4 +30,5 @@ export { useViewCursor, type UseViewCursorOptions, type ViewCursor, } from "./us
 export { tokens, tokensCss, brand, status, light, dark, space, radius, type as typography, shell as shellMetrics, type ThemePalette, } from "./tokens";
 export { cn } from "./utils";
 export { safeHref } from "./safeHref";
+export { PageSkeleton } from "./PageSkeleton";
 //# sourceMappingURL=index.d.ts.map
