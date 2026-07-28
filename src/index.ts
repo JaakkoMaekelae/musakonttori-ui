@@ -118,6 +118,54 @@ export {
   type DetailState,
 } from "./AdminShell";
 export {
+  AdminRail,
+  type AdminRailProps,
+  type AdminRailModule,
+} from "./AdminRail";
+export {
+  AdminNav,
+  type AdminNavProps,
+  type AdminNavGroup,
+  type AdminNavItem,
+} from "./AdminNav";
+export {
+  AdminDetailPanel,
+  AdminField,
+  type AdminDetailPanelProps,
+  type AdminDetailTab,
+  type AdminFieldProps,
+} from "./AdminDetailPanel";
+export { Workspace, type WorkspaceProps } from "./Workspace";
+export {
+  AdminPageHeader,
+  type AdminPageHeaderProps,
+} from "./AdminPageHeader";
+export {
+  AdminPage,
+  AdminContent,
+  AdminSection,
+  type AdminPageProps,
+  type AdminContentProps,
+  type AdminSectionProps,
+} from "./AdminPage";
+export {
+  AdminSystemState,
+  type AdminSystemStateProps,
+  type SystemStateKind,
+} from "./AdminSystemState";
+export {
+  StatTile,
+  StatRow,
+  type StatTileProps,
+  type StatTileDelta,
+  type StatRowProps,
+} from "./StatTile";
+export {
+  useViewCursor,
+  type UseViewCursorOptions,
+  type ViewCursor,
+} from "./useViewCursor";
+export {
   tokens,
   tokensCss,
   brand,
@@ -132,3 +180,4 @@ export {
 } from "./tokens";
 export { cn } from "./utils";
 export { safeHref } from "./safeHref";
+export { PageSkeleton } from "./PageSkeleton";

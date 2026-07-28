@@ -1,0 +1,51 @@
+import type { ReactNode } from "react";
+export interface AdminPageProps {
+    rail: ReactNode;
+    nav: ReactNode;
+    /** Header, body — whatever the archetype needs. Scrolls as one column. */
+    children: ReactNode;
+    navCollapsed?: boolean;
+    label?: string;
+    className?: string;
+}
+/**
+ * The frame for archetypes that have no list/detail split — dashboard,
+ * settings, report, form, wizard.
+ *
+ * It is the same shell with the detail closed and the content occupying the
+ * list zone, rather than a second layout component. That keeps the rail and
+ * nav pixel-identical across every archetype: switching from a workspace to
+ * settings must not shift the navigation by a pixel, or the whole product
+ * feels like separate apps stitched together.
+ */
+export declare function AdminPage({ rail, nav, children, navCollapsed, label, className, }: AdminPageProps): import("react").JSX.Element;
+export interface AdminContentProps {
+    children: ReactNode;
+    /**
+     * "prose" caps the measure for settings and forms, where long lines hurt.
+     * "wide" lets dashboards and reports use the full width.
+     */
+    width?: "prose" | "wide";
+    className?: string;
+}
+/** Body padding and measure, shared by every non-workspace archetype. */
+export declare function AdminContent({ children, width, className, }: AdminContentProps): import("react").JSX.Element;
+export interface AdminSectionProps {
+    title: ReactNode;
+    description?: ReactNode;
+    /** Save/reset for this section, or a single switch. */
+    action?: ReactNode;
+    children?: ReactNode;
+    id?: string;
+    className?: string;
+}
+/**
+ * A titled block. Settings pages are a stack of these; dashboards use them
+ * between widget groups.
+ *
+ * Renders as a real `section` with a heading rather than a styled div, so the
+ * settings page has a usable heading outline — that outline is how screen
+ * reader users navigate a long settings screen.
+ */
+export declare function AdminSection({ title, description, action, children, id, className, }: AdminSectionProps): import("react").JSX.Element;
+//# sourceMappingURL=AdminPage.d.ts.map
