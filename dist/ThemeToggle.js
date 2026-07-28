@@ -39,5 +39,5 @@ export function ThemeToggle({ className }) {
     if (!mounted) {
         return _jsx("div", { className: cn("h-9 w-9 rounded-lg", className) });
     }
-    return (_jsx("button", { type: "button", onClick: toggle, className: cn("grid h-9 w-9 place-items-center rounded-lg transition hover:bg-white/[0.06]", className), "aria-label": dark ? "Vaihda vaaleaan teemaan" : "Vaihda tummaan teemaan", children: dark ? _jsx(Sun, { className: "h-4 w-4" }) : _jsx(Moon, { className: "h-4 w-4" }) }));
+    return (_jsx("button", { type: "button", onClick: toggle, className: cn("grid h-9 w-9 place-items-center rounded-lg transition hover:bg-white/[0.06]", className), suppressHydrationWarning: true, "aria-label": dark ? "Vaihda vaaleaan teemaan" : "Vaihda tummaan teemaan", children: dark ? _jsx(Sun, { className: "h-4 w-4" }) : _jsx(Moon, { className: "h-4 w-4" }) }));
 }

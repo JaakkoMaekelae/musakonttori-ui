@@ -56,6 +56,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         "grid h-9 w-9 place-items-center rounded-lg transition hover:bg-white/[0.06]",
         className,
       )}
+      suppressHydrationWarning
       aria-label={dark ? "Vaihda vaaleaan teemaan" : "Vaihda tummaan teemaan"}
     >
       {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
