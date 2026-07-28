@@ -1,6 +1,6 @@
 {
   "name": "@musakonttori/ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -88,13 +88,22 @@
     "./utils": {
       "import": "./dist/utils.js",
       "types": "./dist/utils.d.ts"
+    },
+    "./tokens": {
+      "import": "./dist/tokens.js",
+      "types": "./dist/tokens.d.ts"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./admin-shell": {
+      "import": "./dist/AdminShell.js",
+      "types": "./dist/AdminShell.d.ts"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "node scripts/build-tokens.mjs && tsc -p tsconfig.build.json",
     "dev": "tsc -p tsconfig.build.json --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
@@ -104,7 +113,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md}\"",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build:tokens": "node scripts/build-tokens.mjs"
   },
   "peerDependencies": {
     "lucide-react": "*",

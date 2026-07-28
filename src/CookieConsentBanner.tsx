@@ -53,10 +53,10 @@ export function CookieConsentBanner({ privacyHref }: CookieConsentBannerProps) {
   const [detailsOpen, setDetailsOpen] = useState(false);
 
   useEffect(() => {
-    if (!readConsent()) {
-      const timer = window.setTimeout(() => setVisible(true), 250);
-      return () => window.clearTimeout(timer);
-    }
+    // Consent already stored — nothing to show and nothing to clean up.
+    if (readConsent()) return undefined;
+    const timer = window.setTimeout(() => setVisible(true), 250);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const choose = useCallback((analytics: boolean, marketing: boolean) => {
