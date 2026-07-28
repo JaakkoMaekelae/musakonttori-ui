@@ -1,14 +1,17 @@
+export declare const COUNTRY_COOKIE = "mk_country";
+export declare const LOCALE_COOKIE = "mk_locale";
+export declare const CURRENCY_COOKIE = "mk_currency";
 interface MarketSwitcherProps {
-    /** Current country code (ISO 3166-1 alpha-2). Defaults to FI. */
-    country?: string;
-    /** Current locale code. Defaults to fi. */
-    locale?: string;
-    /** Current currency code (ISO 4217). Defaults to EUR. */
-    currency?: string;
-    /** Called when country changes. */
+    /** Server-provided default country (ISO 3166-1 alpha-2). Overridden by cookie on client. */
+    defaultCountry?: string;
+    /** Server-provided default locale. Overridden by cookie on client. */
+    defaultLocale?: string;
+    /** Server-provided default currency (ISO 4217). Overridden by cookie on client. */
+    defaultCurrency?: string;
+    /** Called when country changes (after cookie set + state update). */
     onCountryChange?: (country: string) => void;
-    /** Called when locale changes. */
-    onLocaleChange?: (locale: string) => void;
+    /** Called when locale changes. Return false to prevent page reload. */
+    onLocaleChange?: (locale: string) => boolean | void;
     /** Called when currency changes. */
     onCurrencyChange?: (currency: string) => void;
     /** Size variant. */
@@ -16,13 +19,14 @@ interface MarketSwitcherProps {
     className?: string;
 }
 /**
- * Country, language, and currency switcher.
+ * Country, language, and currency switcher. Self-contained cookie management.
  *
  * Trigger shows: 🇫🇮 Suomi · €
  * Dropdown has three sections: Valuutta, Kieli, Maa.
  * EUR is always available as a currency option.
- * Language can be changed independently from country.
+ * Language changes trigger a full page reload to the new locale path.
+ * Cookie hydration happens in useEffect — no SSR mismatch.
  */
-export declare function MarketSwitcher({ country, locale, currency, onCountryChange, onLocaleChange, onCurrencyChange, size, className, }: MarketSwitcherProps): import("react").JSX.Element;
+export declare function MarketSwitcher({ defaultCountry, defaultLocale, defaultCurrency, onCountryChange, onLocaleChange, onCurrencyChange, size, className, }: MarketSwitcherProps): import("react").JSX.Element | null;
 export {};
 //# sourceMappingURL=MarketSwitcher.d.ts.map
