@@ -118,6 +118,22 @@ export interface LocaleSwitcherModalProps {
   onCountryChange?: (country: string) => void;
 }
 
+// Reusable light/dark-aware brand color variable.
+// Falls back to #BF2227 when the MUI palette is not injected.
+const BRAND = "var(--mk-palette-primary, #BF2227)";
+const BRAND_BG = "var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))";
+const CHECK_BG = BRAND;
+
+// Neutral surface / text tokens that auto-flip with data-theme or MUI providers
+const SURFACE = "var(--mk-palette-bg-surface, var(--mk-color-surface, #FFFFFF))";
+const SURFACE_MUTED = "var(--mk-palette-bg-surface-secondary, var(--mk-color-surface-secondary, #F4F4F5))";
+const TEXT = "var(--mk-palette-text-primary, #111113)";
+const TEXT_DIM = "var(--mk-palette-text-secondary, #5F6068)";
+const TEXT_MUTED = "var(--mk-palette-text-muted, #9CA3AF)";
+const BORDER = "var(--mk-palette-border-subtle, rgba(128,128,128,0.12))";
+const BORDER_HOVER = "var(--mk-palette-border-default, rgba(128,128,128,0.25))";
+const DIVIDER = "var(--mk-palette-border-subtle, rgba(128,128,128,0.08))";
+
 export function LocaleSwitcherModal({
   open,
   onClose,
@@ -216,6 +232,13 @@ export function LocaleSwitcherModal({
     }
   };
 
+  const selectedClass = cn(
+    "border-[var(--mk-palette-primary,#BF2227)] bg-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.08))] ring-1 ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]"
+  );
+  const unselectedClass = cn(
+    "border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.12))] bg-[var(--mk-palette-bg-surface-secondary,#F4F4F5)]"
+  );
+
   if (!mounted) return null;
 
   return (
@@ -225,6 +248,7 @@ export function LocaleSwitcherModal({
         visible ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
     >
+      {/* Backdrop — always dark, standard modal pattern */}
       <div
         className="fixed inset-0 bg-black/60 backdrop-blur-sm"
         onClick={handleClose}
@@ -237,32 +261,44 @@ export function LocaleSwitcherModal({
         aria-modal="true"
         aria-label="Kieli-, valuutta- ja maa-asetukset"
         className={cn(
-          "relative my-auto max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl border border-white/[0.08] bg-black/80 p-6 shadow-2xl backdrop-blur-xl",
+          "relative my-auto max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl border shadow-2xl backdrop-blur-xl p-6",
           "transition-all duration-300",
           visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"
         )}
+        style={{
+          background: `color-mix(in srgb, ${SURFACE}, #0000 5%)`,
+          borderColor: BORDER,
+          color: TEXT,
+        } as React.CSSProperties}
       >
+        {/* Close button */}
         <button
           type="button"
           onClick={handleClose}
-          className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full text-white/50 transition hover:bg-white/[0.06] hover:text-white"
+          className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
           aria-label="Sulje"
+          style={{ color: TEXT_DIM } as React.CSSProperties}
         >
           <X className="h-4 w-4" />
         </button>
 
+        {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#C9252D]/20">
-            <Globe className="h-5 w-5 text-brand" />
+          <div
+            className="grid h-10 w-10 place-items-center rounded-xl"
+            style={{ background: BRAND_BG } as React.CSSProperties}
+          >
+            <Globe className="h-5 w-5" style={{ color: BRAND } as React.CSSProperties} />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white">Alueasetukset</h2>
-            <p className="text-sm text-white/50">Kieli, valuutta ja maa</p>
+            <h2 className="text-lg font-bold" style={{ color: TEXT }}>Alueasetukset</h2>
+            <p className="text-sm" style={{ color: TEXT_DIM }}>Kieli, valuutta ja maa</p>
           </div>
         </div>
 
+        {/* Language section */}
         <section className="mb-6">
-          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: TEXT_MUTED }}>
             Kieli
           </h3>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -273,30 +309,30 @@ export function LocaleSwitcherModal({
                 onClick={() => handleLocaleChange(lang.code)}
                 className={cn(
                   "relative flex flex-col items-start gap-0.5 rounded-xl border px-4 py-3 text-left transition-all",
-                  locale === lang.code
-                    ? "border-brand bg-[#C9252D]/10 ring-1 ring-brand/30"
-                    : "border-white/[0.06] bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04]"
+                  locale === lang.code ? selectedClass : unselectedClass,
+                  locale !== lang.code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"
                 )}
               >
                 <div className="flex w-full items-center justify-between">
                   <span className="text-2xl">{lang.flag}</span>
                   {locale === lang.code && (
-                    <Check className="h-4 w-4 shrink-0 text-brand" />
+                    <Check className="h-4 w-4 shrink-0" style={{ color: BRAND }} />
                   )}
                 </div>
-                <span className="mt-1 text-sm font-semibold text-white">
+                <span className="mt-1 text-sm font-semibold" style={{ color: TEXT }}>
                   {lang.name}
                 </span>
-                <span className="text-[11px] text-white/40">{lang.subtitle}</span>
+                <span className="text-[11px]" style={{ color: TEXT_DIM }}>{lang.subtitle}</span>
               </button>
             ))}
           </div>
         </section>
 
-        <div className="my-5 h-px bg-white/[0.06]" />
+        <div className="my-5 h-px" style={{ background: DIVIDER }} />
 
+        {/* Currency section */}
         <section className="mb-6">
-          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: TEXT_MUTED }}>
             Valuutta
           </h3>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
@@ -307,16 +343,15 @@ export function LocaleSwitcherModal({
                 onClick={() => handleCurrencyChange(cur.code)}
                 className={cn(
                   "relative flex flex-col items-center gap-1 rounded-xl border px-2 py-3 transition-all",
-                  currency === cur.code
-                    ? "border-brand bg-[#C9252D]/10 ring-1 ring-brand/30"
-                    : "border-white/[0.06] bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04]"
+                  currency === cur.code ? selectedClass : unselectedClass,
+                  currency !== cur.code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"
                 )}
               >
-                <span className="text-xl font-bold text-white">{cur.symbol}</span>
-                <span className="text-[11px] font-medium text-white/60">{cur.code}</span>
+                <span className="text-xl font-bold" style={{ color: TEXT }}>{cur.symbol}</span>
+                <span className="text-[11px] font-medium" style={{ color: TEXT_DIM }}>{cur.code}</span>
                 <span className="text-xs">{cur.flag}</span>
                 {currency === cur.code && (
-                  <div className="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full bg-[#C9252D]">
+                  <div className="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full" style={{ background: CHECK_BG }}>
                     <Check className="h-2.5 w-2.5 text-white" />
                   </div>
                 )}
@@ -325,10 +360,11 @@ export function LocaleSwitcherModal({
           </div>
         </section>
 
-        <div className="my-5 h-px bg-white/[0.06]" />
+        <div className="my-5 h-px" style={{ background: DIVIDER }} />
 
+        {/* Country section */}
         <section className="mb-6">
-          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: TEXT_MUTED }}>
             Maa
           </h3>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -339,24 +375,23 @@ export function LocaleSwitcherModal({
                 onClick={() => handleCountryChange(c.code)}
                 className={cn(
                   "flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left transition-all",
-                  country === c.code
-                    ? "border-brand bg-[#C9252D]/10 ring-1 ring-brand/30"
-                    : "border-white/[0.06] bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04]"
+                  country === c.code ? selectedClass : unselectedClass,
+                  country !== c.code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"
                 )}
               >
                 {c.code === "auto" ? (
-                  <MapPin className="h-4 w-4 shrink-0 text-brand" />
+                  <MapPin className="h-4 w-4 shrink-0" style={{ color: BRAND }} />
                 ) : (
                   <span className="text-base">{c.flag}</span>
                 )}
                 <div className="min-w-0">
-                  <span className="text-sm font-medium text-white truncate block">
+                  <span className="text-sm font-medium truncate block" style={{ color: TEXT }}>
                     {c.code === "auto"
                       ? `Automaattinen \u2014 ${COUNTRY_NAMES[detectedCountry]}`
                       : c.name}
                   </span>
                   {c.code === "auto" && country === "auto" && (
-                    <span className="text-[10px] text-white/30">Sijaintisi perusteella</span>
+                    <span className="text-[10px]" style={{ color: TEXT_MUTED }}>Sijaintisi perusteella</span>
                   )}
                 </div>
               </button>
@@ -364,14 +399,28 @@ export function LocaleSwitcherModal({
           </div>
         </section>
 
-        <div className="flex items-center justify-between border-t border-white/[0.06] pt-4">
-          <p className="text-xs text-white/30">
+        {/* Footer */}
+        <div className="flex items-center justify-between pt-4" style={{ borderTop: `1px solid ${DIVIDER}` }}>
+          <p className="text-xs" style={{ color: TEXT_MUTED }}>
             Asetukset tallennetaan selaimeen
           </p>
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-sm font-medium text-white/60 backdrop-blur transition hover:border-white/20 hover:text-white"
+            className="rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur transition"
+            style={{
+              borderColor: BORDER,
+              background: SURFACE_MUTED,
+              color: TEXT_DIM,
+            }}
+            onMouseEnter={(e) => {
+              (e.target as HTMLButtonElement).style.borderColor = BORDER_HOVER;
+              (e.target as HTMLButtonElement).style.color = TEXT;
+            }}
+            onMouseLeave={(e) => {
+              (e.target as HTMLButtonElement).style.borderColor = BORDER;
+              (e.target as HTMLButtonElement).style.color = TEXT_DIM;
+            }}
           >
             Sulje
           </button>
