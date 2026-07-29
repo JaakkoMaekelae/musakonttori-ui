@@ -222,13 +222,14 @@ export function SignInLayout({
         background: `linear-gradient(135deg, color-mix(in srgb, ${primary} 5%, transparent), transparent 45%), var(--mk-palette-bg-canvas, var(--mk-palette-bg, #0D0F17))`,
       }}
     >
+      <style>{SIGN_IN_GRID_CSS}</style>
       <div
+        data-mk-signin-grid=""
         className="mx-auto grid w-full min-h-[calc(100svh-clamp(24px,4vw,56px))] max-w-[1440px] overflow-hidden rounded-[28px] border shadow-2xl max-sm:min-h-svh max-sm:rounded-none max-sm:border-0"
         style={{
           borderColor: "var(--mk-palette-border-subtle, rgba(255,255,255,0.08))",
           background: "var(--mk-palette-bg-elevated, var(--mk-palette-bg-surface, #1A1D27))",
           boxShadow: "var(--mk-shadow-xl, 0 20px 60px rgba(0,0,0,0.4))",
-          gridTemplateColumns: "minmax(420px,0.96fr) minmax(480px,1.04fr)",
         }}
       >
         {/* ===== LEFT: Brand panel ===== */}
@@ -643,3 +644,31 @@ export function SignInLayout({
     </div>
   );
 }
+
+/**
+ * The two-column grid, as a stylesheet rather than an inline style.
+ *
+ * Inline `gridTemplateColumns` cannot be overridden by a media query, so the
+ * old `minmax(420px,…) minmax(480px,…)` applied at every width — a hard 900px
+ * floor that overflowed any viewport narrower than that, including phones.
+ * The `max-sm:` classes beside it only reset padding and radius, never the
+ * columns, so the layout had no way to collapse.
+ *
+ * The breakpoint is 960px, not Tailwind's `sm`: the columns need 900px plus
+ * the page padding, so stacking has to start well above the phone range.
+ *
+ * Shipped as a component-owned <style> because consuming apps do not reliably
+ * scan this package with Tailwind — when they don't, class-based layout here
+ * silently evaporates.
+ */
+const SIGN_IN_GRID_CSS = `
+[data-mk-signin-grid] {
+  grid-template-columns: minmax(420px, 0.96fr) minmax(480px, 1.04fr);
+}
+
+@media (max-width: 959px) {
+  [data-mk-signin-grid] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+`;
