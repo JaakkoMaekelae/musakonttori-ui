@@ -374,41 +374,45 @@ export function LocaleSwitcherModal({
           </div>
         </section>
 
-        <div className="my-5 h-px" style={{ background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }} />
+        {currencyCodes.length > 1 && (
+          <>
+            <div className="my-5 h-px" style={{ background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }} />
 
-        {/* Currency section */}
-        <section className="mb-6">
-          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}>
-            Valuutta
-          </h3>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {currencyCodes.map((code) => {
-              const cur = CURRENCIES_INFO[code];
-              if (!cur) return null;
-              return (
-                <button
-                  key={code}
-                  type="button"
-                  onClick={() => handleCurrencyChange(code)}
-                  className={cn(
-                    "relative flex flex-col items-center gap-1 rounded-xl border px-2 py-3 transition-all",
-                    currency === code ? selectedClass : unselectedClass,
-                    currency !== code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"
-                  )}
-                >
-                  <span className="text-xl font-bold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>{cur.symbol}</span>
-                  <span className="text-[11px] font-medium" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>{code}</span>
-                  <span className="text-xs">{cur.flag}</span>
-                  {currency === code && (
-                    <div className="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full" style={{ background: `var(--mk-palette-primary, #BF2227)` }}>
-                      <Check className="h-2.5 w-2.5 text-white" />
-                    </div>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </section>
+            {/* Currency section */}
+            <section className="mb-6">
+              <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}>
+                Valuutta
+              </h3>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {currencyCodes.map((code) => {
+                  const cur = CURRENCIES_INFO[code];
+                  if (!cur) return null;
+                  return (
+                    <button
+                      key={code}
+                      type="button"
+                      onClick={() => handleCurrencyChange(code)}
+                      className={cn(
+                        "flex flex-col items-center gap-1 rounded-xl border px-2 py-3 transition-all",
+                        currency === code ? selectedClass : unselectedClass,
+                        currency !== code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"
+                      )}
+                    >
+                      <span className="text-xl font-bold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>{cur.symbol}</span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-[11px] font-medium" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>{code}</span>
+                        <span className="text-xs">{cur.flag}</span>
+                      </div>
+                      {currency === code && (
+                        <Check className="h-4 w-4 shrink-0" style={{ color: `var(--mk-palette-primary, #BF2227)` }} />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+          </>
+        )}
 
         {/* Footer */}
         <div className="flex items-center justify-between pt-4" style={{ borderTop: `1px solid var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }}>
