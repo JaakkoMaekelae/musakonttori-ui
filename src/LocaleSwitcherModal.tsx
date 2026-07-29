@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback, useState } from "react";
+import { createPortal } from "react-dom";
 import { Check, Globe, X } from "lucide-react";
 import { cn } from "./utils";
 
@@ -283,7 +284,7 @@ export function LocaleSwitcherModal({
 
   if (!mounted) return null;
 
-  return (
+  return createPortal(
     <div
       className={cn(
         "fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto p-4 transition-all duration-300",
@@ -433,6 +434,7 @@ export function LocaleSwitcherModal({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

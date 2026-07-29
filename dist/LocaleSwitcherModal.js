@@ -1,6 +1,7 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useEffect, useRef, useCallback, useState } from "react";
+import { createPortal } from "react-dom";
 import { Check, Globe, X } from "lucide-react";
 import { cn } from "./utils";
 const STORAGE_KEY = "mk-locale-prefs-v2";
@@ -279,7 +280,7 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
     const unselectedClass = cn("border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.12))] bg-[var(--mk-palette-bg-surface-secondary,#F4F4F5)]");
     if (!mounted)
         return null;
-    return (_jsxs("div", { className: cn("fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto p-4 transition-all duration-300", visible ? "opacity-100" : "opacity-0 pointer-events-none"), children: [_jsx("div", { className: "fixed inset-0 bg-black/60 backdrop-blur-sm", onClick: handleClose, "aria-hidden": "true" }), _jsxs("div", { ref: modalRef, role: "dialog", "aria-modal": "true", "aria-label": "Kieli- ja valuutta-asetukset", className: cn("relative my-auto max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl border shadow-2xl backdrop-blur-xl p-6", "transition-all duration-300", visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"), style: {
+    return createPortal(_jsxs("div", { className: cn("fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto p-4 transition-all duration-300", visible ? "opacity-100" : "opacity-0 pointer-events-none"), children: [_jsx("div", { className: "fixed inset-0 bg-black/60 backdrop-blur-sm", onClick: handleClose, "aria-hidden": "true" }), _jsxs("div", { ref: modalRef, role: "dialog", "aria-modal": "true", "aria-label": "Kieli- ja valuutta-asetukset", className: cn("relative my-auto max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl border shadow-2xl backdrop-blur-xl p-6", "transition-all duration-300", visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"), style: {
                     background: `var(--mk-palette-bg-surface, #FFFFFF)`,
                     borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
                     color: `var(--mk-palette-text-primary, #111113)`,
@@ -297,5 +298,5 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
                                     borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
                                     background: `var(--mk-palette-bg-surface-secondary, #F4F4F5)`,
                                     color: `var(--mk-palette-text-secondary, #5F6068)`,
-                                }, children: "Sulje" })] })] })] }));
+                                }, children: "Sulje" })] })] })] }), document.body);
 }

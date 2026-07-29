@@ -6,5 +6,5 @@ export interface LocaleSwitcherModalProps {
     onLocaleChange?: (locale: string) => void;
     onCurrencyChange?: (currency: string) => void;
 }
-export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, onLocaleChange, onCurrencyChange, }: LocaleSwitcherModalProps): import("react").JSX.Element | null;
+export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, onLocaleChange, onCurrencyChange, }: LocaleSwitcherModalProps): import("react").ReactPortal | null;
 //# sourceMappingURL=LocaleSwitcherModal.d.ts.map
