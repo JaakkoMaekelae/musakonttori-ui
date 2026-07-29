@@ -17,6 +17,14 @@
       "import": "./dist/Badge.js",
       "types": "./dist/Badge.d.ts"
     },
+    "./chip": {
+      "import": "./dist/Chip.js",
+      "types": "./dist/Chip.d.ts"
+    },
+    "./avatar": {
+      "import": "./dist/Avatar.js",
+      "types": "./dist/Avatar.d.ts"
+    },
     "./input": {
       "import": "./dist/Input.js",
       "types": "./dist/Input.d.ts"

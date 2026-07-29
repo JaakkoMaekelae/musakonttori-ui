@@ -51,7 +51,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="text-sm font-medium text-[var(--mk-palette-text-primary,#F0F0F3)]"
+            className="text-sm font-medium text-[var(--mk-palette-text-primary,#111113)]"
           >
             {label}
             {isRequired && <span className="ml-0.5 text-red-500" aria-hidden="true">*</span>}
@@ -70,9 +70,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             value={value}
             defaultValue={defaultValue}
             className={cn(
-              "h-10 w-full rounded-lg border bg-[var(--mk-palette-bg,#0D0F17)] px-3 text-sm text-[var(--mk-palette-text-primary,#F0F0F3)] placeholder:text-[var(--mk-palette-text-tertiary,#6B7280)] transition-colors",
-              "border-[var(--mk-palette-border-default,rgba(255,255,255,0.12))]",
-              "hover:border-[var(--mk-palette-border-hover,rgba(255,255,255,0.2))]",
+              "h-10 w-full rounded-lg border bg-[var(--mk-palette-bg,#FFFFFF)] px-3 text-sm text-[var(--mk-palette-text-primary,#111113)] placeholder:text-[var(--mk-palette-text-tertiary,#6B7280)] transition-colors",
+              "border-[var(--mk-palette-border-default,rgba(128,128,128,0.2))]",
+              "hover:border-[var(--mk-palette-border-hover,rgba(128,128,128,0.35))]",
               "focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-bg-brand,#DC2626)] focus:border-transparent",
               "disabled:opacity-50 disabled:cursor-not-allowed",
               error && "border-red-500 focus:ring-red-500",

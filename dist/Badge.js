@@ -1,21 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { cva } from "class-variance-authority";
 import { cn } from "./utils";
-const TONE_VARIANT_MAP = {
-    success: "success",
-    warning: "warning",
-    error: "error",
-    info: "info",
-    neutral: "neutral",
-    red: "red",
-    purple: "purple",
-    blue: "blue",
-    green: "green",
-    orange: "orange",
-    amber: "amber",
-    pink: "pink",
-    gray: "gray",
-};
 const badgeVariants = cva("inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors", {
     variants: {
         variant: {
@@ -44,37 +29,49 @@ const badgeVariants = cva("inline-flex items-center gap-1.5 rounded-full border 
         variant: "neutral",
     },
 });
-const dotColorMap = {
-    neutral: "bg-zinc-400",
-    success: "bg-emerald-500",
-    warning: "bg-amber-500",
-    error: "bg-red-500",
-    info: "bg-blue-500",
-    brand: "bg-[var(--mk-palette-bg-brand,#DC2626)]",
-    red: "bg-red-500",
-    purple: "bg-purple-500",
-    blue: "bg-blue-500",
-    green: "bg-green-500",
-    orange: "bg-orange-500",
-    amber: "bg-amber-500",
-    pink: "bg-pink-500",
-    gray: "bg-gray-500",
-    default: "bg-zinc-400",
-    primary: "bg-[var(--mk-palette-bg-brand,#DC2626)]",
-    secondary: "bg-gray-500",
-    destructive: "bg-red-500",
-    outline: "bg-zinc-400",
-};
 function resolveVariant(variant, tone) {
     if (tone)
-        return TONE_VARIANT_MAP[tone];
+        return tone;
     return variant ?? "neutral";
 }
+function getDotColor(variant) {
+    switch (variant) {
+        case "success":
+        case "green":
+            return "bg-emerald-500";
+        case "warning":
+        case "orange":
+        case "amber":
+            return "bg-amber-500";
+        case "error":
+        case "red":
+        case "destructive":
+            return "bg-red-500";
+        case "info":
+        case "blue":
+            return "bg-blue-500";
+        case "brand":
+        case "primary":
+            return "bg-[var(--mk-palette-bg-brand,#DC2626)]";
+        case "purple":
+            return "bg-purple-500";
+        case "pink":
+            return "bg-pink-500";
+        case "gray":
+        case "secondary":
+            return "bg-gray-500";
+        case "neutral":
+        case "default":
+        case "outline":
+            return "bg-zinc-400";
+    }
+}
 /**
- * Musakonttori Badge - tag component for displaying status or category.
+ * Musakonttori Badge - compact status indicator.
  *
  * Variants: neutral, success, warning, error, info, brand.
  * Supports `dot` indicator and `pulse` animation.
+ * Use `Chip` for categories, filters and removable values.
  *
  * @example
  * <Badge variant="success">Aktiivinen</Badge>
@@ -82,5 +79,5 @@ function resolveVariant(variant, tone) {
  */
 export function Badge({ variant = "neutral", tone, dot = false, pulse = false, className, children, ...props }) {
     const resolved = resolveVariant(variant, tone);
-    return (_jsxs("span", { className: cn(badgeVariants({ variant: resolved, className })), ...props, children: [dot && (_jsxs("span", { className: "relative flex h-2 w-2", children: [_jsx("span", { className: cn("absolute inline-flex h-full w-full rounded-full", dotColorMap[resolved] ?? dotColorMap.neutral) }), pulse && (_jsx("span", { className: cn("absolute inline-flex h-full w-full animate-ping rounded-full opacity-75", dotColorMap[resolved] ?? dotColorMap.neutral) }))] })), children] }));
+    return (_jsxs("span", { className: cn(badgeVariants({ variant: resolved, className })), ...props, children: [dot && (_jsxs("span", { className: "relative flex h-2 w-2", children: [_jsx("span", { className: cn("absolute inline-flex h-full w-full rounded-full", getDotColor(resolved)) }), pulse && (_jsx("span", { className: cn("absolute inline-flex h-full w-full animate-ping rounded-full opacity-75", getDotColor(resolved)) }))] })), children] }));
 }

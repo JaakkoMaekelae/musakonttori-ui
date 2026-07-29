@@ -23,12 +23,14 @@ export function AppHeader({
   navItems,
   user,
   onSignOut,
-  signInHref = "/auth/signin",
+  signInHref = "/auth/sign-in",
   className,
 }: AppHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const userMenuTriggerRef = useRef<HTMLButtonElement>(null);
+  const userMenuPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -39,6 +41,23 @@ export function AppHeader({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (!userMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setUserMenuOpen(false);
+      userMenuTriggerRef.current?.focus();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    userMenuPanelRef.current
+      ?.querySelector<HTMLElement>('[role="menuitem"]')
+      ?.focus();
+
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [userMenuOpen]);
 
   const initials = user?.name
     ? user.name
@@ -104,6 +123,7 @@ export function AppHeader({
             /* User menu */
             <div className="relative" ref={userMenuRef}>
               <button
+                ref={userMenuTriggerRef}
                 type="button"
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
                 className={cn(
@@ -111,7 +131,9 @@ export function AppHeader({
                   "hover:bg-[var(--mk-palette-bg-surface-hover,#F4F4F5)] dark:hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)]",
                 )}
                 aria-expanded={userMenuOpen}
-                aria-haspopup="true"
+                aria-haspopup="menu"
+                aria-controls="mk-user-menu"
+                aria-label="Avaa käyttäjävalikko"
               >
                 {user.image ? (
                   <img
@@ -134,6 +156,10 @@ export function AppHeader({
 
               {userMenuOpen && (
                 <div
+                  ref={userMenuPanelRef}
+                  id="mk-user-menu"
+                  role="menu"
+                  aria-label="Käyttäjävalikko"
                   className={cn(
                     "absolute right-0 top-full mt-1 w-56 rounded-xl border p-1.5 shadow-xl",
                     "bg-[var(--mk-palette-bg-surface,#FFFFFF)] dark:bg-[var(--mk-palette-bg-surface,#1A1D27)]",
@@ -157,6 +183,7 @@ export function AppHeader({
                   {/* Menu items */}
                   <a
                     href="/tili"
+                    role="menuitem"
                     className={cn(
                       "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
                       "text-[var(--mk-palette-text-primary,#0F0F11)] dark:text-[var(--mk-palette-text-primary,#F0F0F3)]",
@@ -168,6 +195,7 @@ export function AppHeader({
                   </a>
                   <a
                     href="/organisaatiot"
+                    role="menuitem"
                     className={cn(
                       "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
                       "text-[var(--mk-palette-text-primary,#0F0F11)] dark:text-[var(--mk-palette-text-primary,#F0F0F3)]",
@@ -181,6 +209,7 @@ export function AppHeader({
                   <div className="border-t border-[var(--mk-palette-border-subtle,#E4E4E7)] dark:border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] mt-1 pt-1">
                     <button
                       type="button"
+                      role="menuitem"
                       onClick={() => {
                         setUserMenuOpen(false);
                         onSignOut?.();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId, useRef } from "react";
 import { MARKETS, MARKET_CURRENCIES, APP_LOCALES, type CountryMarket } from "./markets";
 import { cn } from "./utils";
 
@@ -61,6 +61,8 @@ export function MarketSwitcher({
   const [locale, setLocale] = useState(defaultLocale);
   const [currency, setCurrency] = useState(defaultCurrency);
   const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelId = useId();
 
   // Hydrate from cookies on mount (client-only)
   useEffect(() => {
@@ -71,6 +73,19 @@ export function MarketSwitcher({
     if (l) setLocale(l);
     if (cur) setCurrency(cur);
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      triggerRef.current?.focus();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
 
   const current = MARKETS.find((m) => m.country === country) ?? (MARKETS[0] as CountryMarket);
   const currencies = MARKET_CURRENCIES;
@@ -133,6 +148,7 @@ export function MarketSwitcher({
     <div className={cn("relative", className)}>
       {/* Trigger button */}
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen(!open)}
         suppressHydrationWarning
@@ -141,7 +157,9 @@ export function MarketSwitcher({
           isSm ? "px-2 py-1 text-xs" : "px-3 py-1.5 text-sm",
         )}
         aria-expanded={open}
-        aria-haspopup="listbox"
+        aria-haspopup="dialog"
+        aria-controls={panelId}
+        aria-label="Vaihda maa, kieli ja valuutta"
       >
         <span className="leading-none">{current.flag}</span>
         <span className="font-medium text-zinc-700 dark:text-zinc-200">
@@ -163,7 +181,12 @@ export function MarketSwitcher({
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute top-full left-0 mt-1 z-50 w-72 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden">
+          <div
+            id={panelId}
+            role="dialog"
+            aria-label="Maa-, kieli- ja valuutta-asetukset"
+            className="absolute top-full left-0 mt-1 z-50 w-72 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl shadow-xl overflow-hidden"
+          >
             {/* Currency */}
             <div className="p-2 border-b border-zinc-100 dark:border-zinc-700">
               <p className="px-3 py-1 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Valuutta</p>

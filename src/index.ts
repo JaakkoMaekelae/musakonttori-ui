@@ -1,5 +1,20 @@
 export { Button, type ButtonProps, buttonVariants } from "./Button";
 export { Badge, type BadgeProps, type BadgeTone } from "./Badge";
+export {
+  Chip,
+  chipVariants,
+  type ChipProps,
+  type StaticChipProps,
+  type SelectableChipProps,
+  type RemovableChipProps,
+} from "./Chip";
+export {
+  Avatar,
+  AvatarGroup,
+  type AvatarProps,
+  type AvatarGroupProps,
+  type AvatarStatus,
+} from "./Avatar";
 export { Input, type InputProps } from "./Input";
 export {
   Card,
@@ -61,27 +76,15 @@ export {
   type SkeletonProps,
   type TableSkeletonProps,
 } from "./Skeleton";
-export {
-  ToastProvider,
-  toast,
-} from "./Toast";
+export { ToastProvider, toast } from "./Toast";
 export {
   EmptyState,
   type EmptyStateProps,
   type EmptyStateAction,
 } from "./EmptyState";
-export {
-  FormField,
-  type FormFieldProps,
-} from "./FormField";
-export {
-  Spinner,
-  type SpinnerProps,
-} from "./Spinner";
-export {
-  Alert,
-  type AlertProps,
-} from "./Alert";
+export { FormField, type FormFieldProps } from "./FormField";
+export { Spinner, type SpinnerProps } from "./Spinner";
+export { Alert, type AlertProps } from "./Alert";
 export {
   Tabs,
   TabsList,
@@ -91,18 +94,12 @@ export {
   type TabsTriggerProps,
   type TabsContentProps,
 } from "./Tabs";
-export {
-  Modal,
-  type ModalProps,
-} from "./Modal";
+export { Modal, type ModalProps } from "./Modal";
 export {
   LocaleSwitcherModal,
   type LocaleSwitcherModalProps,
 } from "./LocaleSwitcherModal";
-export {
-  ThemeToggle,
-  type ThemeToggleProps,
-} from "./ThemeToggle";
+export { ThemeToggle, type ThemeToggleProps } from "./ThemeToggle";
 export {
   CookieConsentBanner,
   type CookieConsentBannerProps,
@@ -136,10 +133,7 @@ export {
   type AdminFieldProps,
 } from "./AdminDetailPanel";
 export { Workspace, type WorkspaceProps } from "./Workspace";
-export {
-  AdminPageHeader,
-  type AdminPageHeaderProps,
-} from "./AdminPageHeader";
+export { AdminPageHeader, type AdminPageHeaderProps } from "./AdminPageHeader";
 export {
   AdminPage,
   AdminContent,
@@ -203,7 +197,11 @@ export {
 } from "./tokens";
 export { cn } from "./utils";
 export { safeHref } from "./safeHref";
-export { SignInLayout, type SignInLayoutProps, type SignInLayoutBenefit } from "./SignInLayout";
+export {
+  SignInLayout,
+  type SignInLayoutProps,
+  type SignInLayoutBenefit,
+} from "./SignInLayout";
 export { PageSkeleton } from "./PageSkeleton";
 export { MarketSwitcher } from "./MarketSwitcher";
 export {
@@ -222,4 +220,8 @@ export {
 } from "./markets";
 export { applyGeoDetection } from "./geoDetection";
 export { AppHeader, type AppHeaderProps } from "./AppHeader";
-export { AppFooter, type AppFooterProps, type AppFooterLinkGroup } from "./AppFooter";
+export {
+  AppFooter,
+  type AppFooterProps,
+  type AppFooterLinkGroup,
+} from "./AppFooter";

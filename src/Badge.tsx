@@ -16,22 +16,6 @@ export type BadgeTone =
   | "pink"
   | "gray";
 
-const TONE_VARIANT_MAP: Record<BadgeTone, BadgeVariant> = {
-  success: "success",
-  warning: "warning",
-  error: "error",
-  info: "info",
-  neutral: "neutral",
-  red: "red",
-  purple: "purple",
-  blue: "blue",
-  green: "green",
-  orange: "orange",
-  amber: "amber",
-  pink: "pink",
-  gray: "gray",
-};
-
 type BadgeVariant =
   | "neutral"
   | "success"
@@ -60,14 +44,10 @@ const badgeVariants = cva(
       variant: {
         neutral:
           "bg-[var(--mk-palette-bg-surface,#1E2130)] text-[var(--mk-palette-text-secondary,#B0B3C1)] border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.06))]",
-        success:
-          "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-        warning:
-          "bg-amber-500/10 text-amber-400 border-amber-500/20",
-        error:
-          "bg-red-500/10 text-red-400 border-red-500/20",
-        info:
-          "bg-blue-500/10 text-blue-400 border-blue-500/20",
+        success: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+        warning: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+        error: "bg-red-500/10 text-red-400 border-red-500/20",
+        info: "bg-blue-500/10 text-blue-400 border-blue-500/20",
         brand:
           "bg-[var(--mk-palette-bg-brand,#DC2626)]/10 text-[var(--mk-palette-bg-brand,#DC2626)] border-[var(--mk-palette-bg-brand,#DC2626)]/20",
         red: "bg-red-500/20 text-red-400 border-red-500/40",
@@ -82,10 +62,8 @@ const badgeVariants = cva(
           "bg-[var(--mk-palette-bg-surface,#1E2130)] text-[var(--mk-palette-text-secondary,#B0B3C1)] border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.06))]",
         primary:
           "bg-[var(--mk-palette-bg-brand,#DC2626)]/10 text-[var(--mk-palette-bg-brand,#DC2626)] border-[var(--mk-palette-bg-brand,#DC2626)]/20",
-        secondary:
-          "bg-gray-500/20 text-gray-400 border-gray-500/40",
-        destructive:
-          "bg-red-500/10 text-red-400 border-red-500/20",
+        secondary: "bg-gray-500/20 text-gray-400 border-gray-500/40",
+        destructive: "bg-red-500/10 text-red-400 border-red-500/20",
         outline:
           "border-[var(--mk-palette-border-default,rgba(255,255,255,0.12))] bg-transparent text-[var(--mk-palette-text-secondary,#B0B3C1)]",
       },
@@ -93,33 +71,12 @@ const badgeVariants = cva(
     defaultVariants: {
       variant: "neutral",
     },
-  },
+  }
 );
 
-const dotColorMap: Record<string, string> = {
-  neutral: "bg-zinc-400",
-  success: "bg-emerald-500",
-  warning: "bg-amber-500",
-  error: "bg-red-500",
-  info: "bg-blue-500",
-  brand: "bg-[var(--mk-palette-bg-brand,#DC2626)]",
-  red: "bg-red-500",
-  purple: "bg-purple-500",
-  blue: "bg-blue-500",
-  green: "bg-green-500",
-  orange: "bg-orange-500",
-  amber: "bg-amber-500",
-  pink: "bg-pink-500",
-  gray: "bg-gray-500",
-  default: "bg-zinc-400",
-  primary: "bg-[var(--mk-palette-bg-brand,#DC2626)]",
-  secondary: "bg-gray-500",
-  destructive: "bg-red-500",
-  outline: "bg-zinc-400",
-};
-
 export interface BadgeProps
-  extends React.HTMLAttributes<HTMLSpanElement>,
+  extends
+    React.HTMLAttributes<HTMLSpanElement>,
     VariantProps<typeof badgeVariants> {
   /** Color tone — compatible with old local Badge */
   tone?: BadgeTone;
@@ -129,16 +86,53 @@ export interface BadgeProps
   pulse?: boolean;
 }
 
-function resolveVariant(variant?: string | null, tone?: BadgeTone): BadgeVariant {
-  if (tone) return TONE_VARIANT_MAP[tone];
+function resolveVariant(
+  variant?: string | null,
+  tone?: BadgeTone
+): BadgeVariant {
+  if (tone) return tone;
   return (variant as BadgeVariant) ?? "neutral";
 }
 
+function getDotColor(variant: BadgeVariant): string {
+  switch (variant) {
+    case "success":
+    case "green":
+      return "bg-emerald-500";
+    case "warning":
+    case "orange":
+    case "amber":
+      return "bg-amber-500";
+    case "error":
+    case "red":
+    case "destructive":
+      return "bg-red-500";
+    case "info":
+    case "blue":
+      return "bg-blue-500";
+    case "brand":
+    case "primary":
+      return "bg-[var(--mk-palette-bg-brand,#DC2626)]";
+    case "purple":
+      return "bg-purple-500";
+    case "pink":
+      return "bg-pink-500";
+    case "gray":
+    case "secondary":
+      return "bg-gray-500";
+    case "neutral":
+    case "default":
+    case "outline":
+      return "bg-zinc-400";
+  }
+}
+
 /**
- * Musakonttori Badge - tag component for displaying status or category.
+ * Musakonttori Badge - compact status indicator.
  *
  * Variants: neutral, success, warning, error, info, brand.
  * Supports `dot` indicator and `pulse` animation.
+ * Use `Chip` for categories, filters and removable values.
  *
  * @example
  * <Badge variant="success">Aktiivinen</Badge>
@@ -156,20 +150,23 @@ export function Badge({
   const resolved = resolveVariant(variant, tone);
 
   return (
-    <span className={cn(badgeVariants({ variant: resolved, className }))} {...props}>
+    <span
+      className={cn(badgeVariants({ variant: resolved, className }))}
+      {...props}
+    >
       {dot && (
         <span className="relative flex h-2 w-2">
           <span
             className={cn(
               "absolute inline-flex h-full w-full rounded-full",
-              dotColorMap[resolved] ?? dotColorMap.neutral,
+              getDotColor(resolved)
             )}
           />
           {pulse && (
             <span
               className={cn(
                 "absolute inline-flex h-full w-full animate-ping rounded-full opacity-75",
-                dotColorMap[resolved] ?? dotColorMap.neutral,
+                getDotColor(resolved)
               )}
             />
           )}
