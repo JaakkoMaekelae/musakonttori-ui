@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback, useState } from "react";
-import { Check, Globe, MapPin, X } from "lucide-react";
+import { Check, Globe, X } from "lucide-react";
 import { cn } from "./utils";
 
 const STORAGE_KEY = "mk-locale-prefs-v2";
@@ -9,7 +9,6 @@ const STORAGE_KEY = "mk-locale-prefs-v2";
 interface LocalePrefs {
   locale: string;
   currency: string;
-  country: string;
 }
 
 function readPrefs(): LocalePrefs | null {
@@ -18,11 +17,7 @@ function readPrefs(): LocalePrefs | null {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    if (
-      typeof parsed.locale === "string" &&
-      typeof parsed.currency === "string" &&
-      typeof parsed.country === "string"
-    ) {
+    if (typeof parsed.locale === "string" && typeof parsed.currency === "string") {
       return parsed;
     }
     return null;
@@ -45,135 +40,180 @@ function detectBrowserCountry(): string {
   const lang = (navigator.language || "").toLowerCase();
   if (lang.startsWith("fi")) return "FI";
   if (lang.startsWith("sv")) return "SE";
-  if (lang.startsWith("de")) return "DE";
-  if (lang.startsWith("fr")) return "FR";
   if (lang.startsWith("da")) return "DK";
   if (lang.startsWith("nb") || lang.startsWith("nn") || lang.startsWith("no")) return "NO";
-  if (lang.startsWith("nl")) return "NL";
+  if (lang.startsWith("de")) {
+    if (lang.includes("ch")) return "CH";
+    if (lang.includes("at")) return "AT";
+    if (lang.includes("lu")) return "LU";
+    if (lang.includes("be")) return "BE";
+    return "DE";
+  }
+  if (lang.startsWith("fr")) {
+    if (lang.includes("ch")) return "CH";
+    if (lang.includes("be")) return "BE";
+    if (lang.includes("lu")) return "LU";
+    return "FR";
+  }
+  if (lang.startsWith("nl")) {
+    if (lang.includes("be")) return "BE";
+    return "NL";
+  }
+  if (lang.startsWith("it")) {
+    if (lang.includes("ch")) return "CH";
+    return "IT";
+  }
   if (lang.startsWith("es")) return "ES";
-  if (lang.startsWith("it")) return "IT";
+  if (lang.startsWith("pt")) return "PT";
+  if (lang.startsWith("pl")) return "PL";
+  if (lang.startsWith("cs")) return "CZ";
+  if (lang.startsWith("hu")) return "HU";
+  if (lang.startsWith("ro")) return "RO";
+  if (lang.startsWith("bg")) return "BG";
+  if (lang.startsWith("hr")) return "HR";
+  if (lang.startsWith("sk")) return "SK";
+  if (lang.startsWith("sl")) return "SI";
+  if (lang.startsWith("et")) return "EE";
+  if (lang.startsWith("lv")) return "LV";
+  if (lang.startsWith("lt")) return "LT";
+  if (lang.startsWith("el")) return "GR";
+  if (lang.startsWith("is")) return "IS";
+  if (lang.startsWith("mt")) return "MT";
+  if (lang.startsWith("ga")) return "IE";
   if (lang.startsWith("en")) {
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-    if (tz.startsWith("Europe/London")) return "GB";
-    if (tz.startsWith("America/") || tz.startsWith("Pacific/")) return "US";
-    if (tz.startsWith("Europe/")) return "FI";
-    return "US";
+    if (lang.includes("ie")) return "IE";
+    if (lang.includes("mt")) return "MT";
+    return "FI";
   }
   return "FI";
 }
 
-const COUNTRY_NAMES: Record<string, string> = {
-  auto: "Automaattinen",
-  FI: "Suomi",
-  GB: "United Kingdom",
-  US: "United States",
-  SE: "Sweden",
-  NO: "Norway",
-  DK: "Denmark",
-  DE: "Germany",
-  FR: "France",
-  NL: "Netherlands",
-  ES: "Spain",
-  IT: "Italy",
+// Languages offered per detected country — native languages + English
+const COUNTRY_LANGUAGES: Record<string, string[]> = {
+  FI: ["fi", "en"],
+  SE: ["sv", "en"],
+  DK: ["da", "en"],
+  NO: ["no", "en"],
+  DE: ["de", "en"],
+  AT: ["de", "en"],
+  CH: ["de", "fr", "it", "en"],
+  FR: ["fr", "en"],
+  BE: ["nl", "fr", "en"],
+  NL: ["nl", "en"],
+  LU: ["fr", "de", "en"],
+  IT: ["it", "en"],
+  ES: ["es", "en"],
+  PT: ["pt", "en"],
+  PL: ["pl", "en"],
+  CZ: ["cs", "en"],
+  HU: ["hu", "en"],
+  RO: ["ro", "en"],
+  BG: ["bg", "en"],
+  HR: ["hr", "en"],
+  SK: ["sk", "en"],
+  SI: ["sl", "en"],
+  EE: ["et", "en"],
+  LV: ["lv", "en"],
+  LT: ["lt", "en"],
+  GR: ["el", "en"],
+  IE: ["en"],
+  MT: ["en"],
+  IS: ["is", "en"],
 };
 
-const LANGUAGES = [
-  { code: "fi", flag: "🇫🇮", name: "Suomi", subtitle: "Selaa suomeksi" },
-  { code: "en", flag: "🇬🇧", name: "English", subtitle: "Browse in English" },
-  { code: "sv", flag: "🇸🇪", name: "Svenska", subtitle: "Bläddra på svenska" },
-] as const;
+// Currency per country
+const COUNTRY_CURRENCY: Record<string, string> = {
+  FI: "EUR", SE: "SEK", DK: "DKK", NO: "NOK", DE: "EUR",
+  AT: "EUR", CH: "CHF", FR: "EUR", BE: "EUR", NL: "EUR",
+  LU: "EUR", IT: "EUR", ES: "EUR", PT: "EUR", PL: "PLN",
+  CZ: "CZK", HU: "HUF", RO: "RON", BG: "BGN", HR: "EUR",
+  SK: "EUR", SI: "EUR", EE: "EUR", LV: "EUR", LT: "EUR",
+  GR: "EUR", IE: "EUR", MT: "EUR", IS: "ISK",
+};
 
-const CURRENCIES = [
-  { code: "EUR", symbol: "€", flag: "🇪🇺", name: "Euro" },
-  { code: "USD", symbol: "$", flag: "🇺🇸", name: "US Dollar" },
-  { code: "GBP", symbol: "£", flag: "🇬🇧", name: "Pound Sterling" },
-  { code: "SEK", symbol: "kr", flag: "🇸🇪", name: "Swedish Krona" },
-  { code: "NOK", symbol: "kr", flag: "🇳🇴", name: "Norwegian Krone" },
-  { code: "DKK", symbol: "kr", flag: "🇩🇰", name: "Danish Krone" },
-] as const;
+// All supported language metadata
+const LANGUAGES_MAP: Record<string, { flag: string; name: string; subtitle: string }> = {
+  fi: { flag: "🇫🇮", name: "Suomi", subtitle: "Selaa suomeksi" },
+  sv: { flag: "🇸🇪", name: "Svenska", subtitle: "Bläddra på svenska" },
+  en: { flag: "🇬🇧", name: "English", subtitle: "Browse in English" },
+  da: { flag: "🇩🇰", name: "Dansk", subtitle: "Gennemse på dansk" },
+  no: { flag: "🇳🇴", name: "Norsk", subtitle: "Bla gjennom på norsk" },
+  de: { flag: "🇩🇪", name: "Deutsch", subtitle: "Auf Deutsch durchsuchen" },
+  fr: { flag: "🇫🇷", name: "Français", subtitle: "Parcourir en français" },
+  nl: { flag: "🇳🇱", name: "Nederlands", subtitle: "Bladeren in het Nederlands" },
+  it: { flag: "🇮🇹", name: "Italiano", subtitle: "Sfoglia in italiano" },
+  es: { flag: "🇪🇸", name: "Español", subtitle: "Navegar en español" },
+  pt: { flag: "🇵🇹", name: "Português", subtitle: "Navegar em português" },
+  pl: { flag: "🇵🇱", name: "Polski", subtitle: "Przeglądaj po polsku" },
+  cs: { flag: "🇨🇿", name: "Čeština", subtitle: "Procházet v češtině" },
+  hu: { flag: "🇭🇺", name: "Magyar", subtitle: "Böngészés magyarul" },
+  ro: { flag: "🇷🇴", name: "Română", subtitle: "Navigați în română" },
+  bg: { flag: "🇧🇬", name: "Български", subtitle: "Разглеждайте на български" },
+  hr: { flag: "🇭🇷", name: "Hrvatski", subtitle: "Pregledavaj na hrvatskom" },
+  sk: { flag: "🇸🇰", name: "Slovenčina", subtitle: "Prehliadať v slovenčine" },
+  sl: { flag: "🇸🇮", name: "Slovenščina", subtitle: "Brskaj v slovenščini" },
+  et: { flag: "🇪🇪", name: "Eesti", subtitle: "Sirvi eesti keeles" },
+  lv: { flag: "🇱🇻", name: "Latviešu", subtitle: "Pārlūkot latviešu valodā" },
+  lt: { flag: "🇱🇹", name: "Lietuvių", subtitle: "Naršyti lietuviškai" },
+  el: { flag: "🇬🇷", name: "Ελληνικά", subtitle: "Περιήγηση στα ελληνικά" },
+  is: { flag: "🇮🇸", name: "Íslenska", subtitle: "Vafra á íslensku" },
+};
 
-const COUNTRIES = [
-  { code: "auto", flag: "", name: "Automaattinen (sijainnin perusteella)", icon: true },
-  { code: "FI", flag: "🇫🇮", name: "Suomi" },
-  { code: "GB", flag: "🇬🇧", name: "United Kingdom" },
-  { code: "US", flag: "🇺🇸", name: "United States" },
-  { code: "SE", flag: "🇸🇪", name: "Sweden" },
-  { code: "NO", flag: "🇳🇴", name: "Norway" },
-  { code: "DK", flag: "🇩🇰", name: "Denmark" },
-  { code: "DE", flag: "🇩🇪", name: "Germany" },
-  { code: "FR", flag: "🇫🇷", name: "France" },
-  { code: "NL", flag: "🇳🇱", name: "Netherlands" },
-  { code: "ES", flag: "🇪🇸", name: "Spain" },
-  { code: "IT", flag: "🇮🇹", name: "Italy" },
-] as const;
+// Currency metadata for the grid
+const CURRENCIES_INFO: Record<string, { symbol: string; flag: string; name: string }> = {
+  EUR: { symbol: "€", flag: "🇪🇺", name: "Euro" },
+  SEK: { symbol: "kr", flag: "🇸🇪", name: "Swedish Krona" },
+  DKK: { symbol: "kr", flag: "🇩🇰", name: "Danish Krone" },
+  NOK: { symbol: "kr", flag: "🇳🇴", name: "Norwegian Krone" },
+  PLN: { symbol: "zł", flag: "🇵🇱", name: "Polish Złoty" },
+  CZK: { symbol: "Kč", flag: "🇨🇿", name: "Czech Koruna" },
+  HUF: { symbol: "Ft", flag: "🇭🇺", name: "Hungarian Forint" },
+  RON: { symbol: "lei", flag: "🇷🇴", name: "Romanian Leu" },
+  BGN: { symbol: "лв", flag: "🇧🇬", name: "Bulgarian Lev" },
+  CHF: { symbol: "CHF", flag: "🇨🇭", name: "Swiss Franc" },
+  ISK: { symbol: "kr", flag: "🇮🇸", name: "Icelandic Króna" },
+};
 
 export interface LocaleSwitcherModalProps {
   open: boolean;
   onClose: () => void;
   currentLocale?: string;
   currentCurrency?: string;
-  currentCountry?: string;
   onLocaleChange?: (locale: string) => void;
   onCurrencyChange?: (currency: string) => void;
-  onCountryChange?: (country: string) => void;
 }
-
-// Reusable light/dark-aware brand color variable.
-// Falls back to #BF2227 when the MUI palette is not injected.
-const BRAND = "var(--mk-palette-primary, #BF2227)";
-const BRAND_BG = "var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))";
-const CHECK_BG = BRAND;
-
-// Neutral surface / text tokens that auto-flip with data-theme or MUI providers
-const SURFACE = "var(--mk-palette-bg-surface, var(--mk-color-surface, #FFFFFF))";
-const SURFACE_MUTED = "var(--mk-palette-bg-surface-secondary, var(--mk-color-surface-secondary, #F4F4F5))";
-const TEXT = "var(--mk-palette-text-primary, #111113)";
-const TEXT_DIM = "var(--mk-palette-text-secondary, #5F6068)";
-const TEXT_MUTED = "var(--mk-palette-text-muted, #9CA3AF)";
-const BORDER = "var(--mk-palette-border-subtle, rgba(128,128,128,0.12))";
-const BORDER_HOVER = "var(--mk-palette-border-default, rgba(128,128,128,0.25))";
-const DIVIDER = "var(--mk-palette-border-subtle, rgba(128,128,128,0.08))";
 
 export function LocaleSwitcherModal({
   open,
   onClose,
   currentLocale = "fi",
   currentCurrency = "EUR",
-  currentCountry = "auto",
   onLocaleChange,
   onCurrencyChange,
-  onCountryChange,
 }: LocaleSwitcherModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [locale, setLocale] = useState(currentLocale);
   const [currency, setCurrency] = useState(currentCurrency);
-  const [country, setCountry] = useState(currentCountry);
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [detectedCountry, setDetectedCountry] = useState("FI");
 
+  // Detect user's country from browser
   useEffect(() => {
-    const d = detectBrowserCountry();
-    setDetectedCountry(d);
+    const c = detectBrowserCountry();
+    setDetectedCountry(c);
   }, []);
 
+  // Load saved prefs on mount
   useEffect(() => {
     const prefs = readPrefs();
     if (prefs) {
       setLocale(prefs.locale);
       setCurrency(prefs.currency);
-      if (prefs.country === "auto") {
-        setCountry("auto");
-        onCountryChange?.(detectedCountry);
-      } else {
-        setCountry(prefs.country);
-      }
-    } else {
-      setCountry("auto");
-      onCountryChange?.(detectedCountry);
     }
-  }, [detectedCountry]);
+  }, []);
 
+  // Animate open/close
   useEffect(() => {
     if (open) {
       setMounted(true);
@@ -198,6 +238,7 @@ export function LocaleSwitcherModal({
     setTimeout(onClose, 250);
   }, [onClose]);
 
+  // Escape key
   useEffect(() => {
     if (!open) return;
     const handleKey = (e: KeyboardEvent) => {
@@ -207,31 +248,32 @@ export function LocaleSwitcherModal({
     return () => document.removeEventListener("keydown", handleKey);
   }, [open, handleClose]);
 
+  // Compute the language and currency options for the detected country
+  const country = detectedCountry;
+  const langCodes = COUNTRY_LANGUAGES[country] || ["fi", "en"];
+  const countryCur = COUNTRY_CURRENCY[country] || "EUR";
+  const currencyCodes: string[] = countryCur === "EUR"
+    ? ["EUR"]
+    : ["EUR", countryCur];
+
+  // Deduplicate languages if needed
+  const uniqueLangCodes = [...new Set(langCodes)];
+
   const handleLocaleChange = (loc: string) => {
     setLocale(loc);
-    const prefs: LocalePrefs = { locale: loc, currency, country };
+    const prefs: LocalePrefs = { locale: loc, currency };
     writePrefs(prefs);
     onLocaleChange?.(loc);
   };
 
   const handleCurrencyChange = (cur: string) => {
     setCurrency(cur);
-    const prefs: LocalePrefs = { locale, currency: cur, country };
+    const prefs: LocalePrefs = { locale, currency: cur };
     writePrefs(prefs);
     onCurrencyChange?.(cur);
   };
 
-  const handleCountryChange = (c: string) => {
-    setCountry(c);
-    const prefs: LocalePrefs = { locale, currency, country: c };
-    writePrefs(prefs);
-    if (c === "auto") {
-      onCountryChange?.(detectedCountry);
-    } else {
-      onCountryChange?.(c);
-    }
-  };
-
+  // Selected/unselected class strings (theme-aware via CSS variable fallbacks)
   const selectedClass = cn(
     "border-[var(--mk-palette-primary,#BF2227)] bg-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.08))] ring-1 ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]"
   );
@@ -259,16 +301,16 @@ export function LocaleSwitcherModal({
         ref={modalRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Kieli-, valuutta- ja maa-asetukset"
+        aria-label="Kieli- ja valuutta-asetukset"
         className={cn(
           "relative my-auto max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl border shadow-2xl backdrop-blur-xl p-6",
           "transition-all duration-300",
           visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"
         )}
         style={{
-          background: `color-mix(in srgb, ${SURFACE}, #0000 5%)`,
-          borderColor: BORDER,
-          color: TEXT,
+          background: `var(--mk-palette-bg-surface, #FFFFFF)`,
+          borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
+          color: `var(--mk-palette-text-primary, #111113)`,
         } as React.CSSProperties}
       >
         {/* Close button */}
@@ -277,7 +319,7 @@ export function LocaleSwitcherModal({
           onClick={handleClose}
           className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
           aria-label="Sulje"
-          style={{ color: TEXT_DIM } as React.CSSProperties}
+          style={{ color: `var(--mk-palette-text-secondary, #5F6068)` } as React.CSSProperties}
         >
           <X className="h-4 w-4" />
         </button>
@@ -286,141 +328,102 @@ export function LocaleSwitcherModal({
         <div className="flex items-center gap-3 mb-6">
           <div
             className="grid h-10 w-10 place-items-center rounded-xl"
-            style={{ background: BRAND_BG } as React.CSSProperties}
+            style={{ background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` } as React.CSSProperties}
           >
-            <Globe className="h-5 w-5" style={{ color: BRAND } as React.CSSProperties} />
+            <Globe className="h-5 w-5" style={{ color: `var(--mk-palette-primary, #BF2227)` } as React.CSSProperties} />
           </div>
           <div>
-            <h2 className="text-lg font-bold" style={{ color: TEXT }}>Alueasetukset</h2>
-            <p className="text-sm" style={{ color: TEXT_DIM }}>Kieli, valuutta ja maa</p>
+            <h2 className="text-lg font-bold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>Alueasetukset</h2>
+            <p className="text-sm" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>Kieli ja valuutta</p>
           </div>
         </div>
 
         {/* Language section */}
         <section className="mb-6">
-          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: TEXT_MUTED }}>
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}>
             Kieli
           </h3>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-            {LANGUAGES.map((lang) => (
-              <button
-                key={lang.code}
-                type="button"
-                onClick={() => handleLocaleChange(lang.code)}
-                className={cn(
-                  "relative flex flex-col items-start gap-0.5 rounded-xl border px-4 py-3 text-left transition-all",
-                  locale === lang.code ? selectedClass : unselectedClass,
-                  locale !== lang.code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"
-                )}
-              >
-                <div className="flex w-full items-center justify-between">
-                  <span className="text-2xl">{lang.flag}</span>
-                  {locale === lang.code && (
-                    <Check className="h-4 w-4 shrink-0" style={{ color: BRAND }} />
+            {uniqueLangCodes.map((code) => {
+              const lang = LANGUAGES_MAP[code];
+              if (!lang) return null;
+              return (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => handleLocaleChange(code)}
+                  className={cn(
+                    "relative flex flex-col items-start gap-0.5 rounded-xl border px-4 py-3 text-left transition-all",
+                    locale === code ? selectedClass : unselectedClass,
+                    locale !== code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"
                   )}
-                </div>
-                <span className="mt-1 text-sm font-semibold" style={{ color: TEXT }}>
-                  {lang.name}
-                </span>
-                <span className="text-[11px]" style={{ color: TEXT_DIM }}>{lang.subtitle}</span>
-              </button>
-            ))}
+                >
+                  <div className="flex w-full items-center justify-between">
+                    <span className="text-2xl">{lang.flag}</span>
+                    {locale === code && (
+                      <Check className="h-4 w-4 shrink-0" style={{ color: `var(--mk-palette-primary, #BF2227)` }} />
+                    )}
+                  </div>
+                  <span className="mt-1 text-sm font-semibold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>
+                    {lang.name}
+                  </span>
+                  <span className="text-[11px]" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>{lang.subtitle}</span>
+                </button>
+              );
+            })}
           </div>
         </section>
 
-        <div className="my-5 h-px" style={{ background: DIVIDER }} />
+        <div className="my-5 h-px" style={{ background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }} />
 
         {/* Currency section */}
         <section className="mb-6">
-          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: TEXT_MUTED }}>
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}>
             Valuutta
           </h3>
-          <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-            {CURRENCIES.map((cur) => (
-              <button
-                key={cur.code}
-                type="button"
-                onClick={() => handleCurrencyChange(cur.code)}
-                className={cn(
-                  "relative flex flex-col items-center gap-1 rounded-xl border px-2 py-3 transition-all",
-                  currency === cur.code ? selectedClass : unselectedClass,
-                  currency !== cur.code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"
-                )}
-              >
-                <span className="text-xl font-bold" style={{ color: TEXT }}>{cur.symbol}</span>
-                <span className="text-[11px] font-medium" style={{ color: TEXT_DIM }}>{cur.code}</span>
-                <span className="text-xs">{cur.flag}</span>
-                {currency === cur.code && (
-                  <div className="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full" style={{ background: CHECK_BG }}>
-                    <Check className="h-2.5 w-2.5 text-white" />
-                  </div>
-                )}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <div className="my-5 h-px" style={{ background: DIVIDER }} />
-
-        {/* Country section */}
-        <section className="mb-6">
-          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: TEXT_MUTED }}>
-            Maa
-          </h3>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {COUNTRIES.map((c) => (
-              <button
-                key={c.code}
-                type="button"
-                onClick={() => handleCountryChange(c.code)}
-                className={cn(
-                  "flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left transition-all",
-                  country === c.code ? selectedClass : unselectedClass,
-                  country !== c.code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"
-                )}
-              >
-                {c.code === "auto" ? (
-                  <MapPin className="h-4 w-4 shrink-0" style={{ color: BRAND }} />
-                ) : (
-                  <span className="text-base">{c.flag}</span>
-                )}
-                <div className="min-w-0">
-                  <span className="text-sm font-medium truncate block" style={{ color: TEXT }}>
-                    {c.code === "auto"
-                      ? `Automaattinen \u2014 ${COUNTRY_NAMES[detectedCountry]}`
-                      : c.name}
-                  </span>
-                  {c.code === "auto" && country === "auto" && (
-                    <span className="text-[10px]" style={{ color: TEXT_MUTED }}>Sijaintisi perusteella</span>
+            {currencyCodes.map((code) => {
+              const cur = CURRENCIES_INFO[code];
+              if (!cur) return null;
+              return (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => handleCurrencyChange(code)}
+                  className={cn(
+                    "relative flex flex-col items-center gap-1 rounded-xl border px-2 py-3 transition-all",
+                    currency === code ? selectedClass : unselectedClass,
+                    currency !== code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"
                   )}
-                </div>
-              </button>
-            ))}
+                >
+                  <span className="text-xl font-bold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>{cur.symbol}</span>
+                  <span className="text-[11px] font-medium" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>{code}</span>
+                  <span className="text-xs">{cur.flag}</span>
+                  {currency === code && (
+                    <div className="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full" style={{ background: `var(--mk-palette-primary, #BF2227)` }}>
+                      <Check className="h-2.5 w-2.5 text-white" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </section>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-4" style={{ borderTop: `1px solid ${DIVIDER}` }}>
-          <p className="text-xs" style={{ color: TEXT_MUTED }}>
+        <div className="flex items-center justify-between pt-4" style={{ borderTop: `1px solid var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }}>
+          <p className="text-xs" style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}>
             Asetukset tallennetaan selaimeen
           </p>
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur transition"
+            className="rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur transition hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))] hover:text-[var(--mk-palette-text-primary,#111113)]"
             style={{
-              borderColor: BORDER,
-              background: SURFACE_MUTED,
-              color: TEXT_DIM,
-            }}
-            onMouseEnter={(e) => {
-              (e.target as HTMLButtonElement).style.borderColor = BORDER_HOVER;
-              (e.target as HTMLButtonElement).style.color = TEXT;
-            }}
-            onMouseLeave={(e) => {
-              (e.target as HTMLButtonElement).style.borderColor = BORDER;
-              (e.target as HTMLButtonElement).style.color = TEXT_DIM;
-            }}
+              borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
+              background: `var(--mk-palette-bg-surface-secondary, #F4F4F5)`,
+              color: `var(--mk-palette-text-secondary, #5F6068)`,
+            } as React.CSSProperties}
           >
             Sulje
           </button>
