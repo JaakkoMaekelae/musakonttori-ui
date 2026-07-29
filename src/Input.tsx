@@ -71,8 +71,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             defaultValue={defaultValue}
             className={cn(
               "h-10 w-full rounded-lg border bg-[var(--mk-palette-bg,#FFFFFF)] px-3 text-sm text-[var(--mk-palette-text-primary,#111113)] placeholder:text-[var(--mk-palette-text-tertiary,#6B7280)] transition-colors",
-              "border-[var(--mk-palette-border-default,rgba(128,128,128,0.2))]",
-              "hover:border-[var(--mk-palette-border-hover,rgba(128,128,128,0.35))]",
+              "border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.12))]",
+              "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]",
               "focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-bg-brand,#DC2626)] focus:border-transparent",
               "disabled:opacity-50 disabled:cursor-not-allowed",
               error && "border-red-500 focus:ring-red-500",
