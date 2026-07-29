@@ -2,11 +2,12 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "./utils";
-const cardVariants = cva("rounded-2xl border border-[var(--mk-palette-border-subtle,var(--mk-color-border-subtle,rgba(128,128,128,0.15)))] transition-shadow", {
+const cardVariants = cva("rounded-2xl transition-shadow", {
     variants: {
         variant: {
             default: "bg-[var(--mk-palette-bg-surface,var(--mk-color-surface,#FFFFFF))] shadow-sm",
             elevated: "bg-[var(--mk-palette-bg-surface,var(--mk-color-surface,#FFFFFF))] shadow-lg hover:shadow-xl",
+            bordered: "border border-[var(--mk-palette-border-subtle,var(--mk-color-border-subtle,rgba(128,128,128,0.15)))] bg-[var(--mk-palette-bg-surface,var(--mk-color-surface,#FFFFFF))] shadow-sm",
         },
     },
     defaultVariants: {

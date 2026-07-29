@@ -1,6 +1,6 @@
 import { type VariantProps } from "class-variance-authority";
 declare const cardVariants: (props?: ({
-    variant?: "default" | "elevated" | null | undefined;
+    variant?: "default" | "elevated" | "bordered" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
     size?: "sm" | "md" | "lg";
