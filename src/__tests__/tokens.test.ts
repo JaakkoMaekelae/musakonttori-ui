@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { brand, dark, light, tokensCss } from "../tokens";
 
 describe("tokens", () => {
@@ -50,5 +52,12 @@ describe("tokens", () => {
     // Dark borders are alpha-based so they read correctly over any surface.
     expect(dark.border.subtle.startsWith("rgba")).toBe(true);
     expect(dark.border.default.startsWith("rgba")).toBe(true);
+  });
+
+  it("does not override the light token base with a dark :root block", () => {
+    const globalsCss = readFileSync(resolve("src/globals.css"), "utf8");
+
+    expect(globalsCss).not.toMatch(/:root,\s*\[data-theme=["']dark["']\]/);
+    expect(globalsCss).toContain('@import "./tokens.css"');
   });
 });

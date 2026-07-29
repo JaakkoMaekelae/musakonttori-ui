@@ -156,6 +156,14 @@
     "./sign-in-layout": {
       "import": "./dist/SignInLayout.js",
       "types": "./dist/SignInLayout.d.ts"
+    },
+    "./app-header": {
+      "import": "./dist/AppHeader.js",
+      "types": "./dist/AppHeader.d.ts"
+    },
+    "./app-footer": {
+      "import": "./dist/AppFooter.js",
+      "types": "./dist/AppFooter.d.ts"
     }
   },
   "files": [

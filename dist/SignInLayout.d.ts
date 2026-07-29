@@ -24,6 +24,10 @@ export interface SignInLayoutProps {
     formSubtitle: string;
     formDescription: string;
     onSignIn: (email: string, password: string) => Promise<void>;
+    authMode?: "credentials" | "clerk";
+    clerkSignInUrl?: string;
+    accountsUrl?: string;
+    accountsFrom?: string;
     registerHref: string;
     registerLabel: string;
     registerTitle: string;
@@ -44,5 +48,5 @@ export interface SignInLayoutProps {
  * Consumer passes all strings, icons, and the auth handler — this component
  * owns zero product-specific copy or logic.
  */
-export declare function SignInLayout({ productName, productTagline, brandEyebrow, brandTitle, brandTitleAccent, brandDescription, benefits, previewTitle, previewValue, previewStatus, previewOrderName, previewOrderId, previewOrderStatus, previewOrderAmount, formTitle, formSubtitle, formDescription, onSignIn, registerHref, registerLabel, registerTitle, registerDescription, backHref, backLabel, securityNote, errorMessage, className, }: SignInLayoutProps): import("react").JSX.Element;
+export declare function SignInLayout({ productName, productTagline, brandEyebrow, brandTitle, brandTitleAccent, brandDescription, benefits, previewTitle, previewValue, previewStatus, previewOrderName, previewOrderId, previewOrderStatus, previewOrderAmount, formTitle, formSubtitle, formDescription, onSignIn, accountsUrl, accountsFrom, registerHref, registerLabel, registerTitle, registerDescription, backHref, backLabel, securityNote, errorMessage, className, }: SignInLayoutProps): import("react").JSX.Element;
 //# sourceMappingURL=SignInLayout.d.ts.map

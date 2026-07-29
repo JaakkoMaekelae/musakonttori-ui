@@ -39,3 +39,5 @@ export { PageSkeleton } from "./PageSkeleton";
 export { MarketSwitcher } from "./MarketSwitcher";
 export { MARKETS, MARKET_CURRENCIES, APP_LOCALES, getMarketByCountry, getMarketByLocale, getLocaleForCountry, getCurrencyForCountry, COUNTRY_COOKIE, LOCALE_COOKIE, CURRENCY_COOKIE, } from "./markets";
 export { applyGeoDetection } from "./geoDetection";
+export { AppHeader } from "./AppHeader";
+export { AppFooter } from "./AppFooter";

@@ -37,6 +37,14 @@ export interface SignInLayoutProps {
   formDescription: string;
   onSignIn: (email: string, password: string) => Promise<void>;
 
+  /* --- Clerk satellite mode --- */
+  authMode?: "credentials" | "clerk";
+  clerkSignInUrl?: string;
+
+  /* --- Centralized accounts redirect --- */
+  accountsUrl?: string;
+  accountsFrom?: string;
+
   /* --- Registration --- */
   registerHref: string;
   registerLabel: string;
@@ -165,6 +173,8 @@ export function SignInLayout({
   formSubtitle,
   formDescription,
   onSignIn,
+  accountsUrl,
+  accountsFrom,
   registerHref,
   registerLabel,
   registerTitle,
@@ -382,6 +392,37 @@ export function SignInLayout({
                 {formDescription}
               </p>
             </div>
+
+            {/* Accounts redirect */}
+            {accountsUrl && accountsFrom ? (
+              <div className="mt-8">
+                <a
+                  href={`${accountsUrl}/sign-in?from=${accountsFrom}`}
+                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 font-semibold text-sm transition-colors duration-[160ms] ease-in-out"
+                  style={{
+                    borderColor: `color-mix(in srgb, ${primary} 55%, transparent)`,
+                    background: `color-mix(in srgb, ${primary} 12%, transparent)`,
+                    color: primary,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = `color-mix(in srgb, ${primary} 24%, transparent)`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = `color-mix(in srgb, ${primary} 12%, transparent)`;
+                  }}
+                >
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3" />
+                  </svg>
+                  Kirjaudu Musakonttori-tunnuksella
+                </a>
+                <div className="flex items-center gap-3 my-5">
+                  <div className="flex-1 h-px" style={{ background: "var(--mk-palette-border-subtle, rgba(255,255,255,0.08))" }} />
+                  <span className="text-xs" style={{ color: "var(--mk-palette-text-tertiary, #7E8292)" }}>tai</span>
+                  <div className="flex-1 h-px" style={{ background: "var(--mk-palette-border-subtle, rgba(255,255,255,0.08))" }} />
+                </div>
+              </div>
+            ) : null}
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="mt-9 grid gap-[21px]">

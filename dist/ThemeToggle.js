@@ -4,37 +4,41 @@ import { useState, useEffect, useCallback } from "react";
 import { Moon, Sun } from "lucide-react";
 import { cn } from "./utils";
 const STORAGE_KEY = "mk-mode";
-function applyTheme(dark) {
+function applyTheme(theme) {
     const el = document.documentElement;
-    if (dark) {
-        el.classList.remove("light");
-        el.classList.add("dark");
-    }
-    else {
-        el.classList.add("light");
-        el.classList.remove("dark");
-    }
-    localStorage.setItem(STORAGE_KEY, dark ? "dark" : "light");
-    document.cookie = `mk-mode=${dark ? "dark" : "light"}; path=/; max-age=31536000; SameSite=Lax`;
+    const dark = theme === "dark";
+    el.classList.toggle("dark", dark);
+    el.classList.toggle("light", !dark);
+    el.setAttribute("data-theme", theme);
+    el.style.colorScheme = theme;
+    localStorage.setItem(STORAGE_KEY, theme);
+    document.cookie = `mk-mode=${theme}; path=/; max-age=31536000; SameSite=Lax`;
+}
+function getInitialTheme() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === "light" || stored === "dark")
+        return stored;
+    const root = document.documentElement;
+    const rootTheme = root.getAttribute("data-theme");
+    if (rootTheme === "light" || rootTheme === "dark")
+        return rootTheme;
+    if (root.classList.contains("dark"))
+        return "dark";
+    return "light";
 }
 export function ThemeToggle({ className }) {
-    const [dark, setDark] = useState(true);
+    const [dark, setDark] = useState(false);
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
+        const initial = getInitialTheme();
+        setDark(initial === "dark");
+        applyTheme(initial);
         setMounted(true);
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored === "light") {
-            setDark(false);
-            applyTheme(false);
-        }
-        else {
-            applyTheme(true);
-        }
     }, []);
     const toggle = useCallback(() => {
         const next = !dark;
         setDark(next);
-        applyTheme(next);
+        applyTheme(next ? "dark" : "light");
     }, [dark]);
     if (!mounted) {
         return _jsx("div", { className: cn("h-9 w-9 rounded-lg", className) });

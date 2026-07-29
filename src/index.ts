@@ -221,3 +221,5 @@ export {
   type Market,
 } from "./markets";
 export { applyGeoDetection } from "./geoDetection";
+export { AppHeader, type AppHeaderProps } from "./AppHeader";
+export { AppFooter, type AppFooterProps, type AppFooterLinkGroup } from "./AppFooter";
