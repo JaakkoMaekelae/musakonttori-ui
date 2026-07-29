@@ -93,7 +93,10 @@
       "import": "./dist/tokens.js",
       "types": "./dist/tokens.d.ts"
     },
-    "./tokens.css": "./dist/tokens.css",
+    "./tokens.css": {
+      "style": "./dist/tokens.css",
+      "default": "./dist/tokens.css"
+    },
     "./admin-shell": {
       "import": "./dist/AdminShell.js",
       "types": "./dist/AdminShell.d.ts"
@@ -133,6 +136,26 @@
     "./stat-tile": {
       "import": "./dist/StatTile.js",
       "types": "./dist/StatTile.d.ts"
+    },
+    "./wizard-stepper": {
+      "import": "./dist/WizardStepper.js",
+      "types": "./dist/WizardStepper.d.ts"
+    },
+    "./admin-form-layout": {
+      "import": "./dist/AdminFormLayout.js",
+      "types": "./dist/AdminFormLayout.d.ts"
+    },
+    "./admin-report-layout": {
+      "import": "./dist/AdminReportLayout.js",
+      "types": "./dist/AdminReportLayout.d.ts"
+    },
+    "./admin-log-stream": {
+      "import": "./dist/AdminLogStream.js",
+      "types": "./dist/AdminLogStream.d.ts"
+    },
+    "./sign-in-layout": {
+      "import": "./dist/SignInLayout.js",
+      "types": "./dist/SignInLayout.d.ts"
     }
   },
   "files": [

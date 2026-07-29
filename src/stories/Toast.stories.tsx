@@ -50,37 +50,41 @@ export const Default: Story = {
 
 export const Success: Story = {
   render: () => (
-    <ToastProvider richColors closeButton>
+    <>
+      <ToastProvider richColors closeButton />
       <Button variant="default" onClick={() => toast.success("Data saved successfully!")}>
         Trigger Success
       </Button>
-    </ToastProvider>
+    </>
   ),
 };
 
 export const Error: Story = {
   render: () => (
-    <ToastProvider richColors closeButton>
+    <>
+      <ToastProvider richColors closeButton />
       <Button variant="destructive" onClick={() => toast.error("Could not save changes. Please try again.")}>
         Trigger Error
       </Button>
-    </ToastProvider>
+    </>
   ),
 };
 
 export const Info: Story = {
   render: () => (
-    <ToastProvider richColors closeButton>
+    <>
+      <ToastProvider richColors closeButton />
       <Button variant="secondary" onClick={() => toast.info("A new version is available.")}>
         Trigger Info
       </Button>
-    </ToastProvider>
+    </>
   ),
 };
 
 export const WithAction: Story = {
   render: () => (
-    <ToastProvider richColors closeButton>
+    <>
+      <ToastProvider richColors closeButton />
       <Button
         variant="outline"
         onClick={() =>
@@ -92,7 +96,7 @@ export const WithAction: Story = {
       >
         Trigger with action
       </Button>
-    </ToastProvider>
+    </>
   ),
 };
 

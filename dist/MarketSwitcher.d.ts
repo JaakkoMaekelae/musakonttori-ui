@@ -27,6 +27,6 @@ interface MarketSwitcherProps {
  * Language changes trigger a full page reload to the new locale path.
  * Cookie hydration happens in useEffect — no SSR mismatch.
  */
-export declare function MarketSwitcher({ defaultCountry, defaultLocale, defaultCurrency, onCountryChange, onLocaleChange, onCurrencyChange, size, className, }: MarketSwitcherProps): import("react").JSX.Element | null;
+export declare function MarketSwitcher({ defaultCountry, defaultLocale, defaultCurrency, onCountryChange, onLocaleChange, onCurrencyChange, size, className, }: MarketSwitcherProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=MarketSwitcher.d.ts.map

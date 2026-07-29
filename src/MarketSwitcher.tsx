@@ -61,7 +61,6 @@ export function MarketSwitcher({
   const [locale, setLocale] = useState(defaultLocale);
   const [currency, setCurrency] = useState(defaultCurrency);
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   // Hydrate from cookies on mount (client-only)
   useEffect(() => {
@@ -71,7 +70,6 @@ export function MarketSwitcher({
     if (c) setCountry(c);
     if (l) setLocale(l);
     if (cur) setCurrency(cur);
-    setMounted(true);
   }, []);
 
   const current = MARKETS.find((m) => m.country === country) ?? (MARKETS[0] as CountryMarket);
@@ -130,12 +128,6 @@ export function MarketSwitcher({
   };
 
   const isSm = size === "sm";
-
-  // Don't render until client-mounted to avoid hydration mismatch
-  if (!mounted && typeof window !== "undefined") {
-    // Small delay for mounting — show nothing briefly
-    return null;
-  }
 
   return (
     <div className={cn("relative", className)}>
