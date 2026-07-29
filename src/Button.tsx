@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-bg-brand,#DC2626)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--mk-palette-bg,#0D0F17)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-bg-brand,#DC2626)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--mk-palette-bg,#FFFFFF)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4",
   {
     variants: {
       variant: {
@@ -13,11 +13,11 @@ const buttonVariants = cva(
         default:
           "bg-[var(--mk-palette-bg-brand,#DC2626)] text-white hover:bg-[var(--mk-palette-bg-brand-hover,#B91C1C)] active:bg-[var(--mk-palette-bg-brand-active,#991B1B)]",
         secondary:
-          "bg-[var(--mk-palette-bg-surface,#1E2130)] text-[var(--mk-palette-text-primary,#F0F0F3)] border border-[var(--mk-palette-border-default,rgba(255,255,255,0.12))] hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)]",
+          "bg-[var(--mk-palette-bg-surface,#F4F4F5)] text-[var(--mk-palette-text-primary,#111113)] border border-[var(--mk-palette-border-default,rgba(128,128,128,0.2))] hover:bg-[var(--mk-palette-bg-surface-hover,#E5E5E8)]",
         outline:
-          "border border-[var(--mk-palette-border-default,rgba(255,255,255,0.12))] text-[var(--mk-palette-text-primary,#F0F0F3)] bg-transparent hover:bg-[var(--mk-palette-bg-surface,#1E2130)]",
+          "border border-[var(--mk-palette-border-default,rgba(128,128,128,0.2))] text-[var(--mk-palette-text-primary,#111113)] bg-transparent hover:bg-[var(--mk-palette-bg-surface,#F4F4F5)]",
         ghost:
-          "text-[var(--mk-palette-text-secondary,#B0B3C1)] bg-transparent hover:text-[var(--mk-palette-text-primary,#F0F0F3)] hover:bg-[var(--mk-palette-bg-surface,#1E2130)]",
+          "text-[var(--mk-palette-text-secondary,#5F6068)] bg-transparent hover:text-[var(--mk-palette-text-primary,#111113)] hover:bg-[var(--mk-palette-bg-surface,#F4F4F5)]",
         destructive:
           "bg-red-600 text-white hover:bg-red-700 active:bg-red-800",
       },
