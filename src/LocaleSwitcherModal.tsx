@@ -327,7 +327,7 @@ export function LocaleSwitcherModal({
         <button
           type="button"
           onClick={handleClose}
-          className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
+          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
           aria-label="Sulje"
           style={{ color: `var(--mk-palette-text-secondary, #5F6068)` } as React.CSSProperties}
         >
@@ -337,7 +337,7 @@ export function LocaleSwitcherModal({
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
           <div
-            className="grid h-10 w-10 place-items-center rounded-xl"
+            className="flex h-10 w-10 items-center justify-center rounded-xl"
             style={{ background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` } as React.CSSProperties}
           >
             <Globe className="h-5 w-5" style={{ color: `var(--mk-palette-primary, #BF2227)` } as React.CSSProperties} />
