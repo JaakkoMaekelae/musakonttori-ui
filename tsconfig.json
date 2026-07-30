@@ -23,7 +23,8 @@
     "isolatedModules": true,
     "incremental": true,
     "types": [
-      "vitest/globals"
+      "vitest/globals",
+      "node"
     ]
   },
   "include": [

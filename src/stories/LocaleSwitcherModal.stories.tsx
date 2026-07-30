@@ -5,9 +5,6 @@ import { Button } from "../Button";
 
 const LocaleSwitcherDemo = () => {
   const [open, setOpen] = useState(false);
-  const lastLocale = "fi";
-  const lastCurrency = "EUR";
-  const lastCountry = "auto";
 
   return (
     <>
@@ -15,9 +12,8 @@ const LocaleSwitcherDemo = () => {
       <LocaleSwitcherModal
         open={open}
         onClose={() => setOpen(false)}
-        onLocaleChange={(loc) => console.log("locale →", loc)}
-        onCurrencyChange={(cur) => console.log("currency →", cur)}
-        onCountryChange={(c) => console.log("country →", c)}
+        onLocaleChange={(loc: string) => console.log("locale →", loc)}
+        onCurrencyChange={(cur: string) => console.log("currency →", cur)}
       />
     </>
   );
@@ -46,7 +42,6 @@ export const Preselected: Story = {
           onClose={() => setOpen(false)}
           currentLocale="en"
           currentCurrency="USD"
-          currentCountry="US"
         />
       );
     };

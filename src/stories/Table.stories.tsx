@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DataTable, Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell } from "../Table";
-import { EmptyState } from "../EmptyState";
 
 const meta: Meta<typeof DataTable> = {
   title: "UI/Table",

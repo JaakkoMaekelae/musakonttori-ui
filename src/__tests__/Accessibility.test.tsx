@@ -7,7 +7,6 @@ import { Modal } from "../Modal";
 import { Alert } from "../Alert";
 import { Spinner } from "../Spinner";
 import { FormField } from "../FormField";
-import { EmptyState } from "../EmptyState";
 import { Skeleton } from "../Skeleton";
 
 describe("Accessibility: semantic roles", () => {

@@ -3,18 +3,12 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DataTable, Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell } from "../Table";
 
-interface TestRow {
-  id: string;
-  name: string;
-  email: string;
-}
-
 const columns = [
   { key: "name", header: "Nimi" },
   { key: "email", header: "Sähköposti" },
 ];
 
-const data: TestRow[] = [
+const data: Record<string, unknown>[] = [
   { id: "1", name: "Matti Meikäläinen", email: "matti@example.com" },
   { id: "2", name: "Maija Malli", email: "maija@example.com" },
 ];
@@ -129,7 +123,7 @@ describe("DataTable", () => {
   it("renders custom cell content via render function", () => {
     const cols = [
       { key: "name", header: "Nimi" },
-      { key: "status", header: "Tila", render: (row: TestRow) => <span data-testid="custom-cell">{row.name}-active</span> },
+      { key: "status", header: "Tila", render: (row: Record<string, unknown>) => <span data-testid="custom-cell">{row.name as string}-active</span> },
     ];
     render(<DataTable columns={cols} data={data} />);
     expect(screen.getAllByTestId("custom-cell")).toHaveLength(2);
