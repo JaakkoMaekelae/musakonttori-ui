@@ -287,7 +287,7 @@ export function LocaleSwitcherModal({
   return createPortal(
     <div
       className={cn(
-        "fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto p-4 transition-all duration-300",
+        "fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto p-4 transition-all duration-300",
         visible ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
     >
