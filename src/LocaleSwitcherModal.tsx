@@ -287,9 +287,10 @@ export function LocaleSwitcherModal({
   return createPortal(
     <div
       className={cn(
-        "fixed inset-0 z-[9999] transition-all duration-300",
+        "fixed inset-0 z-[9999]",
         visible ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
+      style={{ transition: "opacity 300ms" }}
     >
       {/* Backdrop */}
       <div
