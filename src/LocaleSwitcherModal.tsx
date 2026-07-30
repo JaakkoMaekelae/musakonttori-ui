@@ -287,33 +287,35 @@ export function LocaleSwitcherModal({
   return createPortal(
     <div
       className={cn(
-        "fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto p-4 transition-all duration-300",
+        "fixed inset-0 z-[9999] transition-all duration-300",
         visible ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
     >
-      {/* Backdrop — always dark, standard modal pattern */}
+      {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={handleClose}
         aria-hidden="true"
       />
 
-      <div
-        ref={modalRef}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Kieli- ja valuutta-asetukset"
-        className={cn(
-          "relative my-auto max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl border shadow-2xl backdrop-blur-xl p-6",
-          "transition-all duration-300",
-          visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"
-        )}
-        style={{
-          background: `var(--mk-palette-bg-surface, #FFFFFF)`,
-          borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
-          color: `var(--mk-palette-text-primary, #111113)`,
-        } as React.CSSProperties}
-      >
+      {/* Modal panel */}
+      <div className="absolute inset-0 flex items-center justify-center p-4">
+        <div
+          ref={modalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Kieli- ja valuutta-asetukset"
+          className={cn(
+            "w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6",
+            "transition-all duration-300",
+            visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"
+          )}
+          style={{
+            background: `var(--mk-palette-bg-surface, #FFFFFF)`,
+            borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
+            color: `var(--mk-palette-text-primary, #111113)`,
+          } as React.CSSProperties}
+        >
         {/* Close button */}
         <button
           type="button"
@@ -432,6 +434,7 @@ export function LocaleSwitcherModal({
           >
             Sulje
           </button>
+        </div>
         </div>
       </div>
     </div>,
