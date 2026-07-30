@@ -313,7 +313,7 @@ export function LocaleSwitcherModal({
           aria-modal="true"
           aria-label="Kieli- ja valuutta-asetukset"
           className={cn(
-            "w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6",
+            "relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6",
             "transition-all duration-300",
             visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"
           )}
