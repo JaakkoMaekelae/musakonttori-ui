@@ -286,11 +286,17 @@ export function LocaleSwitcherModal({
 
   return createPortal(
     <div
-      className={cn(
-        "fixed inset-0 z-[9999]",
-        visible ? "opacity-100" : "opacity-0 pointer-events-none"
-      )}
-      style={{ transition: "opacity 300ms" }}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 2147483647,
+        opacity: visible ? 1 : 0,
+        pointerEvents: visible ? "auto" : "none",
+        transition: "opacity 300ms",
+      }}
     >
       {/* Backdrop */}
       <div
