@@ -1,3 +1,4 @@
+'use client';
 export { Button, buttonVariants } from "./Button";
 export { Badge } from "./Badge";
 export { Chip, chipVariants, } from "./Chip";

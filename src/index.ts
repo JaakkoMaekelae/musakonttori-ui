@@ -1,3 +1,5 @@
+'use client';
+
 export { Button, type ButtonProps, buttonVariants } from "./Button";
 export { Badge, type BadgeProps, type BadgeTone } from "./Badge";
 export {
