@@ -175,6 +175,14 @@
     "./app-footer": {
       "import": "./dist/AppFooter.js",
       "types": "./dist/AppFooter.d.ts"
+    },
+    "./markets": {
+      "import": "./src/markets.ts",
+      "types": "./src/markets.ts"
+    },
+    "./geoDetection": {
+      "import": "./src/geoDetection.ts",
+      "types": "./src/geoDetection.ts"
     }
   },
   "files": [
