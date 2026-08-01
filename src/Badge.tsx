@@ -74,6 +74,41 @@ const badgeVariants = cva(
   }
 );
 
+/**
+ * Light-surface overrides.
+ *
+ * The variants above are dark-first: translucent fills with 400-weight text,
+ * which reads correctly on a dark canvas and washes out on a white one. That
+ * is why light-themed admin sections ended up hand-rolling their own badge
+ * instead of using this component.
+ *
+ * `surface="light"` swaps in solid tints with 700/800-weight ink. It is opt-in,
+ * so every existing consumer keeps exactly the badge it has today.
+ */
+const LIGHT_SURFACE: Record<string, string> = {
+  neutral: "bg-zinc-100 text-zinc-700 border-zinc-200",
+  default: "bg-zinc-100 text-zinc-700 border-zinc-200",
+  success: "bg-emerald-100 text-emerald-700 border-emerald-200",
+  warning: "bg-amber-100 text-amber-800 border-amber-200",
+  error: "bg-red-100 text-red-800 border-red-200",
+  destructive: "bg-red-100 text-red-800 border-red-200",
+  red: "bg-red-100 text-red-800 border-red-200",
+  info: "bg-blue-100 text-blue-700 border-blue-200",
+  blue: "bg-blue-100 text-blue-700 border-blue-200",
+  brand:
+    "bg-[var(--mk-palette-accent-primary,#DC2626)]/10 text-[var(--mk-palette-accent-primary,#DC2626)] border-[var(--mk-palette-accent-primary,#DC2626)]/25",
+  primary:
+    "bg-[var(--mk-palette-accent-primary,#DC2626)]/10 text-[var(--mk-palette-accent-primary,#DC2626)] border-[var(--mk-palette-accent-primary,#DC2626)]/25",
+  purple: "bg-purple-100 text-purple-700 border-purple-200",
+  green: "bg-green-100 text-green-700 border-green-200",
+  orange: "bg-orange-100 text-orange-800 border-orange-200",
+  amber: "bg-amber-100 text-amber-800 border-amber-200",
+  pink: "bg-pink-100 text-pink-700 border-pink-200",
+  gray: "bg-gray-100 text-gray-700 border-gray-200",
+  secondary: "bg-gray-100 text-gray-700 border-gray-200",
+  outline: "border-zinc-300 bg-transparent text-zinc-700",
+};
+
 export interface BadgeProps
   extends
     React.HTMLAttributes<HTMLSpanElement>,
@@ -84,6 +119,11 @@ export interface BadgeProps
   dot?: boolean;
   /** Show pulse animation on dot */
   pulse?: boolean;
+  /**
+   * Which background the badge sits on. Defaults to "dark", which is what
+   * every current consumer already renders — light-themed sections opt in.
+   */
+  surface?: "dark" | "light";
 }
 
 function resolveVariant(
@@ -143,15 +183,27 @@ export function Badge({
   tone,
   dot = false,
   pulse = false,
+  surface = "dark",
   className,
   children,
   ...props
 }: BadgeProps) {
   const resolved = resolveVariant(variant, tone);
+  // On a light surface the variant's own colours are replaced outright rather
+  // than layered, so the dark fill cannot bleed through.
+  const surfaceClass = surface === "light" ? LIGHT_SURFACE[resolved] : undefined;
 
   return (
     <span
-      className={cn(badgeVariants({ variant: resolved, className }))}
+      className={
+        surfaceClass
+          ? cn(
+              "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors",
+              surfaceClass,
+              className
+            )
+          : cn(badgeVariants({ variant: resolved, className }))
+      }
       {...props}
     >
       {dot && (

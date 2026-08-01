@@ -53,3 +53,36 @@ describe("Badge", () => {
     expect(badge.className).toContain("bg-[var(--mk-palette-bg-surface");
   });
 });
+
+describe("Badge surface", () => {
+  it("keeps the dark treatment by default", () => {
+    // Every existing consumer relies on this; the light surface is opt-in.
+    render(<Badge tone="success">Aktiivinen</Badge>);
+    expect(screen.getByText("Aktiivinen").className).toContain("text-emerald-400");
+  });
+
+  it("uses solid tints and dark ink on a light surface", () => {
+    // The dark variants are translucent fills with 400-weight text, which wash
+    // out on white — the reason light admin sections hand-rolled their own.
+    render(
+      <Badge tone="success" surface="light">
+        Aktiivinen
+      </Badge>,
+    );
+    const cls = screen.getByText("Aktiivinen").className;
+    expect(cls).toContain("bg-emerald-100");
+    expect(cls).toContain("text-emerald-700");
+    expect(cls).not.toContain("text-emerald-400");
+  });
+
+  it("does not let the dark fill bleed through on a light surface", () => {
+    render(
+      <Badge tone="neutral" surface="light">
+        Luonnos
+      </Badge>,
+    );
+    const cls = screen.getByText("Luonnos").className;
+    expect(cls).toContain("bg-zinc-100");
+    expect(cls).not.toContain("--mk-palette-bg-surface");
+  });
+});
