@@ -5,7 +5,7 @@ export { Avatar, AvatarGroup, type AvatarProps, type AvatarGroupProps, type Avat
 export { Input, type InputProps } from "./Input";
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, type CardProps, type CardHeaderProps, type CardTitleProps, type CardDescriptionProps, type CardContentProps, type CardFooterProps, } from "./Card";
 export { Dialog, DialogTrigger, DialogClose, DialogPortal, DialogOverlay, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, type DialogContentProps, type DialogHeaderProps, type DialogTitleProps, type DialogDescriptionProps, type DialogFooterProps, } from "./Dialog";
-export { Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell, DataTable, type DataTableProps, type DataTableColumn, } from "./Table";
+export { Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell, DataTable, type TableSurface, type DataTableProps, type DataTableColumn, } from "./Table";
 export { Select, SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectItem, type SelectProps, type SelectTriggerProps, type SelectContentProps, type SelectItemProps, } from "./Select";
 export { Skeleton, TableSkeleton, type SkeletonProps, type TableSkeletonProps, } from "./Skeleton";
 export { ToastProvider, toast } from "./Toast";

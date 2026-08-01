@@ -1,12 +1,56 @@
-import type { ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import { cn } from "./utils";
 
+export type TableSurface = "dark" | "light";
+
+/**
+ * Which background the table sits on.
+ *
+ * The styles below are dark-first — they read their colours from
+ * `--mk-palette-*`, whose fallbacks are dark. That is correct on a dark canvas
+ * and wrong on a light one: several admin sections hardcode a white background
+ * while the document still carries `data-theme="dark"`, so the tokens resolve
+ * to near-white ink on white. That mismatch is why those sections kept their
+ * own copy of this component instead of using it.
+ *
+ * The surface travels by context so a call site sets it once on `<Table>`
+ * rather than on every cell. Defaults to "dark", so every existing consumer
+ * renders exactly what it renders today.
+ */
+const SurfaceContext = createContext<TableSurface>("dark");
+
+const useSurface = () => useContext(SurfaceContext);
+
+const BORDER = {
+  dark: "border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))]",
+  light: "border-zinc-200",
+} as const;
+
+const HEADER_INK = {
+  dark: "text-[var(--mk-palette-text-tertiary,#7E8292)]",
+  light: "text-zinc-500",
+} as const;
+
+const CELL_INK = {
+  dark: "text-[var(--mk-palette-text-secondary,#B0B3C1)]",
+  light: "text-zinc-700",
+} as const;
+
+const ROW_HOVER = {
+  dark: "hover:bg-[var(--mk-palette-bg-muted,#2A2E3D)]",
+  light: "hover:bg-zinc-50",
+} as const;
+
+const SHELL = {
+  dark: "border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] bg-[var(--mk-palette-bg-surface,#1A1D27)]",
+  light: "border-zinc-200 bg-white",
+} as const;
+
 export function TableHead({ children }: { children: React.ReactNode }) {
+  const surface = useSurface();
   return (
     <thead>
-      <tr className="border-b border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))]">
-        {children}
-      </tr>
+      <tr className={cn("border-b", BORDER[surface])}>{children}</tr>
     </thead>
   );
 }
@@ -20,10 +64,12 @@ export function TableHeaderCell({
   align?: "left" | "right" | "center";
   className?: string;
 }) {
+  const surface = useSurface();
   return (
     <th
       className={cn(
-        "px-6 py-3 text-[var(--mk-palette-text-tertiary,#7E8292)] font-medium",
+        "px-6 py-3 font-medium",
+        HEADER_INK[surface],
         align === "left" && "text-left",
         align === "right" && "text-right",
         align === "center" && "text-center",
@@ -48,11 +94,14 @@ export function TableRow({
   className?: string;
   onClick?: () => void;
 }) {
+  const surface = useSurface();
   return (
     <tr
       onClick={onClick}
       className={cn(
-        "border-b border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] last:border-b-0 hover:bg-[var(--mk-palette-bg-muted,#2A2E3D)] transition-colors",
+        "border-b last:border-b-0 transition-colors",
+        BORDER[surface],
+        ROW_HOVER[surface],
         className
       )}
     >
@@ -72,13 +121,13 @@ export function TableCell({
   className?: string;
   colSpan?: number;
 }) {
+  const surface = useSurface();
   return (
     <td
       colSpan={colSpan}
       className={cn(
         "px-6 py-3",
-        align === "left" &&
-          "text-left text-[var(--mk-palette-text-secondary,#B0B3C1)]",
+        align === "left" && cn("text-left", CELL_INK[surface]),
         align === "right" && "text-right",
         align === "center" && "text-center",
         className
@@ -89,13 +138,21 @@ export function TableCell({
   );
 }
 
-export function Table({ children }: { children: React.ReactNode }) {
+export function Table({
+  children,
+  surface = "dark",
+}: {
+  children: React.ReactNode;
+  surface?: TableSurface;
+}) {
   return (
-    <div className="rounded-xl border border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] bg-[var(--mk-palette-bg-surface,#1A1D27)] overflow-hidden">
-      <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-        <table className="w-full text-sm">{children}</table>
+    <SurfaceContext.Provider value={surface}>
+      <div className={cn("rounded-xl border overflow-hidden", SHELL[surface])}>
+        <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+          <table className="w-full text-sm">{children}</table>
+        </div>
       </div>
-    </div>
+    </SurfaceContext.Provider>
   );
 }
 

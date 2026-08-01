@@ -55,6 +55,7 @@ export {
   TableRow,
   TableCell,
   DataTable,
+  type TableSurface,
   type DataTableProps,
   type DataTableColumn,
 } from "./Table";

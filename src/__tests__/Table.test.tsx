@@ -204,3 +204,44 @@ describe("Static Table components", () => {
     expect(td?.colSpan).toBe(3);
   });
 });
+
+describe("Table surface", () => {
+  const rows = (
+    <>
+      <TableHead>
+        <TableHeaderCell>Nimi</TableHeaderCell>
+      </TableHead>
+      <TableBody>
+        <TableRow>
+          <TableCell>Arvi</TableCell>
+        </TableRow>
+      </TableBody>
+    </>
+  );
+
+  it("keeps the dark treatment by default", () => {
+    // Every existing consumer relies on this; light is opt-in.
+    const { container } = render(<Table>{rows}</Table>);
+    expect(container.innerHTML).toContain("--mk-palette-bg-surface");
+  });
+
+  it("uses light borders, ink and shell when the surface is light", () => {
+    // The token fallbacks are dark. On a section that hardcodes a white
+    // background — while the document still says data-theme="dark" — they
+    // resolve to near-white ink on white.
+    const { container } = render(<Table surface="light">{rows}</Table>);
+    const html = container.innerHTML;
+    expect(html).toContain("bg-white");
+    expect(html).toContain("border-zinc-200");
+    expect(html).toContain("text-zinc-500");
+    expect(html).toContain("text-zinc-700");
+    expect(html).not.toContain("--mk-palette-text-secondary");
+  });
+
+  it("passes the surface down without every cell being told", () => {
+    // The point of the context: a call site sets it once on <Table>.
+    const { container } = render(<Table surface="light">{rows}</Table>);
+    expect(container.querySelector("th")?.className).toContain("text-zinc-500");
+    expect(container.querySelector("td")?.className).toContain("text-zinc-700");
+  });
+});

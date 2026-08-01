@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
+export type TableSurface = "dark" | "light";
 export declare function TableHead({ children }: {
     children: React.ReactNode;
 }): import("react").JSX.Element;
@@ -21,8 +22,9 @@ export declare function TableCell({ children, align, className, colSpan, }: {
     className?: string;
     colSpan?: number;
 }): import("react").JSX.Element;
-export declare function Table({ children }: {
+export declare function Table({ children, surface, }: {
     children: React.ReactNode;
+    surface?: TableSurface;
 }): import("react").JSX.Element;
 export interface DataTableColumn<T = Record<string, unknown>> {
     key: string;
