@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
-import { Check, Globe, X } from "lucide-react";
+import { Check, ChevronDown, Globe, X } from "lucide-react";
 import { cn } from "./utils";
 
 const STORAGE_KEY = "mk-locale-prefs-v2";
@@ -457,8 +457,19 @@ export function LocaleSwitcherModal({
               value={country}
               onChange={(e) => handleCountryChange(e.target.value)}
               aria-labelledby="mk-locale-country-label"
-              className="w-full cursor-pointer bg-transparent text-sm font-semibold outline-none"
-              style={{ color: `var(--mk-palette-text-primary, #111113)` }}
+              className="w-full cursor-pointer text-sm font-semibold"
+              // The native chrome is stripped inline rather than with utility
+              // classes: the tile it sits in is already a bordered surface, and
+              // the browser's own border drew a second box inside it. Inline
+              // also survives a product's scoped form reset.
+              style={{
+                appearance: "none",
+                WebkitAppearance: "none",
+                border: "none",
+                outline: "none",
+                background: "transparent",
+                color: `var(--mk-palette-text-primary, #111113)`,
+              } as React.CSSProperties}
             >
               {COUNTRY_CODES.map((code) => (
                 <option key={code} value={code}>
@@ -466,6 +477,11 @@ export function LocaleSwitcherModal({
                 </option>
               ))}
             </select>
+            <ChevronDown
+              className="h-4 w-4 shrink-0"
+              aria-hidden="true"
+              style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}
+            />
           </div>
           <p className="mt-2 text-[11px]" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>
             Maa määrää tarjolla olevat kielet ja valuutat.
