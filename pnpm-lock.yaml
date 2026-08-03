@@ -19,16 +19,10 @@ importers:
         version: 2.1.1
       lucide-react:
         specifier: '*'
-        version: 1.25.0(react@19.2.7)
+        version: 1.25.0(react@19.2.8)
       next:
         specifier: 16.2.12
         version: 16.2.12(@babel/core@7.29.7(supports-color@7.2.0))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      react:
-        specifier: '>=19'
-        version: 19.2.8
-      react-dom:
-        specifier: '>=19'
-        version: 19.2.8(react@19.2.8)
       sonner:
         specifier: ^2.0.0
         version: 2.0.7(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -105,6 +99,12 @@ importers:
       prettier:
         specifier: ^3.9.0
         version: 3.9.5
+      react:
+        specifier: 19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: 19.2.8
+        version: 19.2.8(react@19.2.8)
       storybook:
         specifier: ^8.6.18
         version: 8.6.18(prettier@3.9.5)(supports-color@7.2.0)
@@ -2558,10 +2558,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  react@19.2.7:
-    resolution: {integrity: sha512-HNe9WslTbXmFK8o8cmwgAeJFSBvt1bPdHCVKtaaV+WlAN36mpT4hcRpwbf3fY56ar2oIXzsBpOAiIRHAdY0OlQ==}
-    engines: {node: '>=0.10.0'}
 
   react@19.2.8:
     resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
@@ -5081,9 +5077,9 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@1.25.0(react@19.2.7):
+  lucide-react@1.25.0(react@19.2.8):
     dependencies:
-      react: 19.2.7
+      react: 19.2.8
 
   lz-string@1.5.0: {}
 
@@ -5293,8 +5289,6 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.2.17
-
-  react@19.2.7: {}
 
   react@19.2.8: {}
 

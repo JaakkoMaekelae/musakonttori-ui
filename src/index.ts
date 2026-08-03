@@ -100,8 +100,17 @@ export {
 export { Modal, type ModalProps } from "./Modal";
 export {
   LocaleSwitcherModal,
+  readLocalePrefs,
+  LOCALE_PREFS_EVENT,
+  LANGUAGE_LABELS,
   type LocaleSwitcherModalProps,
+  type LocalePrefs,
 } from "./LocaleSwitcherModal";
+export {
+  LocaleSwitcher,
+  OPEN_LOCALE_MODAL_EVENT,
+  type LocaleSwitcherProps,
+} from "./LocaleSwitcher";
 export { ThemeToggle, type ThemeToggleProps } from "./ThemeToggle";
 export {
   CookieConsentBanner,

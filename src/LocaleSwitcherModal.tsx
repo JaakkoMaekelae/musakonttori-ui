@@ -7,12 +7,21 @@ import { cn } from "./utils";
 
 const STORAGE_KEY = "mk-locale-prefs-v2";
 
-interface LocalePrefs {
+export interface LocalePrefs {
   locale: string;
   currency: string;
+  /**
+   * Added after the first release of this component. Entries written by the
+   * older version have no country, so it stays optional — a missing value
+   * falls back to browser detection rather than resetting the whole record.
+   */
+  country?: string;
 }
 
-function readPrefs(): LocalePrefs | null {
+/** Broadcast so other controls on the page (a header flag, a price list) re-read. */
+export const LOCALE_PREFS_EVENT = "mk-locale-prefs-changed";
+
+export function readLocalePrefs(): LocalePrefs | null {
   if (typeof window === "undefined") return null;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -34,6 +43,7 @@ function writePrefs(prefs: LocalePrefs) {
   } catch {
     // private mode, ignore
   }
+  document.dispatchEvent(new Event(LOCALE_PREFS_EVENT));
 }
 
 function detectBrowserCountry(): string {
@@ -132,8 +142,46 @@ const COUNTRY_CURRENCY: Record<string, string> = {
   GR: "EUR", IE: "EUR", MT: "EUR", IS: "ISK",
 };
 
-// All supported language metadata
-const LANGUAGES_MAP: Record<string, { flag: string; name: string; subtitle: string }> = {
+// Country metadata for the country picker. Keyed the same as COUNTRY_LANGUAGES
+// and COUNTRY_CURRENCY — a country listed here must appear in both, or the
+// picker would offer a country with no language to browse it in.
+const COUNTRIES_INFO: Record<string, { flag: string; name: string }> = {
+  FI: { flag: "🇫🇮", name: "Suomi" },
+  SE: { flag: "🇸🇪", name: "Sverige" },
+  DK: { flag: "🇩🇰", name: "Danmark" },
+  NO: { flag: "🇳🇴", name: "Norge" },
+  IS: { flag: "🇮🇸", name: "Ísland" },
+  EE: { flag: "🇪🇪", name: "Eesti" },
+  LV: { flag: "🇱🇻", name: "Latvija" },
+  LT: { flag: "🇱🇹", name: "Lietuva" },
+  DE: { flag: "🇩🇪", name: "Deutschland" },
+  AT: { flag: "🇦🇹", name: "Österreich" },
+  CH: { flag: "🇨🇭", name: "Schweiz" },
+  NL: { flag: "🇳🇱", name: "Nederland" },
+  BE: { flag: "🇧🇪", name: "België" },
+  LU: { flag: "🇱🇺", name: "Luxembourg" },
+  FR: { flag: "🇫🇷", name: "France" },
+  IT: { flag: "🇮🇹", name: "Italia" },
+  ES: { flag: "🇪🇸", name: "España" },
+  PT: { flag: "🇵🇹", name: "Portugal" },
+  IE: { flag: "🇮🇪", name: "Ireland" },
+  MT: { flag: "🇲🇹", name: "Malta" },
+  PL: { flag: "🇵🇱", name: "Polska" },
+  CZ: { flag: "🇨🇿", name: "Česko" },
+  SK: { flag: "🇸🇰", name: "Slovensko" },
+  SI: { flag: "🇸🇮", name: "Slovenija" },
+  HU: { flag: "🇭🇺", name: "Magyarország" },
+  HR: { flag: "🇭🇷", name: "Hrvatska" },
+  RO: { flag: "🇷🇴", name: "România" },
+  BG: { flag: "🇧🇬", name: "България" },
+  GR: { flag: "🇬🇷", name: "Ελλάδα" },
+};
+
+const COUNTRY_CODES = Object.keys(COUNTRIES_INFO);
+
+// All supported language metadata. Exported because the trigger renders the
+// same flag and name as the tile the user picked — two tables would drift.
+export const LANGUAGE_LABELS: Record<string, { flag: string; name: string; subtitle: string }> = {
   fi: { flag: "🇫🇮", name: "Suomi", subtitle: "Selaa suomeksi" },
   sv: { flag: "🇸🇪", name: "Svenska", subtitle: "Bläddra på svenska" },
   en: { flag: "🇬🇧", name: "English", subtitle: "Browse in English" },
@@ -180,8 +228,15 @@ export interface LocaleSwitcherModalProps {
   onClose: () => void;
   currentLocale?: string;
   currentCurrency?: string;
+  /**
+   * Server-known country. Omit to detect from the browser — but pass it when
+   * the app already resolved a country (a geo cookie, an account setting),
+   * otherwise detection will silently override that choice on every mount.
+   */
+  currentCountry?: string;
   onLocaleChange?: (locale: string) => void;
   onCurrencyChange?: (currency: string) => void;
+  onCountryChange?: (country: string) => void;
 }
 
 export function LocaleSwitcherModal({
@@ -189,28 +244,34 @@ export function LocaleSwitcherModal({
   onClose,
   currentLocale = "fi",
   currentCurrency = "EUR",
+  currentCountry,
   onLocaleChange,
   onCurrencyChange,
+  onCountryChange,
 }: LocaleSwitcherModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [locale, setLocale] = useState(currentLocale);
   const [currency, setCurrency] = useState(currentCurrency);
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [detectedCountry, setDetectedCountry] = useState("FI");
+  const [country, setCountry] = useState(currentCountry ?? "FI");
 
-  // Detect user's country from browser
+  // Detection is a fallback, not an override: it only runs when the app did not
+  // supply a country and the browser has no stored preference. Running it
+  // unconditionally would undo an explicit pick on the next mount.
   useEffect(() => {
-    const c = detectBrowserCountry();
-    setDetectedCountry(c);
-  }, []);
+    if (currentCountry) return;
+    if (readLocalePrefs()?.country) return;
+    setCountry(detectBrowserCountry());
+  }, [currentCountry]);
 
   // Load saved prefs on mount
   useEffect(() => {
-    const prefs = readPrefs();
+    const prefs = readLocalePrefs();
     if (prefs) {
       setLocale(prefs.locale);
       setCurrency(prefs.currency);
+      if (prefs.country) setCountry(prefs.country);
     }
   }, []);
 
@@ -249,8 +310,7 @@ export function LocaleSwitcherModal({
     return () => document.removeEventListener("keydown", handleKey);
   }, [open, handleClose]);
 
-  // Compute the language and currency options for the detected country
-  const country = detectedCountry;
+  // Compute the language and currency options for the selected country
   const langCodes = COUNTRY_LANGUAGES[country] || ["fi", "en"];
   const countryCur = COUNTRY_CURRENCY[country] || "EUR";
   const currencyCodes: string[] = countryCur === "EUR"
@@ -262,16 +322,38 @@ export function LocaleSwitcherModal({
 
   const handleLocaleChange = (loc: string) => {
     setLocale(loc);
-    const prefs: LocalePrefs = { locale: loc, currency };
-    writePrefs(prefs);
+    writePrefs({ locale: loc, currency, country });
     onLocaleChange?.(loc);
   };
 
   const handleCurrencyChange = (cur: string) => {
     setCurrency(cur);
-    const prefs: LocalePrefs = { locale, currency: cur };
-    writePrefs(prefs);
+    writePrefs({ locale, currency: cur, country });
     onCurrencyChange?.(cur);
+  };
+
+  /**
+   * Changing country can invalidate the current language and currency — a
+   * Finnish visitor switching to Greece cannot keep browsing in Finnish, and
+   * EUR is not offered outside the eurozone list. Both are re-derived here so
+   * the modal never sits in a state its own options cannot express.
+   */
+  const handleCountryChange = (next: string) => {
+    const nextLangs = COUNTRY_LANGUAGES[next] || ["en"];
+    const nextCurrency = COUNTRY_CURRENCY[next] || "EUR";
+    const nextLocale = nextLangs.includes(locale) ? locale : (nextLangs[0] as string);
+    const keepsCurrency = currency === "EUR" || currency === nextCurrency;
+    const resolvedCurrency = keepsCurrency ? currency : nextCurrency;
+
+    setCountry(next);
+    setLocale(nextLocale);
+    setCurrency(resolvedCurrency);
+    writePrefs({ locale: nextLocale, currency: resolvedCurrency, country: next });
+
+    onCountryChange?.(next);
+    if (resolvedCurrency !== currency) onCurrencyChange?.(resolvedCurrency);
+    // Last, because consumers navigate on this one.
+    if (nextLocale !== locale) onLocaleChange?.(nextLocale);
   };
 
   // Selected/unselected class strings (theme-aware via CSS variable fallbacks)
@@ -311,7 +393,7 @@ export function LocaleSwitcherModal({
           ref={modalRef}
           role="dialog"
           aria-modal="true"
-          aria-label="Kieli- ja valuutta-asetukset"
+          aria-label="Maa-, kieli- ja valuutta-asetukset"
           className={cn(
             "relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6",
             "transition-all duration-300",
@@ -344,9 +426,53 @@ export function LocaleSwitcherModal({
           </div>
           <div>
             <h2 className="text-lg font-bold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>Alueasetukset</h2>
-            <p className="text-sm" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>Kieli ja valuutta</p>
+            <p className="text-sm" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>Maa, kieli ja valuutta</p>
           </div>
         </div>
+
+        {/*
+          Country is a native select, not a tile grid like the two sections
+          below. Thirty tiles would dominate a modal whose actual subject is
+          language, and a select gets the platform's own long-list handling on
+          touch devices for free.
+        */}
+        <section className="mb-6">
+          <h3
+            className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
+            style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}
+            id="mk-locale-country-label"
+          >
+            Maa
+          </h3>
+          <div
+            className={cn(
+              "flex items-center gap-3 rounded-xl border px-4 py-3 transition-all",
+              unselectedClass
+            )}
+          >
+            <span className="text-2xl" aria-hidden="true">
+              {COUNTRIES_INFO[country]?.flag ?? "🌍"}
+            </span>
+            <select
+              value={country}
+              onChange={(e) => handleCountryChange(e.target.value)}
+              aria-labelledby="mk-locale-country-label"
+              className="w-full cursor-pointer bg-transparent text-sm font-semibold outline-none"
+              style={{ color: `var(--mk-palette-text-primary, #111113)` }}
+            >
+              {COUNTRY_CODES.map((code) => (
+                <option key={code} value={code}>
+                  {COUNTRIES_INFO[code]?.name ?? code}
+                </option>
+              ))}
+            </select>
+          </div>
+          <p className="mt-2 text-[11px]" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>
+            Maa määrää tarjolla olevat kielet ja valuutat.
+          </p>
+        </section>
+
+        <div className="my-5 h-px" style={{ background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }} />
 
         {/* Language section */}
         <section className="mb-6">
@@ -355,7 +481,7 @@ export function LocaleSwitcherModal({
           </h3>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {uniqueLangCodes.map((code) => {
-              const lang = LANGUAGES_MAP[code];
+              const lang = LANGUAGE_LABELS[code];
               if (!lang) return null;
               return (
                 <button

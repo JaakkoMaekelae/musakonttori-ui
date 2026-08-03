@@ -239,6 +239,8 @@
     "eslint-plugin-security": "^3.0.0",
     "jsdom": "^29.0.0",
     "prettier": "^3.9.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "storybook": "^8.6.18",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.7.0",

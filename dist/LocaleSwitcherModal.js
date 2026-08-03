@@ -5,7 +5,9 @@ import { createPortal } from "react-dom";
 import { Check, Globe, X } from "lucide-react";
 import { cn } from "./utils";
 const STORAGE_KEY = "mk-locale-prefs-v2";
-function readPrefs() {
+/** Broadcast so other controls on the page (a header flag, a price list) re-read. */
+export const LOCALE_PREFS_EVENT = "mk-locale-prefs-changed";
+export function readLocalePrefs() {
     if (typeof window === "undefined")
         return null;
     try {
@@ -31,6 +33,7 @@ function writePrefs(prefs) {
     catch {
         // private mode, ignore
     }
+    document.dispatchEvent(new Event(LOCALE_PREFS_EVENT));
 }
 function detectBrowserCountry() {
     if (typeof window === "undefined")
@@ -158,8 +161,44 @@ const COUNTRY_CURRENCY = {
     SK: "EUR", SI: "EUR", EE: "EUR", LV: "EUR", LT: "EUR",
     GR: "EUR", IE: "EUR", MT: "EUR", IS: "ISK",
 };
-// All supported language metadata
-const LANGUAGES_MAP = {
+// Country metadata for the country picker. Keyed the same as COUNTRY_LANGUAGES
+// and COUNTRY_CURRENCY — a country listed here must appear in both, or the
+// picker would offer a country with no language to browse it in.
+const COUNTRIES_INFO = {
+    FI: { flag: "🇫🇮", name: "Suomi" },
+    SE: { flag: "🇸🇪", name: "Sverige" },
+    DK: { flag: "🇩🇰", name: "Danmark" },
+    NO: { flag: "🇳🇴", name: "Norge" },
+    IS: { flag: "🇮🇸", name: "Ísland" },
+    EE: { flag: "🇪🇪", name: "Eesti" },
+    LV: { flag: "🇱🇻", name: "Latvija" },
+    LT: { flag: "🇱🇹", name: "Lietuva" },
+    DE: { flag: "🇩🇪", name: "Deutschland" },
+    AT: { flag: "🇦🇹", name: "Österreich" },
+    CH: { flag: "🇨🇭", name: "Schweiz" },
+    NL: { flag: "🇳🇱", name: "Nederland" },
+    BE: { flag: "🇧🇪", name: "België" },
+    LU: { flag: "🇱🇺", name: "Luxembourg" },
+    FR: { flag: "🇫🇷", name: "France" },
+    IT: { flag: "🇮🇹", name: "Italia" },
+    ES: { flag: "🇪🇸", name: "España" },
+    PT: { flag: "🇵🇹", name: "Portugal" },
+    IE: { flag: "🇮🇪", name: "Ireland" },
+    MT: { flag: "🇲🇹", name: "Malta" },
+    PL: { flag: "🇵🇱", name: "Polska" },
+    CZ: { flag: "🇨🇿", name: "Česko" },
+    SK: { flag: "🇸🇰", name: "Slovensko" },
+    SI: { flag: "🇸🇮", name: "Slovenija" },
+    HU: { flag: "🇭🇺", name: "Magyarország" },
+    HR: { flag: "🇭🇷", name: "Hrvatska" },
+    RO: { flag: "🇷🇴", name: "România" },
+    BG: { flag: "🇧🇬", name: "България" },
+    GR: { flag: "🇬🇷", name: "Ελλάδα" },
+};
+const COUNTRY_CODES = Object.keys(COUNTRIES_INFO);
+// All supported language metadata. Exported because the trigger renders the
+// same flag and name as the tile the user picked — two tables would drift.
+export const LANGUAGE_LABELS = {
     fi: { flag: "🇫🇮", name: "Suomi", subtitle: "Selaa suomeksi" },
     sv: { flag: "🇸🇪", name: "Svenska", subtitle: "Bläddra på svenska" },
     en: { flag: "🇬🇧", name: "English", subtitle: "Browse in English" },
@@ -199,24 +238,31 @@ const CURRENCIES_INFO = {
     CHF: { symbol: "CHF", flag: "🇨🇭", name: "Swiss Franc" },
     ISK: { symbol: "kr", flag: "🇮🇸", name: "Icelandic Króna" },
 };
-export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", currentCurrency = "EUR", onLocaleChange, onCurrencyChange, }) {
+export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", currentCurrency = "EUR", currentCountry, onLocaleChange, onCurrencyChange, onCountryChange, }) {
     const modalRef = useRef(null);
     const [locale, setLocale] = useState(currentLocale);
     const [currency, setCurrency] = useState(currentCurrency);
     const [visible, setVisible] = useState(false);
     const [mounted, setMounted] = useState(false);
-    const [detectedCountry, setDetectedCountry] = useState("FI");
-    // Detect user's country from browser
+    const [country, setCountry] = useState(currentCountry ?? "FI");
+    // Detection is a fallback, not an override: it only runs when the app did not
+    // supply a country and the browser has no stored preference. Running it
+    // unconditionally would undo an explicit pick on the next mount.
     useEffect(() => {
-        const c = detectBrowserCountry();
-        setDetectedCountry(c);
-    }, []);
+        if (currentCountry)
+            return;
+        if (readLocalePrefs()?.country)
+            return;
+        setCountry(detectBrowserCountry());
+    }, [currentCountry]);
     // Load saved prefs on mount
     useEffect(() => {
-        const prefs = readPrefs();
+        const prefs = readLocalePrefs();
         if (prefs) {
             setLocale(prefs.locale);
             setCurrency(prefs.currency);
+            if (prefs.country)
+                setCountry(prefs.country);
         }
     }, []);
     // Animate open/close
@@ -254,8 +300,7 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
         document.addEventListener("keydown", handleKey);
         return () => document.removeEventListener("keydown", handleKey);
     }, [open, handleClose]);
-    // Compute the language and currency options for the detected country
-    const country = detectedCountry;
+    // Compute the language and currency options for the selected country
     const langCodes = COUNTRY_LANGUAGES[country] || ["fi", "en"];
     const countryCur = COUNTRY_CURRENCY[country] || "EUR";
     const currencyCodes = countryCur === "EUR"
@@ -265,15 +310,36 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
     const uniqueLangCodes = [...new Set(langCodes)];
     const handleLocaleChange = (loc) => {
         setLocale(loc);
-        const prefs = { locale: loc, currency };
-        writePrefs(prefs);
+        writePrefs({ locale: loc, currency, country });
         onLocaleChange?.(loc);
     };
     const handleCurrencyChange = (cur) => {
         setCurrency(cur);
-        const prefs = { locale, currency: cur };
-        writePrefs(prefs);
+        writePrefs({ locale, currency: cur, country });
         onCurrencyChange?.(cur);
+    };
+    /**
+     * Changing country can invalidate the current language and currency — a
+     * Finnish visitor switching to Greece cannot keep browsing in Finnish, and
+     * EUR is not offered outside the eurozone list. Both are re-derived here so
+     * the modal never sits in a state its own options cannot express.
+     */
+    const handleCountryChange = (next) => {
+        const nextLangs = COUNTRY_LANGUAGES[next] || ["en"];
+        const nextCurrency = COUNTRY_CURRENCY[next] || "EUR";
+        const nextLocale = nextLangs.includes(locale) ? locale : nextLangs[0];
+        const keepsCurrency = currency === "EUR" || currency === nextCurrency;
+        const resolvedCurrency = keepsCurrency ? currency : nextCurrency;
+        setCountry(next);
+        setLocale(nextLocale);
+        setCurrency(resolvedCurrency);
+        writePrefs({ locale: nextLocale, currency: resolvedCurrency, country: next });
+        onCountryChange?.(next);
+        if (resolvedCurrency !== currency)
+            onCurrencyChange?.(resolvedCurrency);
+        // Last, because consumers navigate on this one.
+        if (nextLocale !== locale)
+            onLocaleChange?.(nextLocale);
     };
     // Selected/unselected class strings (theme-aware via CSS variable fallbacks)
     const selectedClass = cn("border-[var(--mk-palette-primary,#BF2227)] bg-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.08))] ring-1 ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]");
@@ -290,12 +356,12 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
             opacity: visible ? 1 : 0,
             pointerEvents: visible ? "auto" : "none",
             transition: "opacity 300ms",
-        }, children: [_jsx("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-sm", onClick: handleClose, "aria-hidden": "true" }), _jsx("div", { className: "absolute inset-0 flex items-center justify-center p-4", children: _jsxs("div", { ref: modalRef, role: "dialog", "aria-modal": "true", "aria-label": "Kieli- ja valuutta-asetukset", className: cn("relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6", "transition-all duration-300", visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"), style: {
+        }, children: [_jsx("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-sm", onClick: handleClose, "aria-hidden": "true" }), _jsx("div", { className: "absolute inset-0 flex items-center justify-center p-4", children: _jsxs("div", { ref: modalRef, role: "dialog", "aria-modal": "true", "aria-label": "Maa-, kieli- ja valuutta-asetukset", className: cn("relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6", "transition-all duration-300", visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"), style: {
                         background: `var(--mk-palette-bg-surface, #FFFFFF)`,
                         borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
                         color: `var(--mk-palette-text-primary, #111113)`,
-                    }, children: [_jsx("button", { type: "button", onClick: handleClose, className: "absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10", "aria-label": "Sulje", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: _jsx(X, { className: "h-4 w-4" }) }), _jsxs("div", { className: "flex items-center gap-3 mb-6", children: [_jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl", style: { background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` }, children: _jsx(Globe, { className: "h-5 w-5", style: { color: `var(--mk-palette-primary, #BF2227)` } }) }), _jsxs("div", { children: [_jsx("h2", { className: "text-lg font-bold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: "Alueasetukset" }), _jsx("p", { className: "text-sm", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: "Kieli ja valuutta" })] })] }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: "Kieli" }), _jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-3", children: uniqueLangCodes.map((code) => {
-                                        const lang = LANGUAGES_MAP[code];
+                    }, children: [_jsx("button", { type: "button", onClick: handleClose, className: "absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10", "aria-label": "Sulje", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: _jsx(X, { className: "h-4 w-4" }) }), _jsxs("div", { className: "flex items-center gap-3 mb-6", children: [_jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl", style: { background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` }, children: _jsx(Globe, { className: "h-5 w-5", style: { color: `var(--mk-palette-primary, #BF2227)` } }) }), _jsxs("div", { children: [_jsx("h2", { className: "text-lg font-bold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: "Alueasetukset" }), _jsx("p", { className: "text-sm", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: "Maa, kieli ja valuutta" })] })] }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, id: "mk-locale-country-label", children: "Maa" }), _jsxs("div", { className: cn("flex items-center gap-3 rounded-xl border px-4 py-3 transition-all", unselectedClass), children: [_jsx("span", { className: "text-2xl", "aria-hidden": "true", children: COUNTRIES_INFO[country]?.flag ?? "🌍" }), _jsx("select", { value: country, onChange: (e) => handleCountryChange(e.target.value), "aria-labelledby": "mk-locale-country-label", className: "w-full cursor-pointer bg-transparent text-sm font-semibold outline-none", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: COUNTRY_CODES.map((code) => (_jsx("option", { value: code, children: COUNTRIES_INFO[code]?.name ?? code }, code))) })] }), _jsx("p", { className: "mt-2 text-[11px]", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: "Maa m\u00E4\u00E4r\u00E4\u00E4 tarjolla olevat kielet ja valuutat." })] }), _jsx("div", { className: "my-5 h-px", style: { background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` } }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: "Kieli" }), _jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-3", children: uniqueLangCodes.map((code) => {
+                                        const lang = LANGUAGE_LABELS[code];
                                         if (!lang)
                                             return null;
                                         return (_jsxs("button", { type: "button", onClick: () => handleLocaleChange(code), className: cn("relative flex flex-col items-start gap-0.5 rounded-xl border px-4 py-3 text-left transition-all", locale === code ? selectedClass : unselectedClass, locale !== code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"), children: [_jsxs("div", { className: "flex w-full items-center justify-between", children: [_jsx("span", { className: "text-2xl", children: lang.flag }), locale === code && (_jsx(Check, { className: "h-4 w-4 shrink-0", style: { color: `var(--mk-palette-primary, #BF2227)` } }))] }), _jsx("span", { className: "mt-1 text-sm font-semibold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: lang.name }), _jsx("span", { className: "text-[11px]", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: lang.subtitle })] }, code));
