@@ -234,20 +234,32 @@ export const SERVICES: ServiceEntry[] = [
     taglineEn: "E-commerce for artists — sell merch, records, tickets",
     icon: "🛒",
     pricingModel: "subscription",
-    pricingSummaryFi: "Alkaen 19,90 €/kk (tulossa)",
-    pricingSummaryEn: "From €19.90/mo (coming soon)",
+    pricingSummaryFi: "Alkaen 0 € (ilmainen), Pro 39,90 €/kk",
+    pricingSummaryEn: "From €0 (free), Pro €39.90/mo",
     plans: [
+      {
+        name: "Free",
+        price: "0 €/kk",
+        featuresFi: ["5 tuotetta", "Perus-teema", "Maksut Stripe", "10 % komissio"],
+        featuresEn: ["5 products", "Basic theme", "Stripe payments", "10% commission"],
+      },
       {
         name: "Starter",
         price: "19,90 €/kk",
-        featuresFi: ["50 tuotetta", "Stripe-maksut", "Perus-teema", "5 % komissio"],
-        featuresEn: ["50 products", "Stripe payments", "Basic theme", "5% commission"],
+        featuresFi: ["50 tuotetta", "Muokattava teema", "Stripe-maksut", "5 % komissio", "Analytiikka"],
+        featuresEn: ["50 products", "Custom theme", "Stripe payments", "5% commission", "Analytics"],
+      },
+      {
+        name: "Pro",
+        price: "39,90 €/kk",
+        featuresFi: ["Rajoittamaton tuote", "Oma domain", "Varastohallinta", "2 % komissio", "Prioriteettituki"],
+        featuresEn: ["Unlimited products", "Custom domain", "Inventory mgmt", "2% commission", "Priority support"],
       },
     ],
-    ctaLabelFi: "Tulossa pian",
-    ctaLabelEn: "Coming soon",
-    url: (_locale: string) => "#",
-    available: false,
+    ctaLabelFi: "Avaa kauppa",
+    ctaLabelEn: "Open store",
+    url: (locale: string) => `https://musakonttori-market.vercel.app/${locale}`,
+    available: true,
   },
 ];
 
@@ -380,7 +392,7 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: Service
               {[
                 { count: 2, discount: 20, standalone: "n. 20 €", bundle: "n. 16 €", labelFi: "Perusduo", labelEn: "Basic Duo", descFi: "Esim. Links + Promo", descEn: "e.g. Links + Promo" },
                 { count: 4, discount: 44, standalone: "n. 40 €", bundle: "n. 22 €", labelFi: "Kasvupaketti", labelEn: "Growth Pack", descFi: "Esim. Links + Promo + SoundLaunch + Mastering", descEn: "e.g. Links + Promo + SoundLaunch + Mastering", highlighted: true },
-                { count: 7, discount: 49, standalone: "58,33 €", bundle: "29,90 €", labelFi: "Kaikki palvelut", labelEn: "All Services", descFi: "Koko ekosysteemi yhdellä hinnalla", descEn: "The entire ecosystem, one price" },
+                { count: 8, discount: 49, standalone: "65,23 €", bundle: "32,90 €", labelFi: "Kaikki palvelut", labelEn: "All Services", descFi: "Koko ekosysteemi yhdellä hinnalla", descEn: "The entire ecosystem, one price" },
               ].map((pkg) => (
                 <div
                   key={pkg.count}
@@ -422,8 +434,8 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: Service
               </h3>
               <p className="text-gray-500 mb-6 max-w-lg mx-auto">
                 {isFi
-                  ? "Räätälöidään sinulle sopiva kokonaisuus. Mitä enemmän palveluita otat, sitä paremman pakettihinnan saat. Kaikki 7 palvelua vain 29,90 €/kk."
-                  : "We'll tailor a package for you. The more services you take, the better the bundle price. All 7 services for just €29.90/mo."}
+                  ? "Räätälöidään sinulle sopiva kokonaisuus. Mitä enemmän palveluita otat, sitä paremman pakettihinnan saat. Kaikki 8 palvelua vain 32,90 €/kk."
+                  : "We'll tailor a package for you. The more services you take, the better the bundle price. All 8 services for just €32.90/mo."}
               </p>
               <a
                 href="mailto:hello@musakonttori.fi"

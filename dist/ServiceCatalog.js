@@ -217,20 +217,32 @@ export const SERVICES = [
         taglineEn: "E-commerce for artists — sell merch, records, tickets",
         icon: "🛒",
         pricingModel: "subscription",
-        pricingSummaryFi: "Alkaen 19,90 €/kk (tulossa)",
-        pricingSummaryEn: "From €19.90/mo (coming soon)",
+        pricingSummaryFi: "Alkaen 0 € (ilmainen), Pro 39,90 €/kk",
+        pricingSummaryEn: "From €0 (free), Pro €39.90/mo",
         plans: [
+            {
+                name: "Free",
+                price: "0 €/kk",
+                featuresFi: ["5 tuotetta", "Perus-teema", "Maksut Stripe", "10 % komissio"],
+                featuresEn: ["5 products", "Basic theme", "Stripe payments", "10% commission"],
+            },
             {
                 name: "Starter",
                 price: "19,90 €/kk",
-                featuresFi: ["50 tuotetta", "Stripe-maksut", "Perus-teema", "5 % komissio"],
-                featuresEn: ["50 products", "Stripe payments", "Basic theme", "5% commission"],
+                featuresFi: ["50 tuotetta", "Muokattava teema", "Stripe-maksut", "5 % komissio", "Analytiikka"],
+                featuresEn: ["50 products", "Custom theme", "Stripe payments", "5% commission", "Analytics"],
+            },
+            {
+                name: "Pro",
+                price: "39,90 €/kk",
+                featuresFi: ["Rajoittamaton tuote", "Oma domain", "Varastohallinta", "2 % komissio", "Prioriteettituki"],
+                featuresEn: ["Unlimited products", "Custom domain", "Inventory mgmt", "2% commission", "Priority support"],
             },
         ],
-        ctaLabelFi: "Tulossa pian",
-        ctaLabelEn: "Coming soon",
-        url: (_locale) => "#",
-        available: false,
+        ctaLabelFi: "Avaa kauppa",
+        ctaLabelEn: "Open store",
+        url: (locale) => `https://musakonttori-market.vercel.app/${locale}`,
+        available: true,
     },
 ];
 const modelBadge = {
@@ -253,10 +265,10 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false }) {
                     }) }), !hideFooterCta && (_jsxs("div", { className: "mt-12", children: [_jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4 mb-8", children: [
                                 { count: 2, discount: 20, standalone: "n. 20 €", bundle: "n. 16 €", labelFi: "Perusduo", labelEn: "Basic Duo", descFi: "Esim. Links + Promo", descEn: "e.g. Links + Promo" },
                                 { count: 4, discount: 44, standalone: "n. 40 €", bundle: "n. 22 €", labelFi: "Kasvupaketti", labelEn: "Growth Pack", descFi: "Esim. Links + Promo + SoundLaunch + Mastering", descEn: "e.g. Links + Promo + SoundLaunch + Mastering", highlighted: true },
-                                { count: 7, discount: 49, standalone: "58,33 €", bundle: "29,90 €", labelFi: "Kaikki palvelut", labelEn: "All Services", descFi: "Koko ekosysteemi yhdellä hinnalla", descEn: "The entire ecosystem, one price" },
+                                { count: 8, discount: 49, standalone: "65,23 €", bundle: "32,90 €", labelFi: "Kaikki palvelut", labelEn: "All Services", descFi: "Koko ekosysteemi yhdellä hinnalla", descEn: "The entire ecosystem, one price" },
                             ].map((pkg) => (_jsxs("div", { className: `rounded-2xl border p-6 text-center transition-shadow hover:shadow-md ${pkg.highlighted
                                     ? "border-[var(--mk-palette-primary,#BF2227)] bg-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.04))] ring-1 ring-[var(--mk-palette-primary,#BF2227)]/20"
                                     : "border-gray-200 bg-white"}`, children: [pkg.highlighted && (_jsx("span", { className: "inline-block mb-2 rounded-full bg-[var(--mk-palette-primary,#BF2227)] text-white text-xs font-bold px-3 py-0.5", children: isFi ? "Suosituin" : "Most Popular" })), _jsxs("div", { className: "text-sm font-semibold text-gray-500 mb-1", children: [pkg.count, " ", isFi ? "palvelua" : "services"] }), _jsxs("div", { className: "text-3xl font-bold text-gray-900 mb-1", children: [pkg.bundle, _jsx("span", { className: "text-base font-normal text-gray-400", children: "/kk" })] }), _jsxs("div", { className: "text-xs text-green-600 font-medium mb-3", children: ["-", pkg.discount, " % ", isFi ? "bundlessa" : "in bundle"] }), _jsxs("div", { className: "text-xs text-gray-400 line-through mb-1", children: [isFi ? "erikseen" : "separately", " ", pkg.standalone, "/kk"] }), _jsx("div", { className: "text-xs text-gray-500", children: isFi ? pkg.descFi : pkg.descEn })] }, pkg.count))) }), _jsxs("div", { className: "text-center p-8 rounded-2xl bg-gradient-to-r from-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.06))] to-transparent border border-gray-100", children: [_jsx("h3", { className: "text-xl font-bold text-gray-900 mb-2", children: isFi ? "Haluatko useamman palvelun?" : "Want multiple services?" }), _jsx("p", { className: "text-gray-500 mb-6 max-w-lg mx-auto", children: isFi
-                                        ? "Räätälöidään sinulle sopiva kokonaisuus. Mitä enemmän palveluita otat, sitä paremman pakettihinnan saat. Kaikki 7 palvelua vain 29,90 €/kk."
-                                        : "We'll tailor a package for you. The more services you take, the better the bundle price. All 7 services for just €29.90/mo." }), _jsxs("a", { href: "mailto:hello@musakonttori.fi", className: "inline-flex items-center gap-2 rounded-full bg-gray-900 text-white px-8 py-3 text-base font-semibold hover:bg-gray-800 transition-colors", children: [isFi ? "Kysy tarjous" : "Request a quote", " ", _jsx(ArrowRight, { className: "h-4 w-4" })] })] })] }))] }) }));
+                                        ? "Räätälöidään sinulle sopiva kokonaisuus. Mitä enemmän palveluita otat, sitä paremman pakettihinnan saat. Kaikki 8 palvelua vain 32,90 €/kk."
+                                        : "We'll tailor a package for you. The more services you take, the better the bundle price. All 8 services for just €32.90/mo." }), _jsxs("a", { href: "mailto:hello@musakonttori.fi", className: "inline-flex items-center gap-2 rounded-full bg-gray-900 text-white px-8 py-3 text-base font-semibold hover:bg-gray-800 transition-colors", children: [isFi ? "Kysy tarjous" : "Request a quote", " ", _jsx(ArrowRight, { className: "h-4 w-4" })] })] })] }))] }) }));
 }
