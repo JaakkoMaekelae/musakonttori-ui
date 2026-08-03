@@ -185,6 +185,43 @@ describe("LocaleSwitcher country selection", () => {
     expect(screen.getByRole("combobox", { name: "Maa" })).toHaveValue("PT");
   });
 
+  it("offers only locales the product routes", () => {
+    render(<LocaleSwitcher locale="fi" country="SE" supportedLocales={["fi", "en"]} />);
+    openModal();
+    // Sweden speaks sv and en; this product routes fi and en.
+    expect(screen.getByText("English")).toBeInTheDocument();
+    expect(screen.queryByText("Svenska")).not.toBeInTheDocument();
+  });
+
+  it("never emits a locale the product cannot route", () => {
+    const onLocaleChange = vi.fn();
+    render(
+      <LocaleSwitcher
+        locale="fi"
+        country="FI"
+        supportedLocales={["fi", "en"]}
+        onLocaleChange={onLocaleChange}
+      />
+    );
+    openModal();
+    // Greece speaks el and en. Finnish is not offered there, so the language
+    // has to move — but it must move to something routable.
+    fireEvent.change(screen.getByRole("combobox", { name: "Maa" }), {
+      target: { value: "GR" },
+    });
+    expect(onLocaleChange).toHaveBeenCalledWith("en");
+  });
+
+  it("falls back to the product's own locales when a country shares none", () => {
+    render(<LocaleSwitcher locale="fi" country="GR" supportedLocales={["fi"]} />);
+    openModal();
+    // Greece speaks el and en; this product routes only fi. An empty language
+    // grid would be worse than an unlocalized one. Matched on the subtitle,
+    // since "Suomi" is also the name of a country in the select above.
+    expect(screen.getByText("Selaa suomeksi")).toBeInTheDocument();
+    expect(screen.queryByText("Browse in English")).not.toBeInTheDocument();
+  });
+
   it("reports the country upward", () => {
     const onCountryChange = vi.fn();
     render(<LocaleSwitcher locale="fi" onCountryChange={onCountryChange} />);

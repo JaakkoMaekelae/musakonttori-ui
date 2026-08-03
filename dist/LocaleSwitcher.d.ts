@@ -38,6 +38,12 @@ export interface LocaleSwitcherProps {
     /** Current country, ISO 3166-1 alpha-2. Omit to let the modal detect it. */
     country?: string;
     /**
+     * The locales this product routes. Pass it — without it the modal offers
+     * whatever the selected country speaks, and a country whose language the
+     * product does not serve navigates to a 404.
+     */
+    supportedLocales?: readonly string[];
+    /**
      * Called when the user picks a language. The app owns navigation: locale
      * path prefixes and localized slugs differ per product, so the library
      * cannot build the target URL correctly on its own.
@@ -65,5 +71,5 @@ export interface LocaleSwitcherProps {
  * noise and the duplicated "FI · FI" read as a bug. Country and currency live
  * inside the modal and stay in the accessible name.
  */
-export declare function LocaleSwitcher({ locale, currency, country, onLocaleChange, onCurrencyChange, onCountryChange, variant, className, }: LocaleSwitcherProps): import("react").JSX.Element;
+export declare function LocaleSwitcher({ locale, currency, country, supportedLocales, onLocaleChange, onCurrencyChange, onCountryChange, variant, className, }: LocaleSwitcherProps): import("react").JSX.Element;
 //# sourceMappingURL=LocaleSwitcher.d.ts.map

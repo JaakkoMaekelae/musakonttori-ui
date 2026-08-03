@@ -83,7 +83,7 @@ export function LocaleSwitcherTrigger({ locale, currency = "EUR", variant = "fla
  * noise and the duplicated "FI · FI" read as a bug. Country and currency live
  * inside the modal and stay in the accessible name.
  */
-export function LocaleSwitcher({ locale, currency = "EUR", country, onLocaleChange, onCurrencyChange, onCountryChange, variant = "flag", className, }) {
+export function LocaleSwitcher({ locale, currency = "EUR", country, supportedLocales, onLocaleChange, onCurrencyChange, onCountryChange, variant = "flag", className, }) {
     const [open, setOpen] = useState(false);
     // Any trigger, anywhere on the page, can open this modal.
     useEffect(() => {
@@ -92,7 +92,7 @@ export function LocaleSwitcher({ locale, currency = "EUR", country, onLocaleChan
         return () => document.removeEventListener(OPEN_LOCALE_MODAL_EVENT, handler);
     }, []);
     const handleClose = useCallback(() => setOpen(false), []);
-    return (_jsxs(_Fragment, { children: [_jsx(LocaleSwitcherTrigger, { locale: locale, currency: currency, variant: variant, className: className, onOpen: () => setOpen(true) }), _jsx(LocaleSwitcherModal, { open: open, onClose: handleClose, currentLocale: locale, currentCurrency: currency, currentCountry: country, onLocaleChange: onLocaleChange, onCurrencyChange: onCurrencyChange, onCountryChange: onCountryChange })] }));
+    return (_jsxs(_Fragment, { children: [_jsx(LocaleSwitcherTrigger, { locale: locale, currency: currency, variant: variant, className: className, onOpen: () => setOpen(true) }), _jsx(LocaleSwitcherModal, { open: open, onClose: handleClose, currentLocale: locale, currentCurrency: currency, currentCountry: country, supportedLocales: supportedLocales, onLocaleChange: onLocaleChange, onCurrencyChange: onCurrencyChange, onCountryChange: onCountryChange })] }));
 }
 function subscribePrefs(onChange) {
     document.addEventListener(LOCALE_PREFS_EVENT, onChange);

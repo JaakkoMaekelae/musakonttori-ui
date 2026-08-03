@@ -196,6 +196,21 @@ const COUNTRIES_INFO = {
     GR: { flag: "🇬🇷", name: "Ελλάδα" },
 };
 const COUNTRY_CODES = Object.keys(COUNTRIES_INFO);
+/**
+ * Languages to offer for a country, narrowed to what the product routes.
+ *
+ * When a country speaks nothing the product serves — Greece, in an app that
+ * routes fi and en — the answer is the product's own locales rather than an
+ * empty grid. Offering a language that 404s is worse than offering one that is
+ * not local.
+ */
+function languagesFor(country, supported) {
+    const spoken = [...new Set(COUNTRY_LANGUAGES[country] ?? ["fi", "en"])];
+    if (!supported?.length)
+        return spoken;
+    const offered = spoken.filter((code) => supported.includes(code));
+    return offered.length > 0 ? offered : [...supported];
+}
 // All supported language metadata. Exported because the trigger renders the
 // same flag and name as the tile the user picked — two tables would drift.
 export const LANGUAGE_LABELS = {
@@ -238,7 +253,7 @@ const CURRENCIES_INFO = {
     CHF: { symbol: "CHF", flag: "🇨🇭", name: "Swiss Franc" },
     ISK: { symbol: "kr", flag: "🇮🇸", name: "Icelandic Króna" },
 };
-export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", currentCurrency = "EUR", currentCountry, onLocaleChange, onCurrencyChange, onCountryChange, }) {
+export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", currentCurrency = "EUR", currentCountry, supportedLocales, onLocaleChange, onCurrencyChange, onCountryChange, }) {
     const modalRef = useRef(null);
     const [locale, setLocale] = useState(currentLocale);
     const [currency, setCurrency] = useState(currentCurrency);
@@ -301,13 +316,11 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
         return () => document.removeEventListener("keydown", handleKey);
     }, [open, handleClose]);
     // Compute the language and currency options for the selected country
-    const langCodes = COUNTRY_LANGUAGES[country] || ["fi", "en"];
     const countryCur = COUNTRY_CURRENCY[country] || "EUR";
     const currencyCodes = countryCur === "EUR"
         ? ["EUR"]
         : ["EUR", countryCur];
-    // Deduplicate languages if needed
-    const uniqueLangCodes = [...new Set(langCodes)];
+    const uniqueLangCodes = languagesFor(country, supportedLocales);
     const handleLocaleChange = (loc) => {
         setLocale(loc);
         writePrefs({ locale: loc, currency, country });
@@ -325,7 +338,7 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
      * the modal never sits in a state its own options cannot express.
      */
     const handleCountryChange = (next) => {
-        const nextLangs = COUNTRY_LANGUAGES[next] || ["en"];
+        const nextLangs = languagesFor(next, supportedLocales);
         const nextCurrency = COUNTRY_CURRENCY[next] || "EUR";
         const nextLocale = nextLangs.includes(locale) ? locale : nextLangs[0];
         const keepsCurrency = currency === "EUR" || currency === nextCurrency;

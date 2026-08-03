@@ -27,9 +27,18 @@ export interface LocaleSwitcherModalProps {
      * otherwise detection will silently override that choice on every mount.
      */
     currentCountry?: string;
+    /**
+     * The locales this product actually routes. Omit only if the product serves
+     * every language in LANGUAGE_LABELS — almost none do.
+     *
+     * Without it the modal offers whatever the selected country speaks, and
+     * picking Sweden hands the app "sv". Sopimushallinta routes fi and en only,
+     * so that produced a navigation to /en/sv/release and a 404.
+     */
+    supportedLocales?: readonly string[];
     onLocaleChange?: (locale: string) => void;
     onCurrencyChange?: (currency: string) => void;
     onCountryChange?: (country: string) => void;
 }
-export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, currentCountry, onLocaleChange, onCurrencyChange, onCountryChange, }: LocaleSwitcherModalProps): import("react").ReactPortal | null;
+export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, currentCountry, supportedLocales, onLocaleChange, onCurrencyChange, onCountryChange, }: LocaleSwitcherModalProps): import("react").ReactPortal | null;
 //# sourceMappingURL=LocaleSwitcherModal.d.ts.map

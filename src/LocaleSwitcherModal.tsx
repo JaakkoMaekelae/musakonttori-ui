@@ -179,6 +179,24 @@ const COUNTRIES_INFO: Record<string, { flag: string; name: string }> = {
 
 const COUNTRY_CODES = Object.keys(COUNTRIES_INFO);
 
+/**
+ * Languages to offer for a country, narrowed to what the product routes.
+ *
+ * When a country speaks nothing the product serves — Greece, in an app that
+ * routes fi and en — the answer is the product's own locales rather than an
+ * empty grid. Offering a language that 404s is worse than offering one that is
+ * not local.
+ */
+function languagesFor(
+  country: string,
+  supported?: readonly string[]
+): string[] {
+  const spoken = [...new Set(COUNTRY_LANGUAGES[country] ?? ["fi", "en"])];
+  if (!supported?.length) return spoken;
+  const offered = spoken.filter((code) => supported.includes(code));
+  return offered.length > 0 ? offered : [...supported];
+}
+
 // All supported language metadata. Exported because the trigger renders the
 // same flag and name as the tile the user picked — two tables would drift.
 export const LANGUAGE_LABELS: Record<string, { flag: string; name: string; subtitle: string }> = {
@@ -234,6 +252,15 @@ export interface LocaleSwitcherModalProps {
    * otherwise detection will silently override that choice on every mount.
    */
   currentCountry?: string;
+  /**
+   * The locales this product actually routes. Omit only if the product serves
+   * every language in LANGUAGE_LABELS — almost none do.
+   *
+   * Without it the modal offers whatever the selected country speaks, and
+   * picking Sweden hands the app "sv". Sopimushallinta routes fi and en only,
+   * so that produced a navigation to /en/sv/release and a 404.
+   */
+  supportedLocales?: readonly string[];
   onLocaleChange?: (locale: string) => void;
   onCurrencyChange?: (currency: string) => void;
   onCountryChange?: (country: string) => void;
@@ -245,6 +272,7 @@ export function LocaleSwitcherModal({
   currentLocale = "fi",
   currentCurrency = "EUR",
   currentCountry,
+  supportedLocales,
   onLocaleChange,
   onCurrencyChange,
   onCountryChange,
@@ -311,14 +339,12 @@ export function LocaleSwitcherModal({
   }, [open, handleClose]);
 
   // Compute the language and currency options for the selected country
-  const langCodes = COUNTRY_LANGUAGES[country] || ["fi", "en"];
   const countryCur = COUNTRY_CURRENCY[country] || "EUR";
   const currencyCodes: string[] = countryCur === "EUR"
     ? ["EUR"]
     : ["EUR", countryCur];
 
-  // Deduplicate languages if needed
-  const uniqueLangCodes = [...new Set(langCodes)];
+  const uniqueLangCodes = languagesFor(country, supportedLocales);
 
   const handleLocaleChange = (loc: string) => {
     setLocale(loc);
@@ -339,7 +365,7 @@ export function LocaleSwitcherModal({
    * the modal never sits in a state its own options cannot express.
    */
   const handleCountryChange = (next: string) => {
-    const nextLangs = COUNTRY_LANGUAGES[next] || ["en"];
+    const nextLangs = languagesFor(next, supportedLocales);
     const nextCurrency = COUNTRY_CURRENCY[next] || "EUR";
     const nextLocale = nextLangs.includes(locale) ? locale : (nextLangs[0] as string);
     const keepsCurrency = currency === "EUR" || currency === nextCurrency;
