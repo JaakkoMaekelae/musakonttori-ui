@@ -17,6 +17,46 @@ import {
  */
 export const OPEN_LOCALE_MODAL_EVENT = "mk-open-locale-modal";
 
+/**
+ * The trigger's box model, as a stylesheet rather than Tailwind utilities.
+ *
+ * Several products wrap a section in a scoped reset — sopimushallinta's landing
+ * and release shells carry `.mk-landing-root *, { padding: 0 }` and
+ * `.mk-landing-root button { border-style: none }`. Those selectors are more
+ * specific than a plain utility class, so `px-3 py-1.5 border` measured as
+ * `padding: 0px; border-width: 0px` on a real page: a flag with no button
+ * around it. That is the same failure that made products hand-roll their own
+ * trigger against their own CSS.
+ *
+ * The doubled attribute selector is deliberate — one copy loses the tie to
+ * `.mk-landing-root button` (class + type), two win it outright without
+ * reaching for !important, which a consumer could not then override at all.
+ */
+const TRIGGER_CSS = `
+[data-mk-switcher="language"][data-mk-switcher] {
+  box-sizing: border-box;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--mk-palette-border-subtle, rgba(128,128,128,0.18));
+  background: transparent;
+  color: var(--mk-palette-text-secondary, #5F6068);
+  cursor: pointer;
+  line-height: 1.25rem;
+}
+[data-mk-switcher="language"][data-mk-switcher]:hover {
+  border-color: var(--mk-palette-border-default, rgba(128,128,128,0.32));
+  color: var(--mk-palette-text-primary, #111113);
+}
+[data-mk-switcher="language"][data-mk-switcher]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--mk-palette-primary-ring, rgba(191,34,39,0.3));
+}
+[data-mk-switcher="language"] .mk-locale-trigger-flag {
+  font-size: 1rem;
+  line-height: 1;
+}
+`;
+
 export interface LocaleSwitcherTriggerProps {
   /** Current language, e.g. "fi". Normally `useLocale()` from next-intl. */
   locale: string;
@@ -62,30 +102,28 @@ export function LocaleSwitcherTrigger({
   }, [onOpen]);
 
   return (
-    <button
-      type="button"
-      data-mk-switcher="language"
-      onClick={handleClick}
-      className={cn(
-        "inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
-        "border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.18))]",
-        "text-[var(--mk-palette-text-secondary,#5F6068)]",
-        "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.32))]",
-        "hover:text-[var(--mk-palette-text-primary,#111113)]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]",
-        className
-      )}
-      aria-haspopup="dialog"
-    >
-      <span aria-hidden="true" className="text-base leading-none">
-        {label?.flag ?? "🌍"}
-      </span>
-      {variant === "full" && <span>{label?.name ?? locale.toUpperCase()}</span>}
-      <span className="sr-only">
-        Vaihda maa, kieli ja valuutta — {label?.name ?? locale.toUpperCase()},{" "}
-        {shownCurrency}
-      </span>
-    </button>
+    <>
+      <style>{TRIGGER_CSS}</style>
+      <button
+        type="button"
+        data-mk-switcher="language"
+        onClick={handleClick}
+        className={cn(
+          "mk-locale-trigger inline-flex items-center gap-2 text-sm font-medium transition-colors",
+          className
+        )}
+        aria-haspopup="dialog"
+      >
+        <span aria-hidden="true" className="mk-locale-trigger-flag">
+          {label?.flag ?? "🌍"}
+        </span>
+        {variant === "full" && <span>{label?.name ?? locale.toUpperCase()}</span>}
+        <span className="sr-only">
+          Vaihda maa, kieli ja valuutta — {label?.name ?? locale.toUpperCase()},{" "}
+          {shownCurrency}
+        </span>
+      </button>
+    </>
   );
 }
 

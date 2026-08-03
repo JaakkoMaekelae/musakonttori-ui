@@ -67,6 +67,18 @@ describe("LocaleSwitcherTrigger", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
+  it("carries its own box model, so a product's scoped reset cannot flatten it", () => {
+    const { container } = render(<LocaleSwitcherTrigger locale="fi" />);
+    const css = container.querySelector("style")?.textContent ?? "";
+    // Doubled attribute selector: one copy ties with `.mk-landing-root button`
+    // and loses on source order.
+    expect(css).toContain('[data-mk-switcher="language"][data-mk-switcher]');
+    expect(css).toMatch(/padding:\s*0\.375rem 0\.75rem/);
+    expect(css).toMatch(/border:\s*1px solid/);
+    // !important would leave consumers no way to override at all.
+    expect(css).not.toContain("!important");
+  });
+
   it("asks for the modal by dispatching the open event", () => {
     const heard = vi.fn();
     document.addEventListener(OPEN_LOCALE_MODAL_EVENT, heard);

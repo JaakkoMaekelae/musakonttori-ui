@@ -11,6 +11,45 @@ import { LocaleSwitcherModal, LOCALE_PREFS_EVENT, readLocalePrefs, LANGUAGE_LABE
  */
 export const OPEN_LOCALE_MODAL_EVENT = "mk-open-locale-modal";
 /**
+ * The trigger's box model, as a stylesheet rather than Tailwind utilities.
+ *
+ * Several products wrap a section in a scoped reset — sopimushallinta's landing
+ * and release shells carry `.mk-landing-root *, { padding: 0 }` and
+ * `.mk-landing-root button { border-style: none }`. Those selectors are more
+ * specific than a plain utility class, so `px-3 py-1.5 border` measured as
+ * `padding: 0px; border-width: 0px` on a real page: a flag with no button
+ * around it. That is the same failure that made products hand-roll their own
+ * trigger against their own CSS.
+ *
+ * The doubled attribute selector is deliberate — one copy loses the tie to
+ * `.mk-landing-root button` (class + type), two win it outright without
+ * reaching for !important, which a consumer could not then override at all.
+ */
+const TRIGGER_CSS = `
+[data-mk-switcher="language"][data-mk-switcher] {
+  box-sizing: border-box;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--mk-palette-border-subtle, rgba(128,128,128,0.18));
+  background: transparent;
+  color: var(--mk-palette-text-secondary, #5F6068);
+  cursor: pointer;
+  line-height: 1.25rem;
+}
+[data-mk-switcher="language"][data-mk-switcher]:hover {
+  border-color: var(--mk-palette-border-default, rgba(128,128,128,0.32));
+  color: var(--mk-palette-text-primary, #111113);
+}
+[data-mk-switcher="language"][data-mk-switcher]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--mk-palette-primary-ring, rgba(191,34,39,0.3));
+}
+[data-mk-switcher="language"] .mk-locale-trigger-flag {
+  font-size: 1rem;
+  line-height: 1;
+}
+`;
+/**
  * The button alone. Use this when the product already owns the modal — for
  * example a first-visit gate that has to decide whether to open it unprompted,
  * or suppress it on a route that runs its own locale flow.
@@ -30,7 +69,7 @@ export function LocaleSwitcherTrigger({ locale, currency = "EUR", variant = "fla
         }
         document.dispatchEvent(new Event(OPEN_LOCALE_MODAL_EVENT));
     }, [onOpen]);
-    return (_jsxs("button", { type: "button", "data-mk-switcher": "language", onClick: handleClick, className: cn("inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors", "border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.18))]", "text-[var(--mk-palette-text-secondary,#5F6068)]", "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.32))]", "hover:text-[var(--mk-palette-text-primary,#111113)]", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]", className), "aria-haspopup": "dialog", children: [_jsx("span", { "aria-hidden": "true", className: "text-base leading-none", children: label?.flag ?? "🌍" }), variant === "full" && _jsx("span", { children: label?.name ?? locale.toUpperCase() }), _jsxs("span", { className: "sr-only", children: ["Vaihda maa, kieli ja valuutta \u2014 ", label?.name ?? locale.toUpperCase(), ",", " ", shownCurrency] })] }));
+    return (_jsxs(_Fragment, { children: [_jsx("style", { children: TRIGGER_CSS }), _jsxs("button", { type: "button", "data-mk-switcher": "language", onClick: handleClick, className: cn("mk-locale-trigger inline-flex items-center gap-2 text-sm font-medium transition-colors", className), "aria-haspopup": "dialog", children: [_jsx("span", { "aria-hidden": "true", className: "mk-locale-trigger-flag", children: label?.flag ?? "🌍" }), variant === "full" && _jsx("span", { children: label?.name ?? locale.toUpperCase() }), _jsxs("span", { className: "sr-only", children: ["Vaihda maa, kieli ja valuutta \u2014 ", label?.name ?? locale.toUpperCase(), ",", " ", shownCurrency] })] })] }));
 }
 /**
  * The one language, country and currency control for the whole product family.
