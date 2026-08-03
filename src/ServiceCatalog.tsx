@@ -374,21 +374,64 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: Service
         </div>
 
         {!hideFooterCta && (
-          <div className="mt-12 text-center p-8 rounded-2xl bg-gradient-to-r from-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.06))] to-transparent border border-gray-100">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              {isFi ? "Haluatko useamman palvelun?" : "Want multiple services?"}
-            </h3>
-            <p className="text-gray-500 mb-6 max-w-lg mx-auto">
-              {isFi
-                ? "Räätälöidään sinulle sopiva kokonaisuus. Mitä enemmän palveluita otat, sitä paremman pakettihinnan saat."
-                : "We'll tailor a package for you. The more services you take, the better the bundle price."}
-            </p>
-            <a
-              href="mailto:hello@musakonttori.fi"
-              className="inline-flex items-center gap-2 rounded-full bg-gray-900 text-white px-8 py-3 text-base font-semibold hover:bg-gray-800 transition-colors"
-            >
-              {isFi ? "Kysy tarjous" : "Request a quote"} <ArrowRight className="h-4 w-4" />
-            </a>
+          <div className="mt-12">
+            {/* Bundle pricing examples */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              {[
+                { count: 2, discount: 20, standalone: "n. 20 €", bundle: "n. 16 €", labelFi: "Perusduo", labelEn: "Basic Duo", descFi: "Esim. Links + Promo", descEn: "e.g. Links + Promo" },
+                { count: 4, discount: 44, standalone: "n. 40 €", bundle: "n. 22 €", labelFi: "Kasvupaketti", labelEn: "Growth Pack", descFi: "Esim. Links + Promo + SoundLaunch + Mastering", descEn: "e.g. Links + Promo + SoundLaunch + Mastering", highlighted: true },
+                { count: 7, discount: 49, standalone: "58,33 €", bundle: "29,90 €", labelFi: "Kaikki palvelut", labelEn: "All Services", descFi: "Koko ekosysteemi yhdellä hinnalla", descEn: "The entire ecosystem, one price" },
+              ].map((pkg) => (
+                <div
+                  key={pkg.count}
+                  className={`rounded-2xl border p-6 text-center transition-shadow hover:shadow-md ${
+                    pkg.highlighted
+                      ? "border-[var(--mk-palette-primary,#BF2227)] bg-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.04))] ring-1 ring-[var(--mk-palette-primary,#BF2227)]/20"
+                      : "border-gray-200 bg-white"
+                  }`}
+                >
+                  {pkg.highlighted && (
+                    <span className="inline-block mb-2 rounded-full bg-[var(--mk-palette-primary,#BF2227)] text-white text-xs font-bold px-3 py-0.5">
+                      {isFi ? "Suosituin" : "Most Popular"}
+                    </span>
+                  )}
+                  <div className="text-sm font-semibold text-gray-500 mb-1">
+                    {pkg.count} {isFi ? "palvelua" : "services"}
+                  </div>
+                  <div className="text-3xl font-bold text-gray-900 mb-1">
+                    {pkg.bundle}
+                    <span className="text-base font-normal text-gray-400">/kk</span>
+                  </div>
+                  <div className="text-xs text-green-600 font-medium mb-3">
+                    -{pkg.discount} % {isFi ? "bundlessa" : "in bundle"}
+                  </div>
+                  <div className="text-xs text-gray-400 line-through mb-1">
+                    {isFi ? "erikseen" : "separately"} {pkg.standalone}/kk
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {isFi ? pkg.descFi : pkg.descEn}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div className="text-center p-8 rounded-2xl bg-gradient-to-r from-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.06))] to-transparent border border-gray-100">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                {isFi ? "Haluatko useamman palvelun?" : "Want multiple services?"}
+              </h3>
+              <p className="text-gray-500 mb-6 max-w-lg mx-auto">
+                {isFi
+                  ? "Räätälöidään sinulle sopiva kokonaisuus. Mitä enemmän palveluita otat, sitä paremman pakettihinnan saat. Kaikki 7 palvelua vain 29,90 €/kk."
+                  : "We'll tailor a package for you. The more services you take, the better the bundle price. All 7 services for just €29.90/mo."}
+              </p>
+              <a
+                href="mailto:hello@musakonttori.fi"
+                className="inline-flex items-center gap-2 rounded-full bg-gray-900 text-white px-8 py-3 text-base font-semibold hover:bg-gray-800 transition-colors"
+              >
+                {isFi ? "Kysy tarjous" : "Request a quote"} <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
           </div>
         )}
       </div>
