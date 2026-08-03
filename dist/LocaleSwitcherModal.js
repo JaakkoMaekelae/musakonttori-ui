@@ -196,6 +196,45 @@ const COUNTRIES_INFO = {
     GR: { flag: "🇬🇷", name: "Ελλάδα" },
 };
 const COUNTRY_CODES = Object.keys(COUNTRIES_INFO);
+const LABELS = {
+    fi: {
+        title: "Alueasetukset",
+        subtitle: "Maa, kieli ja valuutta",
+        country: "Maa",
+        countryHint: "Maa määrää tarjolla olevat kielet ja valuutat.",
+        language: "Kieli",
+        currency: "Valuutta",
+        saved: "Asetukset tallennetaan selaimeen",
+        close: "Sulje",
+        dialog: "Maa-, kieli- ja valuutta-asetukset",
+    },
+    en: {
+        title: "Regional settings",
+        subtitle: "Country, language and currency",
+        country: "Country",
+        countryHint: "Your country determines the available languages and currencies.",
+        language: "Language",
+        currency: "Currency",
+        saved: "Saved in your browser",
+        close: "Close",
+        dialog: "Country, language and currency settings",
+    },
+    sv: {
+        title: "Regionala inställningar",
+        subtitle: "Land, språk och valuta",
+        country: "Land",
+        countryHint: "Landet avgör vilka språk och valutor som erbjuds.",
+        language: "Språk",
+        currency: "Valuta",
+        saved: "Sparas i din webbläsare",
+        close: "Stäng",
+        dialog: "Inställningar för land, språk och valuta",
+    },
+};
+function labelsFor(locale, override) {
+    const base = LABELS[locale] ?? LABELS.en;
+    return override ? { ...base, ...override } : base;
+}
 /**
  * Languages to offer for a country, narrowed to what the product routes.
  *
@@ -253,7 +292,7 @@ const CURRENCIES_INFO = {
     CHF: { symbol: "CHF", flag: "🇨🇭", name: "Swiss Franc" },
     ISK: { symbol: "kr", flag: "🇮🇸", name: "Icelandic Króna" },
 };
-export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", currentCurrency = "EUR", currentCountry, supportedLocales, onLocaleChange, onCurrencyChange, onCountryChange, }) {
+export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", currentCurrency = "EUR", currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, }) {
     const modalRef = useRef(null);
     const [locale, setLocale] = useState(currentLocale);
     const [currency, setCurrency] = useState(currentCurrency);
@@ -321,6 +360,9 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
         ? ["EUR"]
         : ["EUR", countryCur];
     const uniqueLangCodes = languagesFor(country, supportedLocales);
+    // Keyed on the selected language, not the page's — the heading should follow
+    // the tile the user just picked, before the app has navigated.
+    const l = labelsFor(locale, labels);
     const handleLocaleChange = (loc) => {
         setLocale(loc);
         writePrefs({ locale: loc, currency, country });
@@ -369,11 +411,11 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
             opacity: visible ? 1 : 0,
             pointerEvents: visible ? "auto" : "none",
             transition: "opacity 300ms",
-        }, children: [_jsx("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-sm", onClick: handleClose, "aria-hidden": "true" }), _jsx("div", { className: "absolute inset-0 flex items-center justify-center p-4", children: _jsxs("div", { ref: modalRef, role: "dialog", "aria-modal": "true", "aria-label": "Maa-, kieli- ja valuutta-asetukset", className: cn("relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6", "transition-all duration-300", visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"), style: {
+        }, children: [_jsx("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-sm", onClick: handleClose, "aria-hidden": "true" }), _jsx("div", { className: "absolute inset-0 flex items-center justify-center p-4", children: _jsxs("div", { ref: modalRef, role: "dialog", "aria-modal": "true", "aria-label": l.dialog, className: cn("relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6", "transition-all duration-300", visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"), style: {
                         background: `var(--mk-palette-bg-surface, #FFFFFF)`,
                         borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
                         color: `var(--mk-palette-text-primary, #111113)`,
-                    }, children: [_jsx("button", { type: "button", onClick: handleClose, className: "absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10", "aria-label": "Sulje", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: _jsx(X, { className: "h-4 w-4" }) }), _jsxs("div", { className: "flex items-center gap-3 mb-6", children: [_jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl", style: { background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` }, children: _jsx(Globe, { className: "h-5 w-5", style: { color: `var(--mk-palette-primary, #BF2227)` } }) }), _jsxs("div", { children: [_jsx("h2", { className: "text-lg font-bold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: "Alueasetukset" }), _jsx("p", { className: "text-sm", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: "Maa, kieli ja valuutta" })] })] }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, id: "mk-locale-country-label", children: "Maa" }), _jsxs("div", { className: cn("flex items-center gap-3 rounded-xl border px-4 py-3 transition-all", unselectedClass), children: [_jsx("span", { className: "text-2xl", "aria-hidden": "true", children: COUNTRIES_INFO[country]?.flag ?? "🌍" }), _jsx("select", { value: country, onChange: (e) => handleCountryChange(e.target.value), "aria-labelledby": "mk-locale-country-label", className: "w-full cursor-pointer text-sm font-semibold", 
+                    }, children: [_jsx("button", { type: "button", onClick: handleClose, className: "absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10", "aria-label": l.close, style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: _jsx(X, { className: "h-4 w-4" }) }), _jsxs("div", { className: "flex items-center gap-3 mb-6", children: [_jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl", style: { background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` }, children: _jsx(Globe, { className: "h-5 w-5", style: { color: `var(--mk-palette-primary, #BF2227)` } }) }), _jsxs("div", { children: [_jsx("h2", { className: "text-lg font-bold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: l.title }), _jsx("p", { className: "text-sm", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: l.subtitle })] })] }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, id: "mk-locale-country-label", children: l.country }), _jsxs("div", { className: cn("flex items-center gap-3 rounded-xl border px-4 py-3 transition-all", unselectedClass), children: [_jsx("span", { className: "text-2xl", "aria-hidden": "true", children: COUNTRIES_INFO[country]?.flag ?? "🌍" }), _jsx("select", { value: country, onChange: (e) => handleCountryChange(e.target.value), "aria-labelledby": "mk-locale-country-label", className: "w-full cursor-pointer text-sm font-semibold", 
                                             // The native chrome is stripped inline rather than with utility
                                             // classes: the tile it sits in is already a bordered surface, and
                                             // the browser's own border drew a second box inside it. Inline
@@ -385,19 +427,19 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
                                                 outline: "none",
                                                 background: "transparent",
                                                 color: `var(--mk-palette-text-primary, #111113)`,
-                                            }, children: COUNTRY_CODES.map((code) => (_jsx("option", { value: code, children: COUNTRIES_INFO[code]?.name ?? code }, code))) }), _jsx(ChevronDown, { className: "h-4 w-4 shrink-0", "aria-hidden": "true", style: { color: `var(--mk-palette-text-secondary, #5F6068)` } })] }), _jsx("p", { className: "mt-2 text-[11px]", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: "Maa m\u00E4\u00E4r\u00E4\u00E4 tarjolla olevat kielet ja valuutat." })] }), _jsx("div", { className: "my-5 h-px", style: { background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` } }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: "Kieli" }), _jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-3", children: uniqueLangCodes.map((code) => {
+                                            }, children: COUNTRY_CODES.map((code) => (_jsx("option", { value: code, children: COUNTRIES_INFO[code]?.name ?? code }, code))) }), _jsx(ChevronDown, { className: "h-4 w-4 shrink-0", "aria-hidden": "true", style: { color: `var(--mk-palette-text-secondary, #5F6068)` } })] }), _jsx("p", { className: "mt-2 text-[11px]", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: l.countryHint })] }), _jsx("div", { className: "my-5 h-px", style: { background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` } }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: l.language }), _jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-3", children: uniqueLangCodes.map((code) => {
                                         const lang = LANGUAGE_LABELS[code];
                                         if (!lang)
                                             return null;
                                         return (_jsxs("button", { type: "button", onClick: () => handleLocaleChange(code), className: cn("relative flex flex-col items-start gap-0.5 rounded-xl border px-4 py-3 text-left transition-all", locale === code ? selectedClass : unselectedClass, locale !== code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"), children: [_jsxs("div", { className: "flex w-full items-center justify-between", children: [_jsx("span", { className: "text-2xl", children: lang.flag }), locale === code && (_jsx(Check, { className: "h-4 w-4 shrink-0", style: { color: `var(--mk-palette-primary, #BF2227)` } }))] }), _jsx("span", { className: "mt-1 text-sm font-semibold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: lang.name }), _jsx("span", { className: "text-[11px]", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: lang.subtitle })] }, code));
-                                    }) })] }), currencyCodes.length > 1 && (_jsxs(_Fragment, { children: [_jsx("div", { className: "my-5 h-px", style: { background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` } }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: "Valuutta" }), _jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-4", children: currencyCodes.map((code) => {
+                                    }) })] }), currencyCodes.length > 1 && (_jsxs(_Fragment, { children: [_jsx("div", { className: "my-5 h-px", style: { background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` } }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: l.currency }), _jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-4", children: currencyCodes.map((code) => {
                                                 const cur = CURRENCIES_INFO[code];
                                                 if (!cur)
                                                     return null;
                                                 return (_jsxs("button", { type: "button", onClick: () => handleCurrencyChange(code), className: cn("flex flex-col items-center gap-1 rounded-xl border px-2 py-3 transition-all", currency === code ? selectedClass : unselectedClass, currency !== code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"), children: [_jsx("span", { className: "text-xl font-bold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: cur.symbol }), _jsxs("div", { className: "flex items-center gap-1", children: [_jsx("span", { className: "text-[11px] font-medium", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: code }), _jsx("span", { className: "text-xs", children: cur.flag })] }), currency === code && (_jsx(Check, { className: "h-4 w-4 shrink-0", style: { color: `var(--mk-palette-primary, #BF2227)` } }))] }, code));
-                                            }) })] })] })), _jsxs("div", { className: "flex items-center justify-between pt-4", style: { borderTop: `1px solid var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }, children: [_jsx("p", { className: "text-xs", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: "Asetukset tallennetaan selaimeen" }), _jsx("button", { type: "button", onClick: handleClose, className: "rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur transition hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))] hover:text-[var(--mk-palette-text-primary,#111113)]", style: {
+                                            }) })] })] })), _jsxs("div", { className: "flex items-center justify-between pt-4", style: { borderTop: `1px solid var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }, children: [_jsx("p", { className: "text-xs", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: l.saved }), _jsx("button", { type: "button", onClick: handleClose, className: "rounded-full border px-4 py-1.5 text-sm font-medium backdrop-blur transition hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))] hover:text-[var(--mk-palette-text-primary,#111113)]", style: {
                                         borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
                                         background: `var(--mk-palette-bg-surface-secondary, #F4F4F5)`,
                                         color: `var(--mk-palette-text-secondary, #5F6068)`,
-                                    }, children: "Sulje" })] })] }) })] }), document.body);
+                                    }, children: l.close })] })] }) })] }), document.body);
 }

@@ -180,6 +180,73 @@ const COUNTRIES_INFO: Record<string, { flag: string; name: string }> = {
 const COUNTRY_CODES = Object.keys(COUNTRIES_INFO);
 
 /**
+ * The modal's own chrome, in the languages the family actually ships UI in.
+ *
+ * The language tiles were always localized — each names itself — but the
+ * headings around them were hardcoded Finnish, so an English page opened a
+ * modal reading "Alueasetukset / Maa, kieli ja valuutta". Anything not listed
+ * here falls back to English rather than to Finnish: a visitor whose language
+ * we have no strings for is more likely to read English.
+ *
+ * Products with their own translations can override the whole set via `labels`.
+ */
+export interface LocaleSwitcherLabels {
+  title: string;
+  subtitle: string;
+  country: string;
+  countryHint: string;
+  language: string;
+  currency: string;
+  saved: string;
+  close: string;
+  dialog: string;
+}
+
+const LABELS: Record<string, LocaleSwitcherLabels> = {
+  fi: {
+    title: "Alueasetukset",
+    subtitle: "Maa, kieli ja valuutta",
+    country: "Maa",
+    countryHint: "Maa määrää tarjolla olevat kielet ja valuutat.",
+    language: "Kieli",
+    currency: "Valuutta",
+    saved: "Asetukset tallennetaan selaimeen",
+    close: "Sulje",
+    dialog: "Maa-, kieli- ja valuutta-asetukset",
+  },
+  en: {
+    title: "Regional settings",
+    subtitle: "Country, language and currency",
+    country: "Country",
+    countryHint: "Your country determines the available languages and currencies.",
+    language: "Language",
+    currency: "Currency",
+    saved: "Saved in your browser",
+    close: "Close",
+    dialog: "Country, language and currency settings",
+  },
+  sv: {
+    title: "Regionala inställningar",
+    subtitle: "Land, språk och valuta",
+    country: "Land",
+    countryHint: "Landet avgör vilka språk och valutor som erbjuds.",
+    language: "Språk",
+    currency: "Valuta",
+    saved: "Sparas i din webbläsare",
+    close: "Stäng",
+    dialog: "Inställningar för land, språk och valuta",
+  },
+};
+
+function labelsFor(
+  locale: string,
+  override?: Partial<LocaleSwitcherLabels>
+): LocaleSwitcherLabels {
+  const base = LABELS[locale] ?? LABELS.en!;
+  return override ? { ...base, ...override } : base;
+}
+
+/**
  * Languages to offer for a country, narrowed to what the product routes.
  *
  * When a country speaks nothing the product serves — Greece, in an app that
@@ -261,6 +328,8 @@ export interface LocaleSwitcherModalProps {
    * so that produced a navigation to /en/sv/release and a 404.
    */
   supportedLocales?: readonly string[];
+  /** Override any of the modal's own strings. Built-in: fi, en, sv. */
+  labels?: Partial<LocaleSwitcherLabels>;
   onLocaleChange?: (locale: string) => void;
   onCurrencyChange?: (currency: string) => void;
   onCountryChange?: (country: string) => void;
@@ -273,6 +342,7 @@ export function LocaleSwitcherModal({
   currentCurrency = "EUR",
   currentCountry,
   supportedLocales,
+  labels,
   onLocaleChange,
   onCurrencyChange,
   onCountryChange,
@@ -345,6 +415,9 @@ export function LocaleSwitcherModal({
     : ["EUR", countryCur];
 
   const uniqueLangCodes = languagesFor(country, supportedLocales);
+  // Keyed on the selected language, not the page's — the heading should follow
+  // the tile the user just picked, before the app has navigated.
+  const l = labelsFor(locale, labels);
 
   const handleLocaleChange = (loc: string) => {
     setLocale(loc);
@@ -419,7 +492,7 @@ export function LocaleSwitcherModal({
           ref={modalRef}
           role="dialog"
           aria-modal="true"
-          aria-label="Maa-, kieli- ja valuutta-asetukset"
+          aria-label={l.dialog}
           className={cn(
             "relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6",
             "transition-all duration-300",
@@ -436,7 +509,7 @@ export function LocaleSwitcherModal({
           type="button"
           onClick={handleClose}
           className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10"
-          aria-label="Sulje"
+          aria-label={l.close}
           style={{ color: `var(--mk-palette-text-secondary, #5F6068)` } as React.CSSProperties}
         >
           <X className="h-4 w-4" />
@@ -451,8 +524,8 @@ export function LocaleSwitcherModal({
             <Globe className="h-5 w-5" style={{ color: `var(--mk-palette-primary, #BF2227)` } as React.CSSProperties} />
           </div>
           <div>
-            <h2 className="text-lg font-bold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>Alueasetukset</h2>
-            <p className="text-sm" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>Maa, kieli ja valuutta</p>
+            <h2 className="text-lg font-bold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>{l.title}</h2>
+            <p className="text-sm" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>{l.subtitle}</p>
           </div>
         </div>
 
@@ -468,7 +541,7 @@ export function LocaleSwitcherModal({
             style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}
             id="mk-locale-country-label"
           >
-            Maa
+            {l.country}
           </h3>
           <div
             className={cn(
@@ -510,7 +583,7 @@ export function LocaleSwitcherModal({
             />
           </div>
           <p className="mt-2 text-[11px]" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>
-            Maa määrää tarjolla olevat kielet ja valuutat.
+            {l.countryHint}
           </p>
         </section>
 
@@ -519,7 +592,7 @@ export function LocaleSwitcherModal({
         {/* Language section */}
         <section className="mb-6">
           <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}>
-            Kieli
+            {l.language}
           </h3>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {uniqueLangCodes.map((code) => {
@@ -559,7 +632,7 @@ export function LocaleSwitcherModal({
             {/* Currency section */}
             <section className="mb-6">
               <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}>
-                Valuutta
+                {l.currency}
               </h3>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {currencyCodes.map((code) => {
@@ -595,7 +668,7 @@ export function LocaleSwitcherModal({
         {/* Footer */}
         <div className="flex items-center justify-between pt-4" style={{ borderTop: `1px solid var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }}>
           <p className="text-xs" style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}>
-            Asetukset tallennetaan selaimeen
+            {l.saved}
           </p>
           <button
             type="button"
@@ -607,7 +680,7 @@ export function LocaleSwitcherModal({
               color: `var(--mk-palette-text-secondary, #5F6068)`,
             } as React.CSSProperties}
           >
-            Sulje
+            {l.close}
           </button>
         </div>
         </div>

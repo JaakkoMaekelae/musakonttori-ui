@@ -11,14 +11,17 @@ beforeEach(() => {
   localStorage.clear();
 });
 
+/** The modal's headings follow the selected language, so match all of them. */
+const COUNTRY_LABEL = /^(Maa|Country|Land)$/;
+
 const openModal = () => {
-  fireEvent.click(screen.getByRole("button", { name: /vaihda maa/i }));
+  fireEvent.click(screen.getByRole("button", { name: /vaihda maa|change country/i }));
 };
 
 describe("LocaleSwitcher trigger", () => {
   it("shows the language flag alone by default", () => {
     render(<LocaleSwitcher locale="fi" />);
-    const trigger = screen.getByRole("button", { name: /vaihda maa/i });
+    const trigger = screen.getByRole("button", { name: /vaihda maa|change country/i });
     expect(trigger).toHaveTextContent("🇫🇮");
     // The name is available to screen readers but not painted next to the flag.
     expect(trigger).not.toHaveTextContent(/^Suomi/);
@@ -26,7 +29,7 @@ describe("LocaleSwitcher trigger", () => {
 
   it("shows the language name when variant is full", () => {
     render(<LocaleSwitcher locale="en" variant="full" />);
-    expect(screen.getByRole("button", { name: /vaihda maa/i })).toHaveTextContent(
+    expect(screen.getByRole("button", { name: /vaihda maa|change country/i })).toHaveTextContent(
       "English"
     );
   });
@@ -40,7 +43,7 @@ describe("LocaleSwitcher trigger", () => {
 
   it("falls back to a globe for a language it has no label for", () => {
     render(<LocaleSwitcher locale="zz" />);
-    expect(screen.getByRole("button", { name: /vaihda maa/i })).toHaveTextContent(
+    expect(screen.getByRole("button", { name: /vaihda maa|change country/i })).toHaveTextContent(
       "🌍"
     );
   });
@@ -98,8 +101,32 @@ describe("LocaleSwitcherTrigger", () => {
       </>
     );
     // Click the header trigger, not the one the LocaleSwitcher renders.
-    fireEvent.click(screen.getAllByRole("button", { name: /vaihda maa/i })[0]!);
+    fireEvent.click(screen.getAllByRole("button", { name: /vaihda maa|change country/i })[0]!);
     expect(screen.getByRole("dialog")).toBeInTheDocument();
+  });
+});
+
+describe("LocaleSwitcher wording", () => {
+  it("speaks the selected language, not always Finnish", () => {
+    render(<LocaleSwitcher locale="en" />);
+    openModal();
+    expect(screen.getByText("Regional settings")).toBeInTheDocument();
+    expect(screen.queryByText("Alueasetukset")).not.toBeInTheDocument();
+  });
+
+  it("falls back to English for a language it has no strings for", () => {
+    render(<LocaleSwitcher locale="pt" />);
+    openModal();
+    // Not Finnish — a Portuguese speaker is likelier to read English.
+    expect(screen.getByText("Regional settings")).toBeInTheDocument();
+  });
+
+  it("lets a product override the wording with its own translations", () => {
+    render(<LocaleSwitcher locale="fi" labels={{ title: "Omat asetukset" }} />);
+    openModal();
+    expect(screen.getByText("Omat asetukset")).toBeInTheDocument();
+    // Unlisted keys keep the built-in string.
+    expect(screen.getByText("Maa, kieli ja valuutta")).toBeInTheDocument();
   });
 });
 
@@ -107,7 +134,7 @@ describe("LocaleSwitcher country selection", () => {
   it("offers the countries the modal has languages for", () => {
     render(<LocaleSwitcher locale="fi" country="FI" />);
     openModal();
-    const select = screen.getByRole("combobox", { name: "Maa" });
+    const select = screen.getByRole("combobox", { name: COUNTRY_LABEL });
     expect(select).toHaveValue("FI");
     expect(screen.getByRole("option", { name: "Sverige" })).toBeInTheDocument();
   });
@@ -128,7 +155,7 @@ describe("LocaleSwitcher country selection", () => {
 
     // Sweden offers sv/en and SEK — Finnish is not on the list, and EUR is not
     // Sweden's currency, so both have to move.
-    fireEvent.change(screen.getByRole("combobox", { name: "Maa" }), {
+    fireEvent.change(screen.getByRole("combobox", { name: COUNTRY_LABEL }), {
       target: { value: "SE" },
     });
 
@@ -149,7 +176,7 @@ describe("LocaleSwitcher country selection", () => {
     );
     openModal();
     // Norway offers EUR and NOK. SEK is neither, so it cannot survive.
-    fireEvent.change(screen.getByRole("combobox", { name: "Maa" }), {
+    fireEvent.change(screen.getByRole("combobox", { name: COUNTRY_LABEL }), {
       target: { value: "NO" },
     });
     expect(onCurrencyChange).toHaveBeenCalledWith("NOK");
@@ -165,7 +192,7 @@ describe("LocaleSwitcher country selection", () => {
       />
     );
     openModal();
-    fireEvent.change(screen.getByRole("combobox", { name: "Maa" }), {
+    fireEvent.change(screen.getByRole("combobox", { name: COUNTRY_LABEL }), {
       target: { value: "DE" },
     });
     // German is Germany's first language, but English is offered there too.
@@ -175,14 +202,14 @@ describe("LocaleSwitcher country selection", () => {
   it("persists the country so the next mount does not re-detect", () => {
     const { unmount } = render(<LocaleSwitcher locale="fi" />);
     openModal();
-    fireEvent.change(screen.getByRole("combobox", { name: "Maa" }), {
+    fireEvent.change(screen.getByRole("combobox", { name: COUNTRY_LABEL }), {
       target: { value: "PT" },
     });
     unmount();
 
     render(<LocaleSwitcher locale="pt" />);
     openModal();
-    expect(screen.getByRole("combobox", { name: "Maa" })).toHaveValue("PT");
+    expect(screen.getByRole("combobox", { name: COUNTRY_LABEL })).toHaveValue("PT");
   });
 
   it("offers only locales the product routes", () => {
@@ -206,7 +233,7 @@ describe("LocaleSwitcher country selection", () => {
     openModal();
     // Greece speaks el and en. Finnish is not offered there, so the language
     // has to move — but it must move to something routable.
-    fireEvent.change(screen.getByRole("combobox", { name: "Maa" }), {
+    fireEvent.change(screen.getByRole("combobox", { name: COUNTRY_LABEL }), {
       target: { value: "GR" },
     });
     expect(onLocaleChange).toHaveBeenCalledWith("en");
@@ -226,7 +253,7 @@ describe("LocaleSwitcher country selection", () => {
     const onCountryChange = vi.fn();
     render(<LocaleSwitcher locale="fi" onCountryChange={onCountryChange} />);
     openModal();
-    fireEvent.change(screen.getByRole("combobox", { name: "Maa" }), {
+    fireEvent.change(screen.getByRole("combobox", { name: COUNTRY_LABEL }), {
       target: { value: "NO" },
     });
     expect(onCountryChange).toHaveBeenCalledWith("NO");

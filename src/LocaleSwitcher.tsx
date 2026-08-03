@@ -7,7 +7,19 @@ import {
   LOCALE_PREFS_EVENT,
   readLocalePrefs,
   LANGUAGE_LABELS,
+  type LocaleSwitcherLabels,
 } from "./LocaleSwitcherModal";
+
+/**
+ * The trigger's accessible name. It is the only text the trigger has — the
+ * button itself shows a flag — so leaving it Finnish on an English page would
+ * mean a screen reader announcing a language the page is not in.
+ */
+const TRIGGER_LABEL: Record<string, string> = {
+  fi: "Vaihda maa, kieli ja valuutta",
+  en: "Change country, language and currency",
+  sv: "Byt land, språk och valuta",
+};
 
 /**
  * Anything on the page can ask for the modal by dispatching this event. That
@@ -119,8 +131,8 @@ export function LocaleSwitcherTrigger({
         </span>
         {variant === "full" && <span>{label?.name ?? locale.toUpperCase()}</span>}
         <span className="sr-only">
-          Vaihda maa, kieli ja valuutta — {label?.name ?? locale.toUpperCase()},{" "}
-          {shownCurrency}
+          {TRIGGER_LABEL[locale] ?? TRIGGER_LABEL.en} —{" "}
+          {label?.name ?? locale.toUpperCase()}, {shownCurrency}
         </span>
       </button>
     </>
@@ -140,6 +152,8 @@ export interface LocaleSwitcherProps {
    * product does not serve navigates to a 404.
    */
   supportedLocales?: readonly string[];
+  /** Override any of the modal's own strings. Built-in: fi, en, sv. */
+  labels?: Partial<LocaleSwitcherLabels>;
   /**
    * Called when the user picks a language. The app owns navigation: locale
    * path prefixes and localized slugs differ per product, so the library
@@ -174,6 +188,7 @@ export function LocaleSwitcher({
   currency = "EUR",
   country,
   supportedLocales,
+  labels,
   onLocaleChange,
   onCurrencyChange,
   onCountryChange,
@@ -208,6 +223,7 @@ export function LocaleSwitcher({
         currentCurrency={currency}
         currentCountry={country}
         supportedLocales={supportedLocales}
+        labels={labels}
         onLocaleChange={onLocaleChange}
         onCurrencyChange={onCurrencyChange}
         onCountryChange={onCountryChange}

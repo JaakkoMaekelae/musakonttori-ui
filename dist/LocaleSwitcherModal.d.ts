@@ -11,6 +11,28 @@ export interface LocalePrefs {
 /** Broadcast so other controls on the page (a header flag, a price list) re-read. */
 export declare const LOCALE_PREFS_EVENT = "mk-locale-prefs-changed";
 export declare function readLocalePrefs(): LocalePrefs | null;
+/**
+ * The modal's own chrome, in the languages the family actually ships UI in.
+ *
+ * The language tiles were always localized — each names itself — but the
+ * headings around them were hardcoded Finnish, so an English page opened a
+ * modal reading "Alueasetukset / Maa, kieli ja valuutta". Anything not listed
+ * here falls back to English rather than to Finnish: a visitor whose language
+ * we have no strings for is more likely to read English.
+ *
+ * Products with their own translations can override the whole set via `labels`.
+ */
+export interface LocaleSwitcherLabels {
+    title: string;
+    subtitle: string;
+    country: string;
+    countryHint: string;
+    language: string;
+    currency: string;
+    saved: string;
+    close: string;
+    dialog: string;
+}
 export declare const LANGUAGE_LABELS: Record<string, {
     flag: string;
     name: string;
@@ -36,9 +58,11 @@ export interface LocaleSwitcherModalProps {
      * so that produced a navigation to /en/sv/release and a 404.
      */
     supportedLocales?: readonly string[];
+    /** Override any of the modal's own strings. Built-in: fi, en, sv. */
+    labels?: Partial<LocaleSwitcherLabels>;
     onLocaleChange?: (locale: string) => void;
     onCurrencyChange?: (currency: string) => void;
     onCountryChange?: (country: string) => void;
 }
-export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, currentCountry, supportedLocales, onLocaleChange, onCurrencyChange, onCountryChange, }: LocaleSwitcherModalProps): import("react").ReactPortal | null;
+export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, }: LocaleSwitcherModalProps): import("react").ReactPortal | null;
 //# sourceMappingURL=LocaleSwitcherModal.d.ts.map

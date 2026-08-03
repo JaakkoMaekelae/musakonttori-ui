@@ -1,3 +1,4 @@
+import { type LocaleSwitcherLabels } from "./LocaleSwitcherModal";
 /**
  * Anything on the page can ask for the modal by dispatching this event. That
  * matters because several products put the trigger in a header that is
@@ -43,6 +44,8 @@ export interface LocaleSwitcherProps {
      * product does not serve navigates to a 404.
      */
     supportedLocales?: readonly string[];
+    /** Override any of the modal's own strings. Built-in: fi, en, sv. */
+    labels?: Partial<LocaleSwitcherLabels>;
     /**
      * Called when the user picks a language. The app owns navigation: locale
      * path prefixes and localized slugs differ per product, so the library
@@ -71,5 +74,5 @@ export interface LocaleSwitcherProps {
  * noise and the duplicated "FI · FI" read as a bug. Country and currency live
  * inside the modal and stay in the accessible name.
  */
-export declare function LocaleSwitcher({ locale, currency, country, supportedLocales, onLocaleChange, onCurrencyChange, onCountryChange, variant, className, }: LocaleSwitcherProps): import("react").JSX.Element;
+export declare function LocaleSwitcher({ locale, currency, country, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, variant, className, }: LocaleSwitcherProps): import("react").JSX.Element;
 //# sourceMappingURL=LocaleSwitcher.d.ts.map

@@ -4,6 +4,16 @@ import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { cn } from "./utils";
 import { LocaleSwitcherModal, LOCALE_PREFS_EVENT, readLocalePrefs, LANGUAGE_LABELS, } from "./LocaleSwitcherModal";
 /**
+ * The trigger's accessible name. It is the only text the trigger has — the
+ * button itself shows a flag — so leaving it Finnish on an English page would
+ * mean a screen reader announcing a language the page is not in.
+ */
+const TRIGGER_LABEL = {
+    fi: "Vaihda maa, kieli ja valuutta",
+    en: "Change country, language and currency",
+    sv: "Byt land, språk och valuta",
+};
+/**
  * Anything on the page can ask for the modal by dispatching this event. That
  * matters because several products put the trigger in a header that is
  * rendered by a server component, and also want a "change region" link in the
@@ -69,7 +79,7 @@ export function LocaleSwitcherTrigger({ locale, currency = "EUR", variant = "fla
         }
         document.dispatchEvent(new Event(OPEN_LOCALE_MODAL_EVENT));
     }, [onOpen]);
-    return (_jsxs(_Fragment, { children: [_jsx("style", { children: TRIGGER_CSS }), _jsxs("button", { type: "button", "data-mk-switcher": "language", onClick: handleClick, className: cn("mk-locale-trigger inline-flex items-center gap-2 text-sm font-medium transition-colors", className), "aria-haspopup": "dialog", children: [_jsx("span", { "aria-hidden": "true", className: "mk-locale-trigger-flag", children: label?.flag ?? "🌍" }), variant === "full" && _jsx("span", { children: label?.name ?? locale.toUpperCase() }), _jsxs("span", { className: "sr-only", children: ["Vaihda maa, kieli ja valuutta \u2014 ", label?.name ?? locale.toUpperCase(), ",", " ", shownCurrency] })] })] }));
+    return (_jsxs(_Fragment, { children: [_jsx("style", { children: TRIGGER_CSS }), _jsxs("button", { type: "button", "data-mk-switcher": "language", onClick: handleClick, className: cn("mk-locale-trigger inline-flex items-center gap-2 text-sm font-medium transition-colors", className), "aria-haspopup": "dialog", children: [_jsx("span", { "aria-hidden": "true", className: "mk-locale-trigger-flag", children: label?.flag ?? "🌍" }), variant === "full" && _jsx("span", { children: label?.name ?? locale.toUpperCase() }), _jsxs("span", { className: "sr-only", children: [TRIGGER_LABEL[locale] ?? TRIGGER_LABEL.en, " \u2014", " ", label?.name ?? locale.toUpperCase(), ", ", shownCurrency] })] })] }));
 }
 /**
  * The one language, country and currency control for the whole product family.
@@ -83,7 +93,7 @@ export function LocaleSwitcherTrigger({ locale, currency = "EUR", variant = "fla
  * noise and the duplicated "FI · FI" read as a bug. Country and currency live
  * inside the modal and stay in the accessible name.
  */
-export function LocaleSwitcher({ locale, currency = "EUR", country, supportedLocales, onLocaleChange, onCurrencyChange, onCountryChange, variant = "flag", className, }) {
+export function LocaleSwitcher({ locale, currency = "EUR", country, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, variant = "flag", className, }) {
     const [open, setOpen] = useState(false);
     // Any trigger, anywhere on the page, can open this modal.
     useEffect(() => {
@@ -92,7 +102,7 @@ export function LocaleSwitcher({ locale, currency = "EUR", country, supportedLoc
         return () => document.removeEventListener(OPEN_LOCALE_MODAL_EVENT, handler);
     }, []);
     const handleClose = useCallback(() => setOpen(false), []);
-    return (_jsxs(_Fragment, { children: [_jsx(LocaleSwitcherTrigger, { locale: locale, currency: currency, variant: variant, className: className, onOpen: () => setOpen(true) }), _jsx(LocaleSwitcherModal, { open: open, onClose: handleClose, currentLocale: locale, currentCurrency: currency, currentCountry: country, supportedLocales: supportedLocales, onLocaleChange: onLocaleChange, onCurrencyChange: onCurrencyChange, onCountryChange: onCountryChange })] }));
+    return (_jsxs(_Fragment, { children: [_jsx(LocaleSwitcherTrigger, { locale: locale, currency: currency, variant: variant, className: className, onOpen: () => setOpen(true) }), _jsx(LocaleSwitcherModal, { open: open, onClose: handleClose, currentLocale: locale, currentCurrency: currency, currentCountry: country, supportedLocales: supportedLocales, labels: labels, onLocaleChange: onLocaleChange, onCurrencyChange: onCurrencyChange, onCountryChange: onCountryChange })] }));
 }
 function subscribePrefs(onChange) {
     document.addEventListener(LOCALE_PREFS_EVENT, onChange);

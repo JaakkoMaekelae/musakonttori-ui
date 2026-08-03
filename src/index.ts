@@ -104,6 +104,7 @@ export {
   LOCALE_PREFS_EVENT,
   LANGUAGE_LABELS,
   type LocaleSwitcherModalProps,
+  type LocaleSwitcherLabels,
   type LocalePrefs,
 } from "./LocaleSwitcherModal";
 export {
