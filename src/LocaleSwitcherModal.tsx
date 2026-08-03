@@ -333,6 +333,8 @@ export interface LocaleSwitcherModalProps {
   onLocaleChange?: (locale: string) => void;
   onCurrencyChange?: (currency: string) => void;
   onCountryChange?: (country: string) => void;
+  /** Hide the country selector — country is determined server-side (geo-IP). Default false. */
+  showCountry?: boolean;
 }
 
 export function LocaleSwitcherModal({
@@ -346,6 +348,7 @@ export function LocaleSwitcherModal({
   onLocaleChange,
   onCurrencyChange,
   onCountryChange,
+  showCountry = true,
 }: LocaleSwitcherModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [locale, setLocale] = useState(currentLocale);
@@ -535,6 +538,7 @@ export function LocaleSwitcherModal({
           language, and a select gets the platform's own long-list handling on
           touch devices for free.
         */}
+        {showCountry && (
         <section className="mb-6">
           <h3
             className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
@@ -586,6 +590,7 @@ export function LocaleSwitcherModal({
             {l.countryHint}
           </p>
         </section>
+        )}
 
         <div className="my-5 h-px" style={{ background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }} />
 
