@@ -44,4 +44,5 @@ export { MARKETS, MARKET_CURRENCIES, APP_LOCALES, getMarketByCountry, getMarketB
 export { applyGeoDetection } from "./geoDetection";
 export { AppHeader, type AppHeaderProps } from "./AppHeader";
 export { AppFooter, type AppFooterProps, type AppFooterLinkGroup, } from "./AppFooter";
+export { ServiceCatalog, SERVICES, type ServiceCatalogProps, type ServiceEntry, } from "./ServiceCatalog";
 //# sourceMappingURL=index.d.ts.map

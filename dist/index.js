@@ -45,3 +45,4 @@ export { MARKETS, MARKET_CURRENCIES, APP_LOCALES, getMarketByCountry, getMarketB
 export { applyGeoDetection } from "./geoDetection";
 export { AppHeader } from "./AppHeader";
 export { AppFooter, } from "./AppFooter";
+export { ServiceCatalog, SERVICES, } from "./ServiceCatalog";

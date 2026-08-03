@@ -240,3 +240,9 @@ export {
   type AppFooterProps,
   type AppFooterLinkGroup,
 } from "./AppFooter";
+export {
+  ServiceCatalog,
+  SERVICES,
+  type ServiceCatalogProps,
+  type ServiceEntry,
+} from "./ServiceCatalog";
