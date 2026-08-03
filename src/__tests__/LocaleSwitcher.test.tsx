@@ -1,6 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { LocaleSwitcher, OPEN_LOCALE_MODAL_EVENT } from "../LocaleSwitcher";
+import {
+  LocaleSwitcher,
+  LocaleSwitcherTrigger,
+  OPEN_LOCALE_MODAL_EVENT,
+} from "../LocaleSwitcher";
 
 /** The modal persists to localStorage; each test starts from a clean slate. */
 beforeEach(() => {
@@ -52,6 +56,37 @@ describe("LocaleSwitcher trigger", () => {
   it("opens when any other control on the page dispatches the event", () => {
     render(<LocaleSwitcher locale="fi" />);
     fireEvent(document, new Event(OPEN_LOCALE_MODAL_EVENT));
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+  });
+});
+
+describe("LocaleSwitcherTrigger", () => {
+  it("renders no modal of its own", () => {
+    render(<LocaleSwitcherTrigger locale="fi" />);
+    openModal();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("asks for the modal by dispatching the open event", () => {
+    const heard = vi.fn();
+    document.addEventListener(OPEN_LOCALE_MODAL_EVENT, heard);
+    render(<LocaleSwitcherTrigger locale="fi" />);
+    openModal();
+    expect(heard).toHaveBeenCalled();
+    document.removeEventListener(OPEN_LOCALE_MODAL_EVENT, heard);
+  });
+
+  it("reaches a modal rendered elsewhere in the tree", () => {
+    render(
+      <>
+        <header>
+          <LocaleSwitcherTrigger locale="fi" />
+        </header>
+        <LocaleSwitcher locale="fi" className="sr-only" />
+      </>
+    );
+    // Click the header trigger, not the one the LocaleSwitcher renders.
+    fireEvent.click(screen.getAllByRole("button", { name: /vaihda maa/i })[0]!);
     expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
 });

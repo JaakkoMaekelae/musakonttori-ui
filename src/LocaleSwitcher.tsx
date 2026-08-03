@@ -17,6 +17,78 @@ import {
  */
 export const OPEN_LOCALE_MODAL_EVENT = "mk-open-locale-modal";
 
+export interface LocaleSwitcherTriggerProps {
+  /** Current language, e.g. "fi". Normally `useLocale()` from next-intl. */
+  locale: string;
+  /** Current currency, ISO 4217 — announced, not painted. */
+  currency?: string;
+  /**
+   * "flag" shows the language flag alone — the default, and what the header
+   * of every product uses. "full" adds the language name, for footers and
+   * settings pages where there is room and no surrounding context.
+   */
+  variant?: "flag" | "full";
+  className?: string;
+  /** Called instead of dispatching the open event. Rarely needed. */
+  onOpen?: () => void;
+}
+
+/**
+ * The button alone. Use this when the product already owns the modal — for
+ * example a first-visit gate that has to decide whether to open it unprompted,
+ * or suppress it on a route that runs its own locale flow.
+ *
+ * It asks for the modal by dispatching {@link OPEN_LOCALE_MODAL_EVENT} on the
+ * document, so the trigger and the modal need no shared React state and can
+ * live in different trees.
+ */
+export function LocaleSwitcherTrigger({
+  locale,
+  currency = "EUR",
+  variant = "flag",
+  className,
+  onOpen,
+}: LocaleSwitcherTriggerProps) {
+  const stored = useSyncExternalStore(subscribePrefs, readStoredCurrency, () => null);
+  const shownCurrency = stored ?? currency;
+  const label = LANGUAGE_LABELS[locale];
+
+  const handleClick = useCallback(() => {
+    if (onOpen) {
+      onOpen();
+      return;
+    }
+    document.dispatchEvent(new Event(OPEN_LOCALE_MODAL_EVENT));
+  }, [onOpen]);
+
+  return (
+    <button
+      type="button"
+      data-mk-switcher="language"
+      onClick={handleClick}
+      className={cn(
+        "inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
+        "border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.18))]",
+        "text-[var(--mk-palette-text-secondary,#5F6068)]",
+        "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.32))]",
+        "hover:text-[var(--mk-palette-text-primary,#111113)]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]",
+        className
+      )}
+      aria-haspopup="dialog"
+    >
+      <span aria-hidden="true" className="text-base leading-none">
+        {label?.flag ?? "🌍"}
+      </span>
+      {variant === "full" && <span>{label?.name ?? locale.toUpperCase()}</span>}
+      <span className="sr-only">
+        Vaihda maa, kieli ja valuutta — {label?.name ?? locale.toUpperCase()},{" "}
+        {shownCurrency}
+      </span>
+    </button>
+  );
+}
+
 export interface LocaleSwitcherProps {
   /** Current language, e.g. "fi". Normally `useLocale()` from next-intl. */
   locale: string;
@@ -72,42 +144,17 @@ export function LocaleSwitcher({
     return () => document.removeEventListener(OPEN_LOCALE_MODAL_EVENT, handler);
   }, []);
 
-  // The stored prefs are an external store, so the first client render already
-  // has the right value. Reading them into state inside an effect would paint
-  // the server's locale first and then flip it.
-  const stored = useSyncExternalStore(subscribePrefs, readStoredCurrency, () => null);
-  const shownCurrency = stored ?? currency;
-
-  const label = LANGUAGE_LABELS[locale];
   const handleClose = useCallback(() => setOpen(false), []);
 
   return (
     <>
-      <button
-        type="button"
-        data-mk-switcher="language"
-        onClick={() => setOpen(true)}
-        className={cn(
-          "inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
-          "border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.18))]",
-          "text-[var(--mk-palette-text-secondary,#5F6068)]",
-          "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.32))]",
-          "hover:text-[var(--mk-palette-text-primary,#111113)]",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]",
-          className
-        )}
-        aria-haspopup="dialog"
-        aria-expanded={open}
-      >
-        <span aria-hidden="true" className="text-base leading-none">
-          {label?.flag ?? "🌍"}
-        </span>
-        {variant === "full" && <span>{label?.name ?? locale.toUpperCase()}</span>}
-        <span className="sr-only">
-          Vaihda maa, kieli ja valuutta — {label?.name ?? locale.toUpperCase()},{" "}
-          {shownCurrency}
-        </span>
-      </button>
+      <LocaleSwitcherTrigger
+        locale={locale}
+        currency={currency}
+        variant={variant}
+        className={className}
+        onOpen={() => setOpen(true)}
+      />
 
       <LocaleSwitcherModal
         open={open}

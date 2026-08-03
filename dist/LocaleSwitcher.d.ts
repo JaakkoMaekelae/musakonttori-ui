@@ -5,6 +5,31 @@
  * footer — two triggers, one modal, no shared React state between them.
  */
 export declare const OPEN_LOCALE_MODAL_EVENT = "mk-open-locale-modal";
+export interface LocaleSwitcherTriggerProps {
+    /** Current language, e.g. "fi". Normally `useLocale()` from next-intl. */
+    locale: string;
+    /** Current currency, ISO 4217 — announced, not painted. */
+    currency?: string;
+    /**
+     * "flag" shows the language flag alone — the default, and what the header
+     * of every product uses. "full" adds the language name, for footers and
+     * settings pages where there is room and no surrounding context.
+     */
+    variant?: "flag" | "full";
+    className?: string;
+    /** Called instead of dispatching the open event. Rarely needed. */
+    onOpen?: () => void;
+}
+/**
+ * The button alone. Use this when the product already owns the modal — for
+ * example a first-visit gate that has to decide whether to open it unprompted,
+ * or suppress it on a route that runs its own locale flow.
+ *
+ * It asks for the modal by dispatching {@link OPEN_LOCALE_MODAL_EVENT} on the
+ * document, so the trigger and the modal need no shared React state and can
+ * live in different trees.
+ */
+export declare function LocaleSwitcherTrigger({ locale, currency, variant, className, onOpen, }: LocaleSwitcherTriggerProps): import("react").JSX.Element;
 export interface LocaleSwitcherProps {
     /** Current language, e.g. "fi". Normally `useLocale()` from next-intl. */
     locale: string;

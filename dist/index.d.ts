@@ -16,7 +16,7 @@ export { Alert, type AlertProps } from "./Alert";
 export { Tabs, TabsList, TabsTrigger, TabsContent, type TabsListProps, type TabsTriggerProps, type TabsContentProps, } from "./Tabs";
 export { Modal, type ModalProps } from "./Modal";
 export { LocaleSwitcherModal, readLocalePrefs, LOCALE_PREFS_EVENT, LANGUAGE_LABELS, type LocaleSwitcherModalProps, type LocalePrefs, } from "./LocaleSwitcherModal";
-export { LocaleSwitcher, OPEN_LOCALE_MODAL_EVENT, type LocaleSwitcherProps, } from "./LocaleSwitcher";
+export { LocaleSwitcher, LocaleSwitcherTrigger, OPEN_LOCALE_MODAL_EVENT, type LocaleSwitcherProps, type LocaleSwitcherTriggerProps, } from "./LocaleSwitcher";
 export { ThemeToggle, type ThemeToggleProps } from "./ThemeToggle";
 export { CookieConsentBanner, type CookieConsentBannerProps, } from "./CookieConsentBanner";
 export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem, } from "./Breadcrumb";

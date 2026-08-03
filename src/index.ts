@@ -108,8 +108,10 @@ export {
 } from "./LocaleSwitcherModal";
 export {
   LocaleSwitcher,
+  LocaleSwitcherTrigger,
   OPEN_LOCALE_MODAL_EVENT,
   type LocaleSwitcherProps,
+  type LocaleSwitcherTriggerProps,
 } from "./LocaleSwitcher";
 export { ThemeToggle, type ThemeToggleProps } from "./ThemeToggle";
 export {

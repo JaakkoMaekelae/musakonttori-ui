@@ -11,6 +11,28 @@ import { LocaleSwitcherModal, LOCALE_PREFS_EVENT, readLocalePrefs, LANGUAGE_LABE
  */
 export const OPEN_LOCALE_MODAL_EVENT = "mk-open-locale-modal";
 /**
+ * The button alone. Use this when the product already owns the modal — for
+ * example a first-visit gate that has to decide whether to open it unprompted,
+ * or suppress it on a route that runs its own locale flow.
+ *
+ * It asks for the modal by dispatching {@link OPEN_LOCALE_MODAL_EVENT} on the
+ * document, so the trigger and the modal need no shared React state and can
+ * live in different trees.
+ */
+export function LocaleSwitcherTrigger({ locale, currency = "EUR", variant = "flag", className, onOpen, }) {
+    const stored = useSyncExternalStore(subscribePrefs, readStoredCurrency, () => null);
+    const shownCurrency = stored ?? currency;
+    const label = LANGUAGE_LABELS[locale];
+    const handleClick = useCallback(() => {
+        if (onOpen) {
+            onOpen();
+            return;
+        }
+        document.dispatchEvent(new Event(OPEN_LOCALE_MODAL_EVENT));
+    }, [onOpen]);
+    return (_jsxs("button", { type: "button", "data-mk-switcher": "language", onClick: handleClick, className: cn("inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors", "border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.18))]", "text-[var(--mk-palette-text-secondary,#5F6068)]", "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.32))]", "hover:text-[var(--mk-palette-text-primary,#111113)]", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]", className), "aria-haspopup": "dialog", children: [_jsx("span", { "aria-hidden": "true", className: "text-base leading-none", children: label?.flag ?? "🌍" }), variant === "full" && _jsx("span", { children: label?.name ?? locale.toUpperCase() }), _jsxs("span", { className: "sr-only", children: ["Vaihda maa, kieli ja valuutta \u2014 ", label?.name ?? locale.toUpperCase(), ",", " ", shownCurrency] })] }));
+}
+/**
  * The one language, country and currency control for the whole product family.
  *
  * It replaces the per-product dropdowns, pill pairs and country selects that
@@ -30,14 +52,8 @@ export function LocaleSwitcher({ locale, currency = "EUR", country, onLocaleChan
         document.addEventListener(OPEN_LOCALE_MODAL_EVENT, handler);
         return () => document.removeEventListener(OPEN_LOCALE_MODAL_EVENT, handler);
     }, []);
-    // The stored prefs are an external store, so the first client render already
-    // has the right value. Reading them into state inside an effect would paint
-    // the server's locale first and then flip it.
-    const stored = useSyncExternalStore(subscribePrefs, readStoredCurrency, () => null);
-    const shownCurrency = stored ?? currency;
-    const label = LANGUAGE_LABELS[locale];
     const handleClose = useCallback(() => setOpen(false), []);
-    return (_jsxs(_Fragment, { children: [_jsxs("button", { type: "button", "data-mk-switcher": "language", onClick: () => setOpen(true), className: cn("inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors", "border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.18))]", "text-[var(--mk-palette-text-secondary,#5F6068)]", "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.32))]", "hover:text-[var(--mk-palette-text-primary,#111113)]", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]", className), "aria-haspopup": "dialog", "aria-expanded": open, children: [_jsx("span", { "aria-hidden": "true", className: "text-base leading-none", children: label?.flag ?? "🌍" }), variant === "full" && _jsx("span", { children: label?.name ?? locale.toUpperCase() }), _jsxs("span", { className: "sr-only", children: ["Vaihda maa, kieli ja valuutta \u2014 ", label?.name ?? locale.toUpperCase(), ",", " ", shownCurrency] })] }), _jsx(LocaleSwitcherModal, { open: open, onClose: handleClose, currentLocale: locale, currentCurrency: currency, currentCountry: country, onLocaleChange: onLocaleChange, onCurrencyChange: onCurrencyChange, onCountryChange: onCountryChange })] }));
+    return (_jsxs(_Fragment, { children: [_jsx(LocaleSwitcherTrigger, { locale: locale, currency: currency, variant: variant, className: className, onOpen: () => setOpen(true) }), _jsx(LocaleSwitcherModal, { open: open, onClose: handleClose, currentLocale: locale, currentCurrency: currency, currentCountry: country, onLocaleChange: onLocaleChange, onCurrencyChange: onCurrencyChange, onCountryChange: onCountryChange })] }));
 }
 function subscribePrefs(onChange) {
     document.addEventListener(LOCALE_PREFS_EVENT, onChange);

@@ -17,7 +17,7 @@ export { Alert } from "./Alert";
 export { Tabs, TabsList, TabsTrigger, TabsContent, } from "./Tabs";
 export { Modal } from "./Modal";
 export { LocaleSwitcherModal, readLocalePrefs, LOCALE_PREFS_EVENT, LANGUAGE_LABELS, } from "./LocaleSwitcherModal";
-export { LocaleSwitcher, OPEN_LOCALE_MODAL_EVENT, } from "./LocaleSwitcher";
+export { LocaleSwitcher, LocaleSwitcherTrigger, OPEN_LOCALE_MODAL_EVENT, } from "./LocaleSwitcher";
 export { ThemeToggle } from "./ThemeToggle";
 export { CookieConsentBanner, } from "./CookieConsentBanner";
 export { Breadcrumb, } from "./Breadcrumb";
