@@ -1,63 +1,51 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { createContext, useContext } from "react";
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import { cn } from "./utils";
 /**
  * Which background the table sits on.
  *
- * The styles below are dark-first — they read their colours from
+ * The default styling is dark-first — it reads its colours from
  * `--mk-palette-*`, whose fallbacks are dark. That is correct on a dark canvas
  * and wrong on a light one: several admin sections hardcode a white background
  * while the document still carries `data-theme="dark"`, so the tokens resolve
  * to near-white ink on white. That mismatch is why those sections kept their
- * own copy of this component instead of using it.
+ * own copy of this component.
  *
- * The surface travels by context so a call site sets it once on `<Table>`
- * rather than on every cell. Defaults to "dark", so every existing consumer
- * renders exactly what it renders today.
+ * The surface is applied as a data attribute on the wrapper and the light
+ * overrides come from a stylesheet, NOT from React context. Context would need
+ * `createContext`, which is unavailable in a server component — and these
+ * tables are rendered by server components, so it broke the build with
+ * "(0 , c.createContext) is not a function".
  */
-const SurfaceContext = createContext("dark");
-const useSurface = () => useContext(SurfaceContext);
-const BORDER = {
-    dark: "border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))]",
-    light: "border-zinc-200",
-};
-const HEADER_INK = {
-    dark: "text-[var(--mk-palette-text-tertiary,#7E8292)]",
-    light: "text-zinc-500",
-};
-const CELL_INK = {
-    dark: "text-[var(--mk-palette-text-secondary,#B0B3C1)]",
-    light: "text-zinc-700",
-};
-const ROW_HOVER = {
-    dark: "hover:bg-[var(--mk-palette-bg-muted,#2A2E3D)]",
-    light: "hover:bg-zinc-50",
-};
+const SURFACE_CSS = `
+[data-mk-table="light"] { background: #fff; border-color: #e4e4e7; }
+[data-mk-table="light"] thead tr { border-color: #e4e4e7; }
+[data-mk-table="light"] th { color: #71717a; }
+[data-mk-table="light"] tbody tr { border-color: #e4e4e7; }
+[data-mk-table="light"] tbody tr:hover { background: #fafafa; }
+[data-mk-table="light"] td { color: #3f3f46; }
+`;
 const SHELL = {
     dark: "border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] bg-[var(--mk-palette-bg-surface,#1A1D27)]",
     light: "border-zinc-200 bg-white",
 };
 export function TableHead({ children }) {
-    const surface = useSurface();
-    return (_jsx("thead", { children: _jsx("tr", { className: cn("border-b", BORDER[surface]), children: children }) }));
+    return (_jsx("thead", { children: _jsx("tr", { className: "border-b border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))]", children: children }) }));
 }
 export function TableHeaderCell({ children, align = "left", className, }) {
-    const surface = useSurface();
-    return (_jsx("th", { className: cn("px-6 py-3 font-medium", HEADER_INK[surface], align === "left" && "text-left", align === "right" && "text-right", align === "center" && "text-center", className), children: children }));
+    return (_jsx("th", { className: cn("px-6 py-3 font-medium text-[var(--mk-palette-text-tertiary,#7E8292)]", align === "left" && "text-left", align === "right" && "text-right", align === "center" && "text-center", className), children: children }));
 }
 export function TableBody({ children }) {
     return _jsx("tbody", { children: children });
 }
 export function TableRow({ children, className, onClick, }) {
-    const surface = useSurface();
-    return (_jsx("tr", { onClick: onClick, className: cn("border-b last:border-b-0 transition-colors", BORDER[surface], ROW_HOVER[surface], className), children: children }));
+    return (_jsx("tr", { onClick: onClick, className: cn("border-b border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] last:border-b-0 hover:bg-[var(--mk-palette-bg-muted,#2A2E3D)] transition-colors", className), children: children }));
 }
 export function TableCell({ children, align = "left", className, colSpan, }) {
-    const surface = useSurface();
-    return (_jsx("td", { colSpan: colSpan, className: cn("px-6 py-3", align === "left" && cn("text-left", CELL_INK[surface]), align === "right" && "text-right", align === "center" && "text-center", className), children: children }));
+    return (_jsx("td", { colSpan: colSpan, className: cn("px-6 py-3", align === "left" &&
+            "text-left text-[var(--mk-palette-text-secondary,#B0B3C1)]", align === "right" && "text-right", align === "center" && "text-center", className), children: children }));
 }
 export function Table({ children, surface = "dark", }) {
-    return (_jsx(SurfaceContext.Provider, { value: surface, children: _jsx("div", { className: cn("rounded-xl border overflow-hidden", SHELL[surface]), children: _jsx("div", { className: "overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0", children: _jsx("table", { className: "w-full text-sm", children: children }) }) }) }));
+    return (_jsxs(_Fragment, { children: [surface === "light" && _jsx("style", { children: SURFACE_CSS }), _jsx("div", { "data-mk-table": surface, className: cn("rounded-xl border overflow-hidden", SHELL[surface]), children: _jsx("div", { className: "overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0", children: _jsx("table", { className: "w-full text-sm", children: children }) }) })] }));
 }
 const SKELETON_WIDTHS = ["75%", "60%", "80%", "50%", "70%"];
 function DataTableSkeletonCell({ width }) {

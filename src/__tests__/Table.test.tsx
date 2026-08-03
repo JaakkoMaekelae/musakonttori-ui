@@ -225,23 +225,23 @@ describe("Table surface", () => {
     expect(container.innerHTML).toContain("--mk-palette-bg-surface");
   });
 
-  it("uses light borders, ink and shell when the surface is light", () => {
+  it("marks the wrapper and ships light overrides when the surface is light", () => {
     // The token fallbacks are dark. On a section that hardcodes a white
     // background — while the document still says data-theme="dark" — they
     // resolve to near-white ink on white.
     const { container } = render(<Table surface="light">{rows}</Table>);
-    const html = container.innerHTML;
-    expect(html).toContain("bg-white");
-    expect(html).toContain("border-zinc-200");
-    expect(html).toContain("text-zinc-500");
-    expect(html).toContain("text-zinc-700");
-    expect(html).not.toContain("--mk-palette-text-secondary");
+    expect(container.querySelector('[data-mk-table="light"]')).toBeInTheDocument();
+    expect(container.querySelector("style")?.textContent).toContain(
+      '[data-mk-table="light"] td',
+    );
   });
 
-  it("passes the surface down without every cell being told", () => {
-    // The point of the context: a call site sets it once on <Table>.
+  it("carries the surface without React context", () => {
+    // Context would need createContext, which a server component cannot call —
+    // these tables are rendered by server components, and using it broke the
+    // production build. The attribute plus a stylesheet keeps this RSC-safe.
     const { container } = render(<Table surface="light">{rows}</Table>);
-    expect(container.querySelector("th")?.className).toContain("text-zinc-500");
-    expect(container.querySelector("td")?.className).toContain("text-zinc-700");
+    expect(container.querySelector("th")?.className).not.toContain("text-zinc");
+    expect(container.querySelector('[data-mk-table="light"]')).toBeInTheDocument();
   });
 });

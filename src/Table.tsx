@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { cn } from "./utils";
 
 export type TableSurface = "dark" | "light";
@@ -6,40 +6,27 @@ export type TableSurface = "dark" | "light";
 /**
  * Which background the table sits on.
  *
- * The styles below are dark-first — they read their colours from
+ * The default styling is dark-first — it reads its colours from
  * `--mk-palette-*`, whose fallbacks are dark. That is correct on a dark canvas
  * and wrong on a light one: several admin sections hardcode a white background
  * while the document still carries `data-theme="dark"`, so the tokens resolve
  * to near-white ink on white. That mismatch is why those sections kept their
- * own copy of this component instead of using it.
+ * own copy of this component.
  *
- * The surface travels by context so a call site sets it once on `<Table>`
- * rather than on every cell. Defaults to "dark", so every existing consumer
- * renders exactly what it renders today.
+ * The surface is applied as a data attribute on the wrapper and the light
+ * overrides come from a stylesheet, NOT from React context. Context would need
+ * `createContext`, which is unavailable in a server component — and these
+ * tables are rendered by server components, so it broke the build with
+ * "(0 , c.createContext) is not a function".
  */
-const SurfaceContext = createContext<TableSurface>("dark");
-
-const useSurface = () => useContext(SurfaceContext);
-
-const BORDER = {
-  dark: "border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))]",
-  light: "border-zinc-200",
-} as const;
-
-const HEADER_INK = {
-  dark: "text-[var(--mk-palette-text-tertiary,#7E8292)]",
-  light: "text-zinc-500",
-} as const;
-
-const CELL_INK = {
-  dark: "text-[var(--mk-palette-text-secondary,#B0B3C1)]",
-  light: "text-zinc-700",
-} as const;
-
-const ROW_HOVER = {
-  dark: "hover:bg-[var(--mk-palette-bg-muted,#2A2E3D)]",
-  light: "hover:bg-zinc-50",
-} as const;
+const SURFACE_CSS = `
+[data-mk-table="light"] { background: #fff; border-color: #e4e4e7; }
+[data-mk-table="light"] thead tr { border-color: #e4e4e7; }
+[data-mk-table="light"] th { color: #71717a; }
+[data-mk-table="light"] tbody tr { border-color: #e4e4e7; }
+[data-mk-table="light"] tbody tr:hover { background: #fafafa; }
+[data-mk-table="light"] td { color: #3f3f46; }
+`;
 
 const SHELL = {
   dark: "border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] bg-[var(--mk-palette-bg-surface,#1A1D27)]",
@@ -47,10 +34,9 @@ const SHELL = {
 } as const;
 
 export function TableHead({ children }: { children: React.ReactNode }) {
-  const surface = useSurface();
   return (
     <thead>
-      <tr className={cn("border-b", BORDER[surface])}>{children}</tr>
+      <tr className={"border-b border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))]"}>{children}</tr>
     </thead>
   );
 }
@@ -64,12 +50,10 @@ export function TableHeaderCell({
   align?: "left" | "right" | "center";
   className?: string;
 }) {
-  const surface = useSurface();
   return (
     <th
       className={cn(
-        "px-6 py-3 font-medium",
-        HEADER_INK[surface],
+        "px-6 py-3 font-medium text-[var(--mk-palette-text-tertiary,#7E8292)]",
         align === "left" && "text-left",
         align === "right" && "text-right",
         align === "center" && "text-center",
@@ -94,14 +78,11 @@ export function TableRow({
   className?: string;
   onClick?: () => void;
 }) {
-  const surface = useSurface();
   return (
     <tr
       onClick={onClick}
       className={cn(
-        "border-b last:border-b-0 transition-colors",
-        BORDER[surface],
-        ROW_HOVER[surface],
+        "border-b border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] last:border-b-0 hover:bg-[var(--mk-palette-bg-muted,#2A2E3D)] transition-colors",
         className
       )}
     >
@@ -121,13 +102,13 @@ export function TableCell({
   className?: string;
   colSpan?: number;
 }) {
-  const surface = useSurface();
   return (
     <td
       colSpan={colSpan}
       className={cn(
         "px-6 py-3",
-        align === "left" && cn("text-left", CELL_INK[surface]),
+        align === "left" &&
+          "text-left text-[var(--mk-palette-text-secondary,#B0B3C1)]",
         align === "right" && "text-right",
         align === "center" && "text-center",
         className
@@ -146,13 +127,17 @@ export function Table({
   surface?: TableSurface;
 }) {
   return (
-    <SurfaceContext.Provider value={surface}>
-      <div className={cn("rounded-xl border overflow-hidden", SHELL[surface])}>
+    <>
+      {surface === "light" && <style>{SURFACE_CSS}</style>}
+      <div
+        data-mk-table={surface}
+        className={cn("rounded-xl border overflow-hidden", SHELL[surface])}
+      >
         <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
           <table className="w-full text-sm">{children}</table>
         </div>
       </div>
-    </SurfaceContext.Provider>
+    </>
   );
 }
 
