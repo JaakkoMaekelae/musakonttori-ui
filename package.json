@@ -177,12 +177,12 @@
       "types": "./dist/AppFooter.d.ts"
     },
     "./markets": {
-      "import": "./src/markets.ts",
-      "types": "./src/markets.ts"
+      "import": "./dist/markets.js",
+      "types": "./dist/markets.d.ts"
     },
     "./geoDetection": {
-      "import": "./src/geoDetection.ts",
-      "types": "./src/geoDetection.ts"
+      "import": "./dist/geoDetection.js",
+      "types": "./dist/geoDetection.d.ts"
     }
   },
   "files": [
