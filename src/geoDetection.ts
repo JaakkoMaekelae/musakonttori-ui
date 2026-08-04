@@ -7,7 +7,7 @@
  *
  * Usage in middleware/proxy.ts:
  *
- *   import { applyGeoDetection } from "@musakonttori/ui/markets";
+ *   import { applyGeoDetection } from "@musakonttori/ui/geoDetection";
  *
  *   export default async function middleware(req: NextRequest) {
  *     const res = NextResponse.next();
