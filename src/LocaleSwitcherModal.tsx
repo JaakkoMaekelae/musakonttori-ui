@@ -200,6 +200,13 @@ export interface LocaleSwitcherLabels {
   saved: string;
   close: string;
   dialog: string;
+  /**
+   * Used in place of `subtitle` and `dialog` when `showCountry` is false.
+   * Without these the modal keeps announcing a country section it is not
+   * rendering — "Maa, kieli ja valuutta" above language and currency alone.
+   */
+  subtitleNoCountry: string;
+  dialogNoCountry: string;
 }
 
 const LABELS: Record<string, LocaleSwitcherLabels> = {
@@ -213,6 +220,8 @@ const LABELS: Record<string, LocaleSwitcherLabels> = {
     saved: "Asetukset tallennetaan selaimeen",
     close: "Sulje",
     dialog: "Maa-, kieli- ja valuutta-asetukset",
+    subtitleNoCountry: "Kieli ja valuutta",
+    dialogNoCountry: "Kieli- ja valuutta-asetukset",
   },
   en: {
     title: "Regional settings",
@@ -224,6 +233,8 @@ const LABELS: Record<string, LocaleSwitcherLabels> = {
     saved: "Saved in your browser",
     close: "Close",
     dialog: "Country, language and currency settings",
+    subtitleNoCountry: "Language and currency",
+    dialogNoCountry: "Language and currency settings",
   },
   sv: {
     title: "Regionala inställningar",
@@ -235,6 +246,8 @@ const LABELS: Record<string, LocaleSwitcherLabels> = {
     saved: "Sparas i din webbläsare",
     close: "Stäng",
     dialog: "Inställningar för land, språk och valuta",
+    subtitleNoCountry: "Språk och valuta",
+    dialogNoCountry: "Inställningar för språk och valuta",
   },
 };
 
@@ -333,7 +346,15 @@ export interface LocaleSwitcherModalProps {
   onLocaleChange?: (locale: string) => void;
   onCurrencyChange?: (currency: string) => void;
   onCountryChange?: (country: string) => void;
-  /** Hide the country selector — country is determined server-side (geo-IP). Default false. */
+  /**
+   * Render the country picker. Default true.
+   *
+   * Turn it off where the country is not the visitor's to choose in this
+   * dialog — SoundLaunch settles it on the pricing page, from which currency
+   * follows, so offering it here as well invited two answers to one question.
+   * The country is still tracked; only its control is hidden, and the heading
+   * and dialog name switch to their no-country wording.
+   */
   showCountry?: boolean;
 }
 
@@ -495,7 +516,7 @@ export function LocaleSwitcherModal({
           ref={modalRef}
           role="dialog"
           aria-modal="true"
-          aria-label={l.dialog}
+          aria-label={showCountry ? l.dialog : l.dialogNoCountry}
           className={cn(
             "relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6",
             "transition-all duration-300",
@@ -528,7 +549,7 @@ export function LocaleSwitcherModal({
           </div>
           <div>
             <h2 className="text-lg font-bold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>{l.title}</h2>
-            <p className="text-sm" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>{l.subtitle}</p>
+            <p className="text-sm" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>{showCountry ? l.subtitle : l.subtitleNoCountry}</p>
           </div>
         </div>
 

@@ -32,6 +32,13 @@ export interface LocaleSwitcherLabels {
     saved: string;
     close: string;
     dialog: string;
+    /**
+     * Used in place of `subtitle` and `dialog` when `showCountry` is false.
+     * Without these the modal keeps announcing a country section it is not
+     * rendering — "Maa, kieli ja valuutta" above language and currency alone.
+     */
+    subtitleNoCountry: string;
+    dialogNoCountry: string;
 }
 export declare const LANGUAGE_LABELS: Record<string, {
     flag: string;
@@ -63,7 +70,15 @@ export interface LocaleSwitcherModalProps {
     onLocaleChange?: (locale: string) => void;
     onCurrencyChange?: (currency: string) => void;
     onCountryChange?: (country: string) => void;
-    /** Hide the country selector — country is determined server-side (geo-IP). Default false. */
+    /**
+     * Render the country picker. Default true.
+     *
+     * Turn it off where the country is not the visitor's to choose in this
+     * dialog — SoundLaunch settles it on the pricing page, from which currency
+     * follows, so offering it here as well invited two answers to one question.
+     * The country is still tracked; only its control is hidden, and the heading
+     * and dialog name switch to their no-country wording.
+     */
     showCountry?: boolean;
 }
 export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, showCountry, }: LocaleSwitcherModalProps): import("react").ReactPortal | null;

@@ -154,6 +154,8 @@ export interface LocaleSwitcherProps {
   supportedLocales?: readonly string[];
   /** Override any of the modal's own strings. Built-in: fi, en, sv. */
   labels?: Partial<LocaleSwitcherLabels>;
+  /** Render the country picker inside the modal. Default true. */
+  showCountry?: boolean;
   /**
    * Called when the user picks a language. The app owns navigation: locale
    * path prefixes and localized slugs differ per product, so the library
@@ -189,6 +191,7 @@ export function LocaleSwitcher({
   country,
   supportedLocales,
   labels,
+  showCountry = true,
   onLocaleChange,
   onCurrencyChange,
   onCountryChange,
@@ -224,6 +227,7 @@ export function LocaleSwitcher({
         currentCountry={country}
         supportedLocales={supportedLocales}
         labels={labels}
+        showCountry={showCountry}
         onLocaleChange={onLocaleChange}
         onCurrencyChange={onCurrencyChange}
         onCountryChange={onCountryChange}

@@ -46,6 +46,8 @@ export interface LocaleSwitcherProps {
     supportedLocales?: readonly string[];
     /** Override any of the modal's own strings. Built-in: fi, en, sv. */
     labels?: Partial<LocaleSwitcherLabels>;
+    /** Render the country picker inside the modal. Default true. */
+    showCountry?: boolean;
     /**
      * Called when the user picks a language. The app owns navigation: locale
      * path prefixes and localized slugs differ per product, so the library
@@ -74,5 +76,5 @@ export interface LocaleSwitcherProps {
  * noise and the duplicated "FI · FI" read as a bug. Country and currency live
  * inside the modal and stay in the accessible name.
  */
-export declare function LocaleSwitcher({ locale, currency, country, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, variant, className, }: LocaleSwitcherProps): import("react").JSX.Element;
+export declare function LocaleSwitcher({ locale, currency, country, supportedLocales, labels, showCountry, onLocaleChange, onCurrencyChange, onCountryChange, variant, className, }: LocaleSwitcherProps): import("react").JSX.Element;
 //# sourceMappingURL=LocaleSwitcher.d.ts.map

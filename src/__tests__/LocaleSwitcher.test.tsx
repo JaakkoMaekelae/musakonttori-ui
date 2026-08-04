@@ -258,4 +258,23 @@ describe("LocaleSwitcher country selection", () => {
     });
     expect(onCountryChange).toHaveBeenCalledWith("NO");
   });
+  it("hides the country picker, and its wording, when asked", () => {
+    render(<LocaleSwitcher locale="fi" showCountry={false} />);
+    openModal();
+
+    expect(
+      screen.queryByRole("combobox", { name: COUNTRY_LABEL })
+    ).not.toBeInTheDocument();
+
+    // The heading and the dialog's accessible name have to drop the country
+    // too, or the modal announces a section it is not rendering.
+    expect(screen.getByText("Kieli ja valuutta")).toBeInTheDocument();
+    expect(screen.queryByText("Maa, kieli ja valuutta")).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("dialog", { name: "Kieli- ja valuutta-asetukset" })
+    ).toBeInTheDocument();
+
+    // Language is still there — only the country control went away.
+    expect(screen.getByText("Selaa suomeksi")).toBeInTheDocument();
+  });
 });

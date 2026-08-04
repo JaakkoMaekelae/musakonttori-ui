@@ -207,6 +207,8 @@ const LABELS = {
         saved: "Asetukset tallennetaan selaimeen",
         close: "Sulje",
         dialog: "Maa-, kieli- ja valuutta-asetukset",
+        subtitleNoCountry: "Kieli ja valuutta",
+        dialogNoCountry: "Kieli- ja valuutta-asetukset",
     },
     en: {
         title: "Regional settings",
@@ -218,6 +220,8 @@ const LABELS = {
         saved: "Saved in your browser",
         close: "Close",
         dialog: "Country, language and currency settings",
+        subtitleNoCountry: "Language and currency",
+        dialogNoCountry: "Language and currency settings",
     },
     sv: {
         title: "Regionala inställningar",
@@ -229,6 +233,8 @@ const LABELS = {
         saved: "Sparas i din webbläsare",
         close: "Stäng",
         dialog: "Inställningar för land, språk och valuta",
+        subtitleNoCountry: "Språk och valuta",
+        dialogNoCountry: "Inställningar för språk och valuta",
     },
 };
 function labelsFor(locale, override) {
@@ -411,11 +417,11 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
             opacity: visible ? 1 : 0,
             pointerEvents: visible ? "auto" : "none",
             transition: "opacity 300ms",
-        }, children: [_jsx("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-sm", onClick: handleClose, "aria-hidden": "true" }), _jsx("div", { className: "absolute inset-0 flex items-center justify-center p-4", children: _jsxs("div", { ref: modalRef, role: "dialog", "aria-modal": "true", "aria-label": l.dialog, className: cn("relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6", "transition-all duration-300", visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"), style: {
+        }, children: [_jsx("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-sm", onClick: handleClose, "aria-hidden": "true" }), _jsx("div", { className: "absolute inset-0 flex items-center justify-center p-4", children: _jsxs("div", { ref: modalRef, role: "dialog", "aria-modal": "true", "aria-label": showCountry ? l.dialog : l.dialogNoCountry, className: cn("relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6", "transition-all duration-300", visible ? "translate-y-0 scale-100 opacity-100" : "translate-y-8 scale-[0.97] opacity-0 pointer-events-none"), style: {
                         background: `var(--mk-palette-bg-surface, #FFFFFF)`,
                         borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
                         color: `var(--mk-palette-text-primary, #111113)`,
-                    }, children: [_jsx("button", { type: "button", onClick: handleClose, className: "absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10", "aria-label": l.close, style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: _jsx(X, { className: "h-4 w-4" }) }), _jsxs("div", { className: "flex items-center gap-3 mb-6", children: [_jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl", style: { background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` }, children: _jsx(Globe, { className: "h-5 w-5", style: { color: `var(--mk-palette-primary, #BF2227)` } }) }), _jsxs("div", { children: [_jsx("h2", { className: "text-lg font-bold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: l.title }), _jsx("p", { className: "text-sm", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: l.subtitle })] })] }), showCountry && (_jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, id: "mk-locale-country-label", children: l.country }), _jsxs("div", { className: cn("flex items-center gap-3 rounded-xl border px-4 py-3 transition-all", unselectedClass), children: [_jsx("span", { className: "text-2xl", "aria-hidden": "true", children: COUNTRIES_INFO[country]?.flag ?? "🌍" }), _jsx("select", { value: country, onChange: (e) => handleCountryChange(e.target.value), "aria-labelledby": "mk-locale-country-label", className: "w-full cursor-pointer text-sm font-semibold", 
+                    }, children: [_jsx("button", { type: "button", onClick: handleClose, className: "absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10", "aria-label": l.close, style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: _jsx(X, { className: "h-4 w-4" }) }), _jsxs("div", { className: "flex items-center gap-3 mb-6", children: [_jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl", style: { background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` }, children: _jsx(Globe, { className: "h-5 w-5", style: { color: `var(--mk-palette-primary, #BF2227)` } }) }), _jsxs("div", { children: [_jsx("h2", { className: "text-lg font-bold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: l.title }), _jsx("p", { className: "text-sm", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: showCountry ? l.subtitle : l.subtitleNoCountry })] })] }), showCountry && (_jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, id: "mk-locale-country-label", children: l.country }), _jsxs("div", { className: cn("flex items-center gap-3 rounded-xl border px-4 py-3 transition-all", unselectedClass), children: [_jsx("span", { className: "text-2xl", "aria-hidden": "true", children: COUNTRIES_INFO[country]?.flag ?? "🌍" }), _jsx("select", { value: country, onChange: (e) => handleCountryChange(e.target.value), "aria-labelledby": "mk-locale-country-label", className: "w-full cursor-pointer text-sm font-semibold", 
                                             // The native chrome is stripped inline rather than with utility
                                             // classes: the tile it sits in is already a bordered surface, and
                                             // the browser's own border drew a second box inside it. Inline
