@@ -1,7 +1,7 @@
 import { type VariantProps } from "class-variance-authority";
 export type BadgeTone = "success" | "warning" | "error" | "info" | "neutral" | "red" | "purple" | "blue" | "green" | "orange" | "amber" | "pink" | "gray";
 declare const badgeVariants: (props?: ({
-    variant?: "primary" | "default" | "secondary" | "outline" | "destructive" | "neutral" | "success" | "warning" | "error" | "info" | "brand" | "red" | "purple" | "blue" | "green" | "orange" | "amber" | "pink" | "gray" | null | undefined;
+    variant?: "primary" | "default" | "secondary" | "outline" | "destructive" | "success" | "warning" | "error" | "info" | "neutral" | "red" | "purple" | "blue" | "green" | "orange" | "amber" | "pink" | "gray" | "brand" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof badgeVariants> {
     /** Color tone — compatible with old local Badge */

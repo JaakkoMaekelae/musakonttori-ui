@@ -2,7 +2,7 @@ import { type HTMLAttributes, type ImgHTMLAttributes, type ReactNode } from "rea
 import { type VariantProps } from "class-variance-authority";
 export type AvatarStatus = "online" | "away" | "busy" | "offline";
 declare const avatarVariants: (props?: ({
-    size?: "sm" | "md" | "xs" | "lg" | "xl" | null | undefined;
+    size?: "sm" | "md" | "lg" | "xs" | "xl" | null | undefined;
     shape?: "circle" | "rounded" | null | undefined;
     tone?: "neutral" | "brand" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;

@@ -189,7 +189,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "node scripts/build-tokens.mjs && tsc -p tsconfig.build.json",
+    "build": "rm -rf dist && node scripts/build-tokens.mjs && tsc -p tsconfig.build.json",
     "dev": "tsc -p tsconfig.build.json --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

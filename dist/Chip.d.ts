@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { type VariantProps } from "class-variance-authority";
 declare const chipVariants: (props?: ({
-    variant?: "neutral" | "brand" | "success" | "warning" | "error" | "info" | null | undefined;
+    variant?: "success" | "warning" | "error" | "info" | "neutral" | "brand" | null | undefined;
     size?: "sm" | "md" | null | undefined;
     selected?: boolean | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
