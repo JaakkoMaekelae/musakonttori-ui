@@ -223,7 +223,6 @@ export {
   type NotFoundPageProps,
   type NotFoundLink,
 } from "./NotFoundPage";
-export { MarketSwitcher } from "./MarketSwitcher";
 export {
   MARKETS,
   MARKET_CURRENCIES,

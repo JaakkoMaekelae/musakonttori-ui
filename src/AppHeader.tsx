@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X, User, LogOut, Building2, ChevronDown } from "lucide-react";
 import { cn } from "./utils";
 import { safeHref } from "./safeHref";
-import { MarketSwitcher } from "./MarketSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 
 export interface AppHeaderProps {
@@ -116,7 +115,6 @@ export function AppHeader({
 
         {/* Right: Tools */}
         <div className="flex items-center gap-2">
-          <MarketSwitcher size="sm" className="hidden sm:flex" />
           <ThemeToggle />
 
           {user ? (
@@ -298,7 +296,6 @@ export function AppHeader({
             )}
             {/* Mobile market switcher */}
             <div className="pt-2 pb-1">
-              <MarketSwitcher size="sm" className="sm:hidden" />
             </div>
           </div>
         </div>

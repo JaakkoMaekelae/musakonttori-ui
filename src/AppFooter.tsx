@@ -2,7 +2,6 @@
 
 import { cn } from "./utils";
 import { safeHref } from "./safeHref";
-import { MarketSwitcher } from "./MarketSwitcher";
 
 export interface AppFooterLinkGroup {
   title: string;
@@ -101,9 +100,6 @@ export function AppFooter({
             "border-t border-zinc-800",
           )}
         >
-          <div className="flex items-center gap-2">
-            <MarketSwitcher size="sm" />
-          </div>
           <p className="text-xs text-zinc-500">
             &copy; {year} {companyName}. Kaikki oikeudet pidätetään.
           </p>

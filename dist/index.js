@@ -41,7 +41,6 @@ export { safeHref } from "./safeHref";
 export { SignInLayout, } from "./SignInLayout";
 export { PageSkeleton } from "./PageSkeleton";
 export { NotFoundPage, } from "./NotFoundPage";
-export { MarketSwitcher } from "./MarketSwitcher";
 export { MARKETS, MARKET_CURRENCIES, APP_LOCALES, getMarketByCountry, getMarketByLocale, getLocaleForCountry, getCurrencyForCountry, COUNTRY_COOKIE, LOCALE_COOKIE, CURRENCY_COOKIE, } from "./markets";
 export { applyGeoDetection } from "./geoDetection";
 export { AppHeader } from "./AppHeader";

@@ -40,7 +40,6 @@ export { safeHref } from "./safeHref";
 export { SignInLayout, type SignInLayoutProps, type SignInLayoutBenefit, } from "./SignInLayout";
 export { PageSkeleton } from "./PageSkeleton";
 export { NotFoundPage, type NotFoundPageProps, type NotFoundLink, } from "./NotFoundPage";
-export { MarketSwitcher } from "./MarketSwitcher";
 export { MARKETS, MARKET_CURRENCIES, APP_LOCALES, getMarketByCountry, getMarketByLocale, getLocaleForCountry, getCurrencyForCountry, COUNTRY_COOKIE, LOCALE_COOKIE, CURRENCY_COOKIE, type CountryMarket, type Market, } from "./markets";
 export { applyGeoDetection } from "./geoDetection";
 export { AppHeader, type AppHeaderProps } from "./AppHeader";
