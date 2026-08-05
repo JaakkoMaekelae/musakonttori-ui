@@ -35,6 +35,7 @@ export { AdminSystemState, type AdminSystemStateProps, type SystemStateKind, } f
 export { StatTile, StatRow, type StatTileProps, type StatTileDelta, type StatRowProps, } from "./StatTile";
 export { useViewCursor, type UseViewCursorOptions, type ViewCursor, } from "./useViewCursor";
 export { tokens, tokensCss, brand, status, light, dark, space, radius, type as typography, shell as shellMetrics, type ThemePalette, } from "./tokens";
+export { Lockup, type LockupProps } from "./Lockup";
 export { cn } from "./utils";
 export { safeHref } from "./safeHref";
 export { SignInLayout, type SignInLayoutProps, type SignInLayoutBenefit, } from "./SignInLayout";

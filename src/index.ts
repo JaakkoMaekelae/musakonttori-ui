@@ -210,6 +210,7 @@ export {
   shell as shellMetrics,
   type ThemePalette,
 } from "./tokens";
+export { Lockup, type LockupProps } from "./Lockup";
 export { cn } from "./utils";
 export { safeHref } from "./safeHref";
 export {
