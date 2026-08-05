@@ -16,9 +16,9 @@ import {
  * mean a screen reader announcing a language the page is not in.
  */
 const TRIGGER_LABEL: Record<string, string> = {
-  fi: "Vaihda maa, kieli ja valuutta",
-  en: "Change country, language and currency",
-  sv: "Byt land, språk och valuta",
+  fi: "Vaihda kieli ja valuutta",
+  en: "Change language and currency",
+  sv: "Byt språk och valuta",
 };
 
 /**
@@ -154,8 +154,6 @@ export interface LocaleSwitcherProps {
   supportedLocales?: readonly string[];
   /** Override any of the modal's own strings. Built-in: fi, en, sv. */
   labels?: Partial<LocaleSwitcherLabels>;
-  /** Render the country picker inside the modal. Default true. */
-  showCountry?: boolean;
   /**
    * Called when the user picks a language. The app owns navigation: locale
    * path prefixes and localized slugs differ per product, so the library
@@ -163,7 +161,6 @@ export interface LocaleSwitcherProps {
    */
   onLocaleChange?: (locale: string) => void;
   onCurrencyChange?: (currency: string) => void;
-  onCountryChange?: (country: string) => void;
   /**
    * "flag" shows the language flag alone — the default, and what the header
    * of every product uses. "full" adds the language name, for footers and
@@ -191,10 +188,8 @@ export function LocaleSwitcher({
   country,
   supportedLocales,
   labels,
-  showCountry = true,
   onLocaleChange,
   onCurrencyChange,
-  onCountryChange,
   variant = "flag",
   className,
 }: LocaleSwitcherProps) {
@@ -227,10 +222,8 @@ export function LocaleSwitcher({
         currentCountry={country}
         supportedLocales={supportedLocales}
         labels={labels}
-        showCountry={showCountry}
         onLocaleChange={onLocaleChange}
         onCurrencyChange={onCurrencyChange}
-        onCountryChange={onCountryChange}
       />
     </>
   );

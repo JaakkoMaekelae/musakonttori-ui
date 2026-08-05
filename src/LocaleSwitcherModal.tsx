@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
-import { Check, ChevronDown, Globe, X } from "lucide-react";
+import { Check, Globe, X } from "lucide-react";
 import { cn } from "./utils";
 
 const STORAGE_KEY = "mk-locale-prefs-v2";
@@ -142,42 +142,6 @@ const COUNTRY_CURRENCY: Record<string, string> = {
   GR: "EUR", IE: "EUR", MT: "EUR", IS: "ISK",
 };
 
-// Country metadata for the country picker. Keyed the same as COUNTRY_LANGUAGES
-// and COUNTRY_CURRENCY — a country listed here must appear in both, or the
-// picker would offer a country with no language to browse it in.
-const COUNTRIES_INFO: Record<string, { flag: string; name: string }> = {
-  FI: { flag: "🇫🇮", name: "Suomi" },
-  SE: { flag: "🇸🇪", name: "Sverige" },
-  DK: { flag: "🇩🇰", name: "Danmark" },
-  NO: { flag: "🇳🇴", name: "Norge" },
-  IS: { flag: "🇮🇸", name: "Ísland" },
-  EE: { flag: "🇪🇪", name: "Eesti" },
-  LV: { flag: "🇱🇻", name: "Latvija" },
-  LT: { flag: "🇱🇹", name: "Lietuva" },
-  DE: { flag: "🇩🇪", name: "Deutschland" },
-  AT: { flag: "🇦🇹", name: "Österreich" },
-  CH: { flag: "🇨🇭", name: "Schweiz" },
-  NL: { flag: "🇳🇱", name: "Nederland" },
-  BE: { flag: "🇧🇪", name: "België" },
-  LU: { flag: "🇱🇺", name: "Luxembourg" },
-  FR: { flag: "🇫🇷", name: "France" },
-  IT: { flag: "🇮🇹", name: "Italia" },
-  ES: { flag: "🇪🇸", name: "España" },
-  PT: { flag: "🇵🇹", name: "Portugal" },
-  IE: { flag: "🇮🇪", name: "Ireland" },
-  MT: { flag: "🇲🇹", name: "Malta" },
-  PL: { flag: "🇵🇱", name: "Polska" },
-  CZ: { flag: "🇨🇿", name: "Česko" },
-  SK: { flag: "🇸🇰", name: "Slovensko" },
-  SI: { flag: "🇸🇮", name: "Slovenija" },
-  HU: { flag: "🇭🇺", name: "Magyarország" },
-  HR: { flag: "🇭🇷", name: "Hrvatska" },
-  RO: { flag: "🇷🇴", name: "România" },
-  BG: { flag: "🇧🇬", name: "България" },
-  GR: { flag: "🇬🇷", name: "Ελλάδα" },
-};
-
-const COUNTRY_CODES = Object.keys(COUNTRIES_INFO);
 
 /**
  * The modal's own chrome, in the languages the family actually ships UI in.
@@ -193,61 +157,40 @@ const COUNTRY_CODES = Object.keys(COUNTRIES_INFO);
 export interface LocaleSwitcherLabels {
   title: string;
   subtitle: string;
-  country: string;
-  countryHint: string;
   language: string;
   currency: string;
   saved: string;
   close: string;
   dialog: string;
-  /**
-   * Used in place of `subtitle` and `dialog` when `showCountry` is false.
-   * Without these the modal keeps announcing a country section it is not
-   * rendering — "Maa, kieli ja valuutta" above language and currency alone.
-   */
-  subtitleNoCountry: string;
-  dialogNoCountry: string;
 }
 
 const LABELS: Record<string, LocaleSwitcherLabels> = {
   fi: {
     title: "Alueasetukset",
-    subtitle: "Maa, kieli ja valuutta",
-    country: "Maa",
-    countryHint: "Maa määrää tarjolla olevat kielet ja valuutat.",
+    subtitle: "Kieli ja valuutta",
     language: "Kieli",
     currency: "Valuutta",
     saved: "Asetukset tallennetaan selaimeen",
     close: "Sulje",
-    dialog: "Maa-, kieli- ja valuutta-asetukset",
-    subtitleNoCountry: "Kieli ja valuutta",
-    dialogNoCountry: "Kieli- ja valuutta-asetukset",
+    dialog: "Kieli- ja valuutta-asetukset",
   },
   en: {
     title: "Regional settings",
-    subtitle: "Country, language and currency",
-    country: "Country",
-    countryHint: "Your country determines the available languages and currencies.",
+    subtitle: "Language and currency",
     language: "Language",
     currency: "Currency",
     saved: "Saved in your browser",
     close: "Close",
-    dialog: "Country, language and currency settings",
-    subtitleNoCountry: "Language and currency",
-    dialogNoCountry: "Language and currency settings",
+    dialog: "Language and currency settings",
   },
   sv: {
     title: "Regionala inställningar",
-    subtitle: "Land, språk och valuta",
-    country: "Land",
-    countryHint: "Landet avgör vilka språk och valutor som erbjuds.",
+    subtitle: "Språk och valuta",
     language: "Språk",
     currency: "Valuta",
     saved: "Sparas i din webbläsare",
     close: "Stäng",
-    dialog: "Inställningar för land, språk och valuta",
-    subtitleNoCountry: "Språk och valuta",
-    dialogNoCountry: "Inställningar för språk och valuta",
+    dialog: "Inställningar för språk och valuta",
   },
 };
 
@@ -345,17 +288,6 @@ export interface LocaleSwitcherModalProps {
   labels?: Partial<LocaleSwitcherLabels>;
   onLocaleChange?: (locale: string) => void;
   onCurrencyChange?: (currency: string) => void;
-  onCountryChange?: (country: string) => void;
-  /**
-   * Render the country picker. Default true.
-   *
-   * Turn it off where the country is not the visitor's to choose in this
-   * dialog — SoundLaunch settles it on the pricing page, from which currency
-   * follows, so offering it here as well invited two answers to one question.
-   * The country is still tracked; only its control is hidden, and the heading
-   * and dialog name switch to their no-country wording.
-   */
-  showCountry?: boolean;
 }
 
 export function LocaleSwitcherModal({
@@ -368,8 +300,6 @@ export function LocaleSwitcherModal({
   labels,
   onLocaleChange,
   onCurrencyChange,
-  onCountryChange,
-  showCountry = true,
 }: LocaleSwitcherModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [locale, setLocale] = useState(currentLocale);
@@ -455,29 +385,6 @@ export function LocaleSwitcherModal({
     onCurrencyChange?.(cur);
   };
 
-  /**
-   * Changing country can invalidate the current language and currency — a
-   * Finnish visitor switching to Greece cannot keep browsing in Finnish, and
-   * EUR is not offered outside the eurozone list. Both are re-derived here so
-   * the modal never sits in a state its own options cannot express.
-   */
-  const handleCountryChange = (next: string) => {
-    const nextLangs = languagesFor(next, supportedLocales);
-    const nextCurrency = COUNTRY_CURRENCY[next] || "EUR";
-    const nextLocale = nextLangs.includes(locale) ? locale : (nextLangs[0] as string);
-    const keepsCurrency = currency === "EUR" || currency === nextCurrency;
-    const resolvedCurrency = keepsCurrency ? currency : nextCurrency;
-
-    setCountry(next);
-    setLocale(nextLocale);
-    setCurrency(resolvedCurrency);
-    writePrefs({ locale: nextLocale, currency: resolvedCurrency, country: next });
-
-    onCountryChange?.(next);
-    if (resolvedCurrency !== currency) onCurrencyChange?.(resolvedCurrency);
-    // Last, because consumers navigate on this one.
-    if (nextLocale !== locale) onLocaleChange?.(nextLocale);
-  };
 
   // Selected/unselected class strings (theme-aware via CSS variable fallbacks)
   const selectedClass = cn(
@@ -516,7 +423,7 @@ export function LocaleSwitcherModal({
           ref={modalRef}
           role="dialog"
           aria-modal="true"
-          aria-label={showCountry ? l.dialog : l.dialogNoCountry}
+          aria-label={l.dialog}
           className={cn(
             "relative w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6",
             "transition-all duration-300",
@@ -549,71 +456,10 @@ export function LocaleSwitcherModal({
           </div>
           <div>
             <h2 className="text-lg font-bold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>{l.title}</h2>
-            <p className="text-sm" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>{showCountry ? l.subtitle : l.subtitleNoCountry}</p>
+            <p className="text-sm" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>{l.subtitle}</p>
           </div>
         </div>
 
-        {/*
-          Country is a native select, not a tile grid like the two sections
-          below. Thirty tiles would dominate a modal whose actual subject is
-          language, and a select gets the platform's own long-list handling on
-          touch devices for free.
-        */}
-        {showCountry && (
-        <section className="mb-6">
-          <h3
-            className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
-            style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}
-            id="mk-locale-country-label"
-          >
-            {l.country}
-          </h3>
-          <div
-            className={cn(
-              "flex items-center gap-3 rounded-xl border px-4 py-3 transition-all",
-              unselectedClass
-            )}
-          >
-            <span className="text-2xl" aria-hidden="true">
-              {COUNTRIES_INFO[country]?.flag ?? "🌍"}
-            </span>
-            <select
-              value={country}
-              onChange={(e) => handleCountryChange(e.target.value)}
-              aria-labelledby="mk-locale-country-label"
-              className="w-full cursor-pointer text-sm font-semibold"
-              // The native chrome is stripped inline rather than with utility
-              // classes: the tile it sits in is already a bordered surface, and
-              // the browser's own border drew a second box inside it. Inline
-              // also survives a product's scoped form reset.
-              style={{
-                appearance: "none",
-                WebkitAppearance: "none",
-                border: "none",
-                outline: "none",
-                background: "transparent",
-                color: `var(--mk-palette-text-primary, #111113)`,
-              } as React.CSSProperties}
-            >
-              {COUNTRY_CODES.map((code) => (
-                <option key={code} value={code}>
-                  {COUNTRIES_INFO[code]?.name ?? code}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              className="h-4 w-4 shrink-0"
-              aria-hidden="true"
-              style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}
-            />
-          </div>
-          <p className="mt-2 text-[11px]" style={{ color: `var(--mk-palette-text-secondary, #5F6068)` }}>
-            {l.countryHint}
-          </p>
-        </section>
-        )}
-
-        <div className="my-5 h-px" style={{ background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }} />
 
         {/* Language section */}
         <section className="mb-6">

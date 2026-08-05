@@ -9,9 +9,9 @@ import { LocaleSwitcherModal, LOCALE_PREFS_EVENT, readLocalePrefs, LANGUAGE_LABE
  * mean a screen reader announcing a language the page is not in.
  */
 const TRIGGER_LABEL = {
-    fi: "Vaihda maa, kieli ja valuutta",
-    en: "Change country, language and currency",
-    sv: "Byt land, språk och valuta",
+    fi: "Vaihda kieli ja valuutta",
+    en: "Change language and currency",
+    sv: "Byt språk och valuta",
 };
 /**
  * Anything on the page can ask for the modal by dispatching this event. That
@@ -93,7 +93,7 @@ export function LocaleSwitcherTrigger({ locale, currency = "EUR", variant = "fla
  * noise and the duplicated "FI · FI" read as a bug. Country and currency live
  * inside the modal and stay in the accessible name.
  */
-export function LocaleSwitcher({ locale, currency = "EUR", country, supportedLocales, labels, showCountry = true, onLocaleChange, onCurrencyChange, onCountryChange, variant = "flag", className, }) {
+export function LocaleSwitcher({ locale, currency = "EUR", country, supportedLocales, labels, onLocaleChange, onCurrencyChange, variant = "flag", className, }) {
     const [open, setOpen] = useState(false);
     // Any trigger, anywhere on the page, can open this modal.
     useEffect(() => {
@@ -102,7 +102,7 @@ export function LocaleSwitcher({ locale, currency = "EUR", country, supportedLoc
         return () => document.removeEventListener(OPEN_LOCALE_MODAL_EVENT, handler);
     }, []);
     const handleClose = useCallback(() => setOpen(false), []);
-    return (_jsxs(_Fragment, { children: [_jsx(LocaleSwitcherTrigger, { locale: locale, currency: currency, variant: variant, className: className, onOpen: () => setOpen(true) }), _jsx(LocaleSwitcherModal, { open: open, onClose: handleClose, currentLocale: locale, currentCurrency: currency, currentCountry: country, supportedLocales: supportedLocales, labels: labels, showCountry: showCountry, onLocaleChange: onLocaleChange, onCurrencyChange: onCurrencyChange, onCountryChange: onCountryChange })] }));
+    return (_jsxs(_Fragment, { children: [_jsx(LocaleSwitcherTrigger, { locale: locale, currency: currency, variant: variant, className: className, onOpen: () => setOpen(true) }), _jsx(LocaleSwitcherModal, { open: open, onClose: handleClose, currentLocale: locale, currentCurrency: currency, currentCountry: country, supportedLocales: supportedLocales, labels: labels, onLocaleChange: onLocaleChange, onCurrencyChange: onCurrencyChange })] }));
 }
 function subscribePrefs(onChange) {
     document.addEventListener(LOCALE_PREFS_EVENT, onChange);
