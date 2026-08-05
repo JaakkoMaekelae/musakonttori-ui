@@ -2,12 +2,6 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { NotFoundPage } from "../NotFoundPage";
 
-const renderLink = (href: string, children: React.ReactNode) => (
-  <a key={href} href={href}>
-    {children}
-  </a>
-);
-
 describe("NotFoundPage", () => {
   it("names the product that lost you, not just 404", () => {
     render(
@@ -18,7 +12,6 @@ describe("NotFoundPage", () => {
         title="Tätä sivua ei löytynyt"
         description="Linkki voi olla vanhentunut."
         links={[{ label: "Selaa tapahtumia", href: "/events" }]}
-        renderLink={renderLink}
       />
     );
     expect(screen.getByText("Ticketing")).toBeInTheDocument();
@@ -26,6 +19,26 @@ describe("NotFoundPage", () => {
     expect(
       screen.getByRole("heading", { name: "Tätä sivua ei löytynyt" })
     ).toBeInTheDocument();
+  });
+
+  it("renders plain anchors, so a server not-found.tsx can use it", () => {
+    // The component must not require a function prop: it is re-exported
+    // through a 'use client' barrel, and not-found.tsx is a server component.
+    // Passing a render prop across that boundary fails the production build
+    // on every prerendered page.
+    render(
+      <NotFoundPage
+        product="Links"
+        initial="L"
+        accent={["#4F46E5", "#A855F7"]}
+        title="Hukassa"
+        description="."
+        links={[{ label: "Oma paneeli", href: "/dashboard" }]}
+      />
+    );
+    const link = screen.getByRole("link", { name: /Oma paneeli/ });
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveAttribute("href", "/dashboard");
   });
 
   it("offers the product's own destinations", () => {
@@ -40,7 +53,6 @@ describe("NotFoundPage", () => {
           { label: "Keikat", href: "/keikat", hint: "Tulevat keikat" },
           { label: "Festarit", href: "/festarit" },
         ]}
-        renderLink={renderLink}
       />
     );
     // The point of the component: a 404 that is worth landing on offers real

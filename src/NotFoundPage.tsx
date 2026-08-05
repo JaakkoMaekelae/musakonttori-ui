@@ -26,12 +26,6 @@ export interface NotFoundPageProps {
    * helps nobody. Two to four entries.
    */
   links: NotFoundLink[];
-  /**
-   * Renders one link. The app supplies this because locale prefixes and
-   * localized slugs differ per product, and the library cannot build a correct
-   * href on its own.
-   */
-  renderLink: (href: string, children: ReactNode) => ReactNode;
   /** Shown under the links, e.g. a support address. */
   footer?: ReactNode;
   className?: string;
@@ -48,6 +42,17 @@ export interface NotFoundPageProps {
  * This component keeps the frame and the lockup consistent across the family
  * and makes the products supply what is genuinely theirs: their accent, their
  * initial, and above all the destinations worth offering.
+ *
+ * The links are plain anchors rather than each app's router Link. An earlier
+ * version took a renderLink function so apps could pass their locale-aware
+ * Link; that cannot work. This module is re-exported through an index.ts
+ * marked 'use client', so it is a client component, and not-found.tsx is a
+ * server component — React refuses to serialize a function across that
+ * boundary and the build fails on every prerendered page.
+ *
+ * A hard navigation is the right behaviour here anyway: the client router has
+ * already failed to find this route, and unprefixed hrefs are redirected to
+ * the right locale by each app's middleware.
  */
 export function NotFoundPage({
   product,
@@ -56,7 +61,6 @@ export function NotFoundPage({
   title,
   description,
   links,
-  renderLink,
   footer,
   className,
 }: NotFoundPageProps) {
@@ -102,11 +106,10 @@ export function NotFoundPage({
         </p>
 
         <nav className="mt-8 flex flex-col gap-2" aria-label={`${product} — ${title}`}>
-          {links.map((link) =>
-            renderLink(
-              link.href,
-              <span
+          {links.map((link) => (
+              <a
                 key={link.href}
+                href={link.href}
                 className={cn(
                   "group flex items-center justify-between gap-4 rounded-xl border px-4 py-3 transition-colors",
                   "border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))]",
@@ -128,9 +131,8 @@ export function NotFoundPage({
                 >
                   →
                 </span>
-              </span>
-            )
-          )}
+              </a>
+          ))}
         </nav>
 
         {footer && (
