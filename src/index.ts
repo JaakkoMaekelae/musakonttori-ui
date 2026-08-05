@@ -218,6 +218,11 @@ export {
   type SignInLayoutBenefit,
 } from "./SignInLayout";
 export { PageSkeleton } from "./PageSkeleton";
+export {
+  NotFoundPage,
+  type NotFoundPageProps,
+  type NotFoundLink,
+} from "./NotFoundPage";
 export { MarketSwitcher } from "./MarketSwitcher";
 export {
   MARKETS,
