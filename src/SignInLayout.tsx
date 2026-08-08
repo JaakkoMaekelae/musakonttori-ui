@@ -60,7 +60,28 @@ export interface SignInLayoutProps {
   errorMessage?: string;
 
   className?: string;
+
+  /** Built-in form labels. Finnish defaults. */
+  labels?: {
+    emailLabel?: string;
+    emailPlaceholder?: string;
+    passwordLabel?: string;
+    passwordPlaceholder?: string;
+    showPassword?: string;
+    hidePassword?: string;
+    signInButton?: string;
+  };
 }
+
+const DEFAULT_FORM_LABELS = {
+  emailLabel: "Sähköposti",
+  emailPlaceholder: "sinä@esimerkki.fi",
+  passwordLabel: "Salasana",
+  passwordPlaceholder: "••••••••",
+  showPassword: "Näytä salasana",
+  hidePassword: "Piilota salasana",
+  signInButton: "Kirjaudu",
+};
 
 /* -------------------------------------------------------------------------- */
 /*  Sub-components                                                            */
@@ -173,6 +194,8 @@ export function SignInLayout({
   formSubtitle,
   formDescription,
   onSignIn,
+  authMode = "credentials",
+  clerkSignInUrl,
   accountsUrl,
   accountsFrom,
   registerHref,
@@ -184,7 +207,9 @@ export function SignInLayout({
   securityNote,
   errorMessage,
   className,
+  labels,
 }: SignInLayoutProps) {
+  const L = { ...DEFAULT_FORM_LABELS, ...labels };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -455,7 +480,7 @@ export function SignInLayout({
                   htmlFor="signin-email"
                   style={{ color: "var(--mk-palette-text-primary, #F0F0F3)" }}
                 >
-                  Sähköposti
+                  {L.emailLabel}
                 </label>
                 <div className="relative flex items-center">
                   <span className="pointer-events-none absolute left-4" style={{ color: "var(--mk-palette-text-tertiary, #7E8292)" }}>
@@ -469,7 +494,7 @@ export function SignInLayout({
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="sinä@esimerkki.fi"
+                    placeholder={L.emailPlaceholder}
                     aria-invalid={hasError ? "true" : undefined}
                     className="h-[54px] w-full rounded-xl border bg-transparent px-12 text-sm outline-none transition-colors duration-[160ms] ease-in-out"
                     style={{
@@ -498,7 +523,7 @@ export function SignInLayout({
                   htmlFor="signin-password"
                   style={{ color: "var(--mk-palette-text-primary, #F0F0F3)" }}
                 >
-                  Salasana
+                  {L.passwordLabel}
                 </label>
                 <div className="relative flex items-center">
                   <span className="pointer-events-none absolute left-4" style={{ color: "var(--mk-palette-text-tertiary, #7E8292)" }}>
@@ -512,7 +537,7 @@ export function SignInLayout({
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
+                    placeholder={L.passwordPlaceholder}
                     aria-invalid={hasError ? "true" : undefined}
                     className="h-[54px] w-full rounded-xl border bg-transparent px-12 text-sm outline-none transition-colors duration-[160ms] ease-in-out"
                     style={{
@@ -537,7 +562,7 @@ export function SignInLayout({
                     onClick={() => setShowPassword((v) => !v)}
                     className="absolute right-2 grid h-10 w-10 place-items-center rounded-lg border-0 bg-transparent cursor-pointer"
                     style={{ color: "var(--mk-palette-text-secondary, #B0B3C1)" }}
-                    aria-label={showPassword ? "Piilota salasana" : "Näytä salasana"}
+                    aria-label={showPassword ? L.hidePassword : L.showPassword}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = "var(--mk-palette-bg-muted, #2A2E3D)";
                       e.currentTarget.style.color = "var(--mk-palette-text-primary, #F0F0F3)";

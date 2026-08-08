@@ -14,7 +14,23 @@ export interface AppHeaderProps {
   onSignOut?: () => void;
   signInHref?: string;
   className?: string;
+  /** Translation labels. Finnish defaults for backward compatibility. */
+  labels?: {
+    mainNav?: string;
+    openUserMenu?: string;
+    userAvatar?: string;
+    userMenu?: string;
+    signOut?: string;
+  };
 }
+
+const DEFAULT_LABELS = {
+  mainNav: "Päävalikko",
+  openUserMenu: "Avaa käyttäjävalikko",
+  userAvatar: "Käyttäjä",
+  userMenu: "Käyttäjävalikko",
+  signOut: "Kirjaudu ulos",
+};
 
 export function AppHeader({
   productName,
@@ -24,7 +40,9 @@ export function AppHeader({
   onSignOut,
   signInHref = "/auth/sign-in",
   className,
+  labels,
 }: AppHeaderProps) {
+  const L = { ...DEFAULT_LABELS, ...labels };
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -92,7 +110,7 @@ export function AppHeader({
 
         {/* Center: Nav (desktop) */}
         {navItems && navItems.length > 0 && (
-          <nav className="hidden md:flex items-center gap-1 ml-4" aria-label="Päävalikko">
+          <nav className="hidden md:flex items-center gap-1 ml-4" aria-label={L.mainNav}>
             {navItems.map((item) => (
               <a
                 key={item.label}
@@ -131,12 +149,12 @@ export function AppHeader({
                 aria-expanded={userMenuOpen}
                 aria-haspopup="menu"
                 aria-controls="mk-user-menu"
-                aria-label="Avaa käyttäjävalikko"
+                aria-label={L.openUserMenu}
               >
                 {user.image ? (
                   <img
                     src={user.image}
-                    alt={user.name ?? "Käyttäjä"}
+                    alt={user.name ?? L.userAvatar}
                     className="h-7 w-7 rounded-full object-cover"
                   />
                 ) : (
@@ -157,7 +175,7 @@ export function AppHeader({
                   ref={userMenuPanelRef}
                   id="mk-user-menu"
                   role="menu"
-                  aria-label="Käyttäjävalikko"
+                  aria-label={L.userMenu}
                   className={cn(
                     "absolute right-0 top-full mt-1 w-56 rounded-xl border p-1.5 shadow-xl",
                     "bg-[var(--mk-palette-bg-surface,#FFFFFF)] dark:bg-[var(--mk-palette-bg-surface,#1A1D27)]",
