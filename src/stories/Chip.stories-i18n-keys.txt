@@ -1,0 +1,4 @@
+// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/stories/Chip.stories.tsx
+// Add these to messages/fi.json and messages/en.json
+  "tällä_viikolla": "TODO_tällä_viikolla",
+  "autobrändi": "TODO_autobrändi",

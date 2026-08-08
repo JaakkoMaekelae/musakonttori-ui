@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition, type ElementType } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "./utils";
 
 /* -------------------------------------------------------------------------- */
@@ -74,11 +75,11 @@ export interface SignInLayoutProps {
 }
 
 const DEFAULT_FORM_LABELS = {
-  emailLabel: "Sähköposti",
-  emailPlaceholder: "sinä@esimerkki.fi",
+  emailLabel: {t("auto.sähköposti")},
+  emailPlaceholder: {t("auto.sinäesimerkkifi")},
   passwordLabel: "Salasana",
   passwordPlaceholder: "••••••••",
-  showPassword: "Näytä salasana",
+  showPassword: {t("auto.näytä_salasana")},
   hidePassword: "Piilota salasana",
   signInButton: "Kirjaudu",
 };
@@ -209,6 +210,7 @@ export function SignInLayout({
   className,
   labels,
 }: SignInLayoutProps) {
+  const t = useTranslations();
   const L = { ...DEFAULT_FORM_LABELS, ...labels };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

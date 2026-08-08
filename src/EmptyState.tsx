@@ -47,7 +47,7 @@ function DefaultIcon() {
  * @example
  * <EmptyState
  *   title="Ei tapahtumia"
- *   description="Et ole vielä luonut yhtään tapahtumaa."
+ *   description={t("auto.et_ole_vielä_luonut_yhtään_tapahtumaa")}
  *   action={{ label: "Luo tapahtuma", onClick: () => {} }}
  * />
  */

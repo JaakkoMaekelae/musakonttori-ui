@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback, useState } from "react";
+import { useTranslations } from "next-intl";
 import { createPortal } from "react-dom";
 import { Check, Globe, X } from "lucide-react";
 import { cn } from "./utils";
@@ -184,13 +185,13 @@ const LABELS: Record<string, LocaleSwitcherLabels> = {
     dialog: "Language and currency settings",
   },
   sv: {
-    title: "Regionala inställningar",
-    subtitle: "Språk och valuta",
-    language: "Språk",
+    title: {t("auto.regionala_inställningar")},
+    subtitle: {t("auto.språk_och_valuta")},
+    language: {t("auto.språk")},
     currency: "Valuta",
-    saved: "Sparas i din webbläsare",
-    close: "Stäng",
-    dialog: "Inställningar för språk och valuta",
+    saved: {t("auto.sparas_i_din_webbläsare")},
+    close: {t("auto.stäng")},
+    dialog: {t("auto.inställningar_för_språk_och_valuta")},
   },
 };
 
@@ -224,10 +225,10 @@ function languagesFor(
 // same flag and name as the tile the user picked — two tables would drift.
 export const LANGUAGE_LABELS: Record<string, { flag: string; name: string; subtitle: string }> = {
   fi: { flag: "🇫🇮", name: "Suomi", subtitle: "Selaa suomeksi" },
-  sv: { flag: "🇸🇪", name: "Svenska", subtitle: "Bläddra på svenska" },
+  sv: { flag: "🇸🇪", name: "Svenska", subtitle: {t("auto.bläddra_på_svenska")} },
   en: { flag: "🇬🇧", name: "English", subtitle: "Browse in English" },
-  da: { flag: "🇩🇰", name: "Dansk", subtitle: "Gennemse på dansk" },
-  no: { flag: "🇳🇴", name: "Norsk", subtitle: "Bla gjennom på norsk" },
+  da: { flag: "🇩🇰", name: "Dansk", subtitle: {t("auto.gennemse_på_dansk")} },
+  no: { flag: "🇳🇴", name: "Norsk", subtitle: {t("auto.bla_gjennom_på_norsk")} },
   de: { flag: "🇩🇪", name: "Deutsch", subtitle: "Auf Deutsch durchsuchen" },
   fr: { flag: "🇫🇷", name: "Français", subtitle: "Parcourir en français" },
   nl: { flag: "🇳🇱", name: "Nederlands", subtitle: "Bladeren in het Nederlands" },
@@ -236,7 +237,7 @@ export const LANGUAGE_LABELS: Record<string, { flag: string; name: string; subti
   pt: { flag: "🇵🇹", name: "Português", subtitle: "Navegar em português" },
   pl: { flag: "🇵🇱", name: "Polski", subtitle: "Przeglądaj po polsku" },
   cs: { flag: "🇨🇿", name: "Čeština", subtitle: "Procházet v češtině" },
-  hu: { flag: "🇭🇺", name: "Magyar", subtitle: "Böngészés magyarul" },
+  hu: { flag: "🇭🇺", name: "Magyar", subtitle: {t("auto.böngszs_magyarul")} },
   ro: { flag: "🇷🇴", name: "Română", subtitle: "Navigați în română" },
   bg: { flag: "🇧🇬", name: "Български", subtitle: "Разглеждайте на български" },
   hr: { flag: "🇭🇷", name: "Hrvatski", subtitle: "Pregledavaj na hrvatskom" },
@@ -301,6 +302,7 @@ export function LocaleSwitcherModal({
   onLocaleChange,
   onCurrencyChange,
 }: LocaleSwitcherModalProps) {
+  const t = useTranslations();
   const modalRef = useRef<HTMLDivElement>(null);
   const [locale, setLocale] = useState(currentLocale);
   const [currency, setCurrency] = useState(currentCurrency);

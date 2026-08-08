@@ -210,7 +210,7 @@ export interface AvatarGroupProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
   "aria-label"
 > {
-  /** Localized name for the group, for example "Projektin jäsenet". */
+  /** Localized name for the group, for example {t("auto.projektin_jäsenet")}. */
   label: string;
 }
 
@@ -226,6 +226,7 @@ export function AvatarGroup({
   children,
   ...props
 }: AvatarGroupProps) {
+  const t = useTranslations();
   return (
     <div
       role="group"

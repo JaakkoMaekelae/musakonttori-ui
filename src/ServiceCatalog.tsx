@@ -44,7 +44,7 @@ export const SERVICES: ServiceEntry[] = [
   {
     key: "links",
     name: "Links",
-    taglineFi: "Artistin digitaalinen käyntikortti — älykkäät linkit ja bio-sivut",
+    taglineFi: {t({t({t({t({t({t("auto.autoautoautoautoautoartistin_digitaaline")})})})})})},
     taglineEn: "Artist's digital storefront — smart links and bio pages",
     icon: "🔗",
     pricingModel: "subscription",
@@ -54,7 +54,7 @@ export const SERVICES: ServiceEntry[] = [
       {
         name: "Starter",
         price: "4,90 €/kk",
-        featuresFi: ["5 linkkiä", "Muokattava bio", "Analytiikka", "Pikseliseuranta"],
+        featuresFi: [{t({t({t({t({t({t({t("auto.autoautoautoautoautoauto5_linkkiä")})})})})})})}, "Muokattava bio", "Analytiikka", "Pikseliseuranta"],
         featuresEn: ["5 links", "Customizable bio", "Analytics", "Pixel tracking"],
       },
       {
@@ -72,7 +72,7 @@ export const SERVICES: ServiceEntry[] = [
   {
     key: "promo",
     name: "Promo",
-    taglineFi: "Musiikkialan kampanjamoottori — some + sähköposti + AI",
+    taglineFi: {t({t("auto.automusiikkialan_kampanjamoottori__some_")})},
     taglineEn: "Music industry campaign engine — social + email + AI",
     icon: "📢",
     pricingModel: "subscription",
@@ -82,13 +82,13 @@ export const SERVICES: ServiceEntry[] = [
       {
         name: "Starter",
         price: "14,90 €/kk",
-        featuresFi: ["5 kampanjaa/kk", "Sähköposti + some", "A/B-testaus"],
+        featuresFi: ["5 kampanjaa/kk", {t({t({t({t({t({t({t("auto.autoautoautoautoautoautosähköposti__some")})})})})})})}, "A/B-testaus"],
         featuresEn: ["5 campaigns/mo", "Email + social", "A/B testing"],
       },
       {
         name: "Pro",
         price: "39,90 €/kk",
-        featuresFi: ["Rajoittamaton kampanja", "AI-sisällöntuotanto", "ROI-seuranta"],
+        featuresFi: ["Rajoittamaton kampanja", {t({t({t({t({t({t({t("auto.autoautoautoautoautoautoaisisällöntuotan")})})})})})})}, "ROI-seuranta"],
         featuresEn: ["Unlimited campaigns", "AI content generation", "ROI tracking"],
       },
     ],
@@ -122,7 +122,7 @@ export const SERVICES: ServiceEntry[] = [
       {
         name: "Albumi",
         price: "129 €",
-        featuresFi: ["7+ kappaletta", "Kaikki alustat", "Dolby Atmos", "Prioriteettijakelu", "Oma tukihenkilö"],
+        featuresFi: ["7+ kappaletta", "Kaikki alustat", "Dolby Atmos", "Prioriteettijakelu", {t({t({t({t({t({t({t("auto.autoautoautoautoautoautooma_tukihenkilö")})})})})})})}],
         featuresEn: ["7+ tracks", "All platforms", "Dolby Atmos", "Priority distribution", "Dedicated support"],
       },
     ],
@@ -162,7 +162,7 @@ export const SERVICES: ServiceEntry[] = [
       {
         name: "Studio",
         price: "59,90 €/kk",
-        featuresFi: ["Rajoittamaton", "HD-WAV + MP3 + Stems", "Batch-masterointi", "Oma ääniprofiili"],
+        featuresFi: ["Rajoittamaton", "HD-WAV + MP3 + Stems", "Batch-masterointi", {t({t({t({t({t({t({t("auto.autoautoautoautoautoautooma_ääniprofiili")})})})})})})}],
         featuresEn: ["Unlimited", "HD-WAV + MP3 + Stems", "Batch mastering", "Custom sound profile"],
       },
     ],
@@ -184,7 +184,7 @@ export const SERVICES: ServiceEntry[] = [
       {
         name: "Starter",
         price: "14,90 €/kk",
-        featuresFi: ["5 tapahtumaa", "3 lipputyyppiä", "QR-check-in", "2,5 % per-myynti"],
+        featuresFi: ["5 tapahtumaa", {t({t({t({t({t({t({t("auto.autoautoautoautoautoauto3_lipputyyppiä")})})})})})})}, "QR-check-in", "2,5 % per-myynti"],
         featuresEn: ["5 events", "3 ticket types", "QR check-in", "2.5% per sale"],
       },
       {
@@ -202,23 +202,23 @@ export const SERVICES: ServiceEntry[] = [
   {
     key: "stageflow",
     name: "StageFlow",
-    taglineFi: "Keikka-alusta — yhdistää Ticketing, Marketing ja Linksin",
+    taglineFi: {t({t({t({t({t({t("auto.autoautoautoautoautokeikkaalusta__yhdist")})})})})})},
     taglineEn: "Live event platform — combines Ticketing, Marketing and Links",
     icon: "🎪",
     pricingModel: "composite",
-    pricingSummaryFi: "Alkaen 29,90 €/kk (sisältää perustason Ticketing + Marketing + Links)",
+    pricingSummaryFi: {t({t({t({t({t({t({t("auto.autoautoautoautoautoautoalkaen_2990_kk_s")})})})})})})},
     pricingSummaryEn: "From €29.90/mo (includes basic Ticketing + Marketing + Links)",
     plans: [
       {
         name: "Artist",
         price: "29,90 €/kk",
-        featuresFi: ["Artistiprofiili", "Keikkojen hallinta", "Faniviestit", "Sisältää: Links Pro + Promo Starter"],
+        featuresFi: ["Artistiprofiili", "Keikkojen hallinta", "Faniviestit", {t({t({t({t({t({t({t("auto.autoautoautoautoautoautosisältää_links_p")})})})})})})}],
         featuresEn: ["Artist profile", "Event management", "Fan messages", "Includes: Links Pro + Promo Starter"],
       },
       {
-        name: "Järjestäjä",
+        name: {t({t({t({t({t({t({t("auto.autoautoautoautoautoautojärjestäjä")})})})})})})},
         price: "59,90 €/kk",
-        featuresFi: ["Monitapahtuma", "Artistibookkaus", "Sisältää: Ticketing Pro + Promo Pro + Links Pro"],
+        featuresFi: ["Monitapahtuma", "Artistibookkaus", {t({t({t({t({t({t({t("auto.autoautoautoautoautoautosisältää_ticketi")})})})})})})}],
         featuresEn: ["Multi-event", "Artist booking", "Includes: Ticketing Pro + Promo Pro + Links Pro"],
       },
     ],
@@ -268,7 +268,7 @@ const modelBadge: Record<string, { labelFi: string; labelEn: string; color: stri
   "one-time": { labelFi: "Kertamaksu", labelEn: "One-time", color: "bg-amber-50 text-amber-700 border-amber-200" },
   tiered: { labelFi: "Tasohinnoittelu", labelEn: "Tiered", color: "bg-purple-50 text-purple-700 border-purple-200" },
   free: { labelFi: "Ilmainen", labelEn: "Free", color: "bg-green-50 text-green-700 border-green-200" },
-  composite: { labelFi: "Yhdistelmä", labelEn: "Composite", color: "bg-indigo-50 text-indigo-700 border-indigo-200" },
+  composite: { labelFi: {t({t({t({t({t({t({t("auto.autoautoautoautoautoautoyhdistelmä")})})})})})})}, labelEn: "Composite", color: "bg-indigo-50 text-indigo-700 border-indigo-200" },
 };
 
 export interface ServiceCatalogProps {
@@ -277,6 +277,7 @@ export interface ServiceCatalogProps {
 }
 
 export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: ServiceCatalogProps) {
+  const t = useTranslations();
   const isFi = locale === "fi";
 
   return (
@@ -291,7 +292,7 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: Service
           </h2>
           <p className="sect-lead max-w-2xl mx-auto">
             {isFi
-              ? "Jokaisella palvelulla on oma hinnoittelumallinsa. Valitse tarvitsemasi palvelut — mitä enemmän käytät, sitä edullisemmaksi kokonaisuus tulee."
+              ? {t("auto.jokaisella_palvelulla_on_oma_hinnoittelu")}
               : "Each service has its own pricing model. Choose the services you need — the more you use, the better the overall price."}
             <br />
             <span className="text-sm text-gray-400 mt-1 block">
@@ -392,7 +393,7 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: Service
               {[
                 { count: 2, discount: 20, standalone: "n. 20 €", bundle: "n. 16 €", labelFi: "Perusduo", labelEn: "Basic Duo", descFi: "Esim. Links + Promo", descEn: "e.g. Links + Promo" },
                 { count: 4, discount: 44, standalone: "n. 40 €", bundle: "n. 22 €", labelFi: "Kasvupaketti", labelEn: "Growth Pack", descFi: "Esim. Links + Promo + SoundLaunch + Mastering", descEn: "e.g. Links + Promo + SoundLaunch + Mastering", highlighted: true },
-                { count: 8, discount: 49, standalone: "65,23 €", bundle: "32,90 €", labelFi: "Kaikki palvelut", labelEn: "All Services", descFi: "Koko ekosysteemi yhdellä hinnalla", descEn: "The entire ecosystem, one price" },
+                { count: 8, discount: 49, standalone: "65,23 €", bundle: "32,90 €", labelFi: "Kaikki palvelut", labelEn: "All Services", descFi: {t({t({t({t({t({t("auto.autoautoautoautoautokoko_ekosysteemi_yhd")})})})})})}, descEn: "The entire ecosystem, one price" },
               ].map((pkg) => (
                 <div
                   key={pkg.count}
@@ -434,7 +435,7 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: Service
               </h3>
               <p className="text-gray-500 mb-6 max-w-lg mx-auto">
                 {isFi
-                  ? "Räätälöidään sinulle sopiva kokonaisuus. Mitä enemmän palveluita otat, sitä paremman pakettihinnan saat. Kaikki 8 palvelua vain 32,90 €/kk."
+                  ? {t({t({t({t({t({t({t("auto.autoautoautoautoautoautoräätälöidään_sin")})})})})})})}
                   : "We'll tailor a package for you. The more services you take, the better the bundle price. All 8 services for just €32.90/mo."}
               </p>
               <a

@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "./utils";
 
 export interface AdminReportLayoutProps {
@@ -9,7 +10,7 @@ export interface AdminReportLayoutProps {
   /** Run/refresh and export. Kept apart from parameters so "export" is never
    *  mistaken for "apply". */
   actions?: ReactNode;
-  /** What the current parameters resolve to: "1.1.–31.3.2026 · 1 284 riviä". */
+  /** What the current parameters resolve to: {t("auto.113132026__1_284_riviä")}. */
   summary?: ReactNode;
   children: ReactNode;
   /**
@@ -39,6 +40,7 @@ export function AdminReportLayout({
   stale,
   className,
 }: AdminReportLayoutProps) {
+  const t = useTranslations();
   return (
     <div className={cn("flex h-full min-h-0 flex-col", className)}>
       <div className="shrink-0 border-b border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] bg-[var(--mk-palette-bg-surface,#1A1D27)] px-5 py-3">

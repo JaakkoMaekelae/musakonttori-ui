@@ -13,7 +13,7 @@ export default meta;
 type Story = StoryObj<typeof AdminShell>;
 
 const ROWS = [
-  { id: "c_4192", title: "Levytyssopimus 2026", artist: "Arvi Keräsarvi", value: "24 000 €" },
+  { id: "c_4192", title: "Levytyssopimus 2026", artist: {t("auto.arvi_keräsarvi")}, value: "24 000 €" },
   { id: "c_4193", title: "Kustannussopimus", artist: "Nova Lume", value: "8 500 €" },
   { id: "c_4194", title: "Managerisopimus", artist: "Hiekka", value: "12 000 €" },
   { id: "c_4195", title: "Sync-lisenssi #4192", artist: "Valo Kollektiivi", value: "3 200 €" },
@@ -153,10 +153,7 @@ function Demo({ initial }: { initial: DetailState }) {
           <div style={{ color: "var(--mk-palette-text-secondary)", fontSize: 12, marginTop: 4 }}>
             {row.artist}
           </div>
-          <p style={{ color: "var(--mk-palette-text-tertiary)", fontSize: 11.5, marginTop: 16 }}>
-            ↑↓ liikkuu jonossa myös laajennetussa tilassa — lista pysyy mountattuna.
-            Esc sulkee.
-          </p>
+          <p style={{ color: "var(--mk-palette-text-tertiary)", fontSize: 11.5, marginTop: 16 }}>{t({t("auto.auto_liikkuu_jonossa_myös_laajennetussa_")})}</p>
         </div>
       }
     />

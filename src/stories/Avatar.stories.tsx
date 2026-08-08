@@ -40,7 +40,7 @@ export const Initials: Story = {
 
 export const Image: Story = {
   args: {
-    name: "Matti Meikäläinen",
+    name: {t("auto.matti_meikäläinen")},
     src: "https://example.com/avatar.jpg",
     size: "xl",
   },
@@ -48,7 +48,7 @@ export const Image: Story = {
 
 export const CustomFallback: Story = {
   args: {
-    name: "Tuntematon käyttäjä",
+    name: {t("auto.tuntematon_käyttäjä")},
     fallback: <UserRound aria-hidden="true" />,
     tone: "brand",
   },
@@ -65,11 +65,11 @@ export const Presence: Story = {
 
 export const Group: Story = {
   render: () => (
-    <AvatarGroup label="Projektin jäsenet">
+    <AvatarGroup label={t("auto.projektin_jäsenet")}>
       <Avatar name="Aino Laine" tone="brand" />
-      <Avatar name="Matti Meikäläinen" />
+      <Avatar name={t("auto.matti_meikäläinen")} />
       <Avatar name="Mira Mallikas" />
-      <Avatar name="Kolme muuta jäsentä" fallback="+3" />
+      <Avatar name={t("auto.kolme_muuta_jäsentä")} fallback="+3" />
     </AvatarGroup>
   ),
 };

@@ -45,7 +45,7 @@ const STATE: Record<
 > = {
   complete: { glyph: "✓", word: "valmis", tone: "var(--mk-status-success, #10B981)" },
   current: { glyph: "●", word: "nykyinen", tone: "var(--mk-palette-accent-primary, #F44242)" },
-  hasErrors: { glyph: "!", word: "sisältää virheitä", tone: "var(--mk-status-error, #EF4444)" },
+  hasErrors: { glyph: "!", word: {t("auto.sisältää_virheitä")}, tone: "var(--mk-status-error, #EF4444)" },
   inProgress: { glyph: "◐", word: "kesken", tone: "var(--mk-status-warning, #F59E0B)" },
   optional: { glyph: "○", word: "valinnainen", tone: "var(--mk-palette-text-tertiary, #7E8292)" },
   skipped: { glyph: "–", word: "ohitettu", tone: "var(--mk-palette-text-tertiary, #7E8292)", muted: true },
@@ -64,6 +64,7 @@ const STATE: Record<
  * step you cannot enter should not look like something you can click.
  */
 export function WizardStepper({ steps, label, className }: WizardStepperProps) {
+  const t = useTranslations();
   return (
     <nav aria-label={label} className={cn("px-1 py-2", className)}>
       <ol className="flex flex-col gap-0.5">

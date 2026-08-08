@@ -1,0 +1,7 @@
+// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/stories/Avatar.stories.tsx
+// Add these to messages/fi.json and messages/en.json
+  "matti_meikäläinen": "TODO_matti_meikäläinen",
+  "tuntematon_käyttäjä": "TODO_tuntematon_käyttäjä",
+  "projektin_jäsenet": "TODO_projektin_jäsenet",
+  "matti_meikäläinen": "TODO_matti_meikäläinen",
+  "kolme_muuta_jäsentä": "TODO_kolme_muuta_jäsentä",

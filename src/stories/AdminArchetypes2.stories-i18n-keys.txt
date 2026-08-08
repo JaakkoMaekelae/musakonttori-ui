@@ -1,0 +1,15 @@
+// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/stories/AdminArchetypes2.stories.tsx
+// Add these to messages/fi.json and messages/en.json
+  "lisätiedot": "TODO_lisätiedot",
+  "lisää_julkaisun_kappaleet_ja_niiden_järj": "TODO_lisää_julkaisun_kappaleet_ja_niiden_järj",
+  "muutoksia_ei_ole_vielä_tallennettu": "TODO_muutoksia_ei_ole_vielä_tallennettu",
+  "tallennus_epäonnistui": "TODO_tallennus_epäonnistui",
+  "osallistujatvaiheesta_puuttuu_tietoja_vo": "TODO_osallistujatvaiheesta_puuttuu_tietoja_vo",
+  "autotallenna_ja_jatka_myöhemmin": "TODO_autotallenna_ja_jatka_myöhemmin",
+  "tänään_ryypätään": "TODO_tänään_ryypätään",
+  "jätä_tyhjäksi_jos_haluat_että_generoimme": "TODO_jätä_tyhjäksi_jos_haluat_että_generoimme",
+  "113132026__1_284_riviä__ryhmitelty_artis": "TODO_113132026__1_284_riviä__ryhmitelty_artis",
+  "arvi_keräsarvi": "TODO_arvi_keräsarvi",
+  "pdfjono_1_tehtävä": "TODO_pdfjono_1_tehtävä",
+  "pdfgenerointi_epäonnistui": "TODO_pdfgenerointi_epäonnistui",
+  "autolataa_lisää": "TODO_autolataa_lisää",

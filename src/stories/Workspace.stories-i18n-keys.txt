@@ -1,0 +1,6 @@
+// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/stories/Workspace.stories.tsx
+// Add these to messages/fi.json and messages/en.json
+  "arvi_keräsarvi": "TODO_arvi_keräsarvi",
+  "tallennetut_näkymät": "TODO_tallennetut_näkymät",
+  "erääntyy_q3": "TODO_erääntyy_q3",
+  "auto_liikkuu_jonossa_myös_laajennettuna_": "TODO_auto_liikkuu_jonossa_myös_laajennettuna_",

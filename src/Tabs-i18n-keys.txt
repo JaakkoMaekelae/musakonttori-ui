@@ -1,0 +1,4 @@
+// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/Tabs.tsx
+// Add these to messages/fi.json and messages/en.json
+  "autosisältö_1": "TODO_autosisältö_1",
+  "autosisältö_2": "TODO_autosisältö_2",

@@ -1,0 +1,9 @@
+// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/CookieConsentBanner.tsx
+// Add these to messages/fi.json and messages/en.json
+  "evästeasetukset": "TODO_evästeasetukset",
+  "autoevästeet_musakonttorissa": "TODO_autoevästeet_musakonttorissa",
+  "autokäytämme_välttämättömiä_evästeitä_ki": "TODO_autokäytämme_välttämättömiä_evästeitä_ki",
+  "autovälttämättömät_evästeet_ovat_aina_kä": "TODO_autovälttämättömät_evästeet_ovat_aina_kä",
+  "lisätiedot": "TODO_lisätiedot",
+  "autovain_välttämättömät": "TODO_autovain_välttämättömät",
+  "autohyväksy_kaikki": "TODO_autohyväksy_kaikki",

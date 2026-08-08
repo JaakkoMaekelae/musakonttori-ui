@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "./utils";
 
 export interface NotFoundLink {
@@ -34,8 +35,7 @@ export interface NotFoundPageProps {
 /**
  * The shared 404 page.
  *
- * Three products shipped a byte-identical generic 404 — the same "Sivua ei
- * löytynyt / palaa etusivulle" with nothing to say which product had just
+ * Three products shipped a byte-identical generic 404 — the same {t("auto.sivua_ei__löytynyt__palaa_etusivulle")} with nothing to say which product had just
  * lost you, and one dead-end link back to the root. That is the same failure
  * as the create-next-app favicon: correct, and interchangeable.
  *
@@ -64,6 +64,7 @@ export function NotFoundPage({
   footer,
   className,
 }: NotFoundPageProps) {
+  const t = useTranslations();
   return (
     <main
       className={cn(

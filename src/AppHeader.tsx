@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { Menu, X, User, LogOut, Building2, ChevronDown } from "lucide-react";
 import { cn } from "./utils";
 import { safeHref } from "./safeHref";
@@ -25,10 +26,10 @@ export interface AppHeaderProps {
 }
 
 const DEFAULT_LABELS = {
-  mainNav: "Päävalikko",
-  openUserMenu: "Avaa käyttäjävalikko",
-  userAvatar: "Käyttäjä",
-  userMenu: "Käyttäjävalikko",
+  mainNav: {t("auto.päävalikko")},
+  openUserMenu: {t("auto.avaa_käyttäjävalikko")},
+  userAvatar: {t("auto.käyttäjä")},
+  userMenu: {t("auto.käyttäjävalikko")},
   signOut: "Kirjaudu ulos",
 };
 
@@ -42,6 +43,7 @@ export function AppHeader({
   className,
   labels,
 }: AppHeaderProps) {
+  const t = useTranslations();
   const L = { ...DEFAULT_LABELS, ...labels };
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);

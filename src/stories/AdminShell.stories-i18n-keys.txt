@@ -1,0 +1,4 @@
+// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/stories/AdminShell.stories.tsx
+// Add these to messages/fi.json and messages/en.json
+  "arvi_keräsarvi": "TODO_arvi_keräsarvi",
+  "auto_liikkuu_jonossa_myös_laajennetussa_": "TODO_auto_liikkuu_jonossa_myös_laajennetussa_",

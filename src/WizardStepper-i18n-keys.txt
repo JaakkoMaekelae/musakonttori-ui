@@ -1,0 +1,3 @@
+// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/WizardStepper.tsx
+// Add these to messages/fi.json and messages/en.json
+  "sisältää_virheitä": "TODO_sisältää_virheitä",

@@ -1,0 +1,5 @@
+// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/Input.tsx
+// Add these to messages/fi.json and messages/en.json
+  "sähköposti": "TODO_sähköposti",
+  "sinäesimerkkifi": "TODO_sinäesimerkkifi",
+  "pakollinen_kenttä": "TODO_pakollinen_kenttä",

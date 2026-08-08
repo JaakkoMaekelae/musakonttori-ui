@@ -17,7 +17,7 @@ export default meta;
 type Story = StoryObj<typeof Workspace>;
 
 const CONTRACTS = [
-  { id: "c_4192", title: "Levytyssopimus 2026", artist: "Arvi Keräsarvi", value: "24 000 €", until: "31.12.2027", royalty: "18 %", state: "Aktiivinen" },
+  { id: "c_4192", title: "Levytyssopimus 2026", artist: {t("auto.arvi_keräsarvi")}, value: "24 000 €", until: "31.12.2027", royalty: "18 %", state: "Aktiivinen" },
   { id: "c_4193", title: "Kustannussopimus", artist: "Nova Lume", value: "8 500 €", until: "—", royalty: "12 %", state: "Odottaa" },
   { id: "c_4194", title: "Managerisopimus", artist: "Hiekka", value: "12 000 €", until: "30.06.2026", royalty: "15 %", state: "Aktiivinen" },
   { id: "c_4195", title: "Sync-lisenssi #4192", artist: "Valo Kollektiivi", value: "3 200 €", until: "—", royalty: "50 %", state: "Luonnos" },
@@ -82,9 +82,9 @@ function Demo() {
             },
             {
               id: "saved",
-              label: "Tallennetut näkymät",
+              label: {t("auto.tallennetut_näkymät")},
               items: [
-                { id: "q3", label: "Erääntyy Q3" },
+                { id: "q3", label: {t("auto.erääntyy_q3")} },
                 { id: "sync", label: "Sync-lisenssit" },
               ],
             },
@@ -151,9 +151,7 @@ function Demo() {
               <AdminField label="Voimassa" numeric>{record.until}</AdminField>
               <AdminField label="Rojalti" numeric>{record.royalty}</AdminField>
             </dl>
-            <p className="px-3.5 pb-4 text-[0.6875rem] text-[var(--mk-palette-text-tertiary,#7E8292)]">
-              ↑↓ liikkuu jonossa myös laajennettuna · Esc sulkee
-            </p>
+            <p className="px-3.5 pb-4 text-[0.6875rem] text-[var(--mk-palette-text-tertiary,#7E8292)]">{t({t("auto.auto_liikkuu_jonossa_myös_laajennettuna_")})}</p>
           </AdminDetailPanel>
         )
       }
