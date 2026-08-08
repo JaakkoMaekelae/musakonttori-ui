@@ -29,12 +29,13 @@ const STATE = {
  * Locked and skipped steps render as plain text rather than links, because a
  * step you cannot enter should not look like something you can click.
  */
-export function WizardStepper({ steps, label, className }) {
+export function WizardStepper({ steps, label, className, stateLabels }) {
     return (_jsx("nav", { "aria-label": label, className: cn("px-1 py-2", className), children: _jsx("ol", { className: "flex flex-col gap-0.5", children: steps.map((step) => {
                 const meta = STATE[step.state];
+                const word = stateLabels?.[step.state] ?? meta.word;
                 const interactive = step.state !== "locked" && (step.href || step.onSelect);
-                const accessibleName = `${step.label} — ${meta.word}${step.hint ? `, ${step.hint}` : ""}`;
-                const inner = (_jsxs(_Fragment, { children: [_jsx("span", { "aria-hidden": "true", className: "w-4 shrink-0 text-center text-[0.75rem] leading-none", style: { color: meta.tone }, children: meta.glyph }), _jsx("span", { className: cn("truncate", step.state === "current" && "font-semibold", step.state === "skipped" && "line-through"), children: step.label }), step.hint && (_jsx("span", { className: "ml-auto shrink-0 truncate text-[0.625rem] text-[var(--mk-palette-text-tertiary,#7E8292)]", children: step.hint })), _jsxs("span", { className: "sr-only", children: ["\u2014 ", meta.word] })] }));
+                const accessibleName = `${step.label} — ${word}${step.hint ? `, ${step.hint}` : ""}`;
+                const inner = (_jsxs(_Fragment, { children: [_jsx("span", { "aria-hidden": "true", className: "w-4 shrink-0 text-center text-[0.75rem] leading-none", style: { color: meta.tone }, children: meta.glyph }), _jsx("span", { className: cn("truncate", step.state === "current" && "font-semibold", step.state === "skipped" && "line-through"), children: step.label }), step.hint && (_jsx("span", { className: "ml-auto shrink-0 truncate text-[0.625rem] text-[var(--mk-palette-text-tertiary,#7E8292)]", children: step.hint })), _jsxs("span", { className: "sr-only", children: ["\u2014 ", word] })] }));
                 const classes = cn("flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#F44242)]", step.state === "current"
                     ? "bg-[var(--mk-palette-accent-soft,rgba(244,66,66,0.16))] text-[var(--mk-palette-accent-primary,#F44242)]"
                     : meta.muted

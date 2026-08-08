@@ -15,6 +15,8 @@ export interface WizardStepperProps {
     /** Names the wizard for screen readers. */
     label: string;
     className?: string;
+    /** Override the per-state word announced to screen readers. Finnish by default. */
+    stateLabels?: Partial<Record<WizardStepState, string>>;
 }
 /**
  * Progress through a wizard.
@@ -26,5 +28,5 @@ export interface WizardStepperProps {
  * Locked and skipped steps render as plain text rather than links, because a
  * step you cannot enter should not look like something you can click.
  */
-export declare function WizardStepper({ steps, label, className }: WizardStepperProps): import("react").JSX.Element;
+export declare function WizardStepper({ steps, label, className, stateLabels }: WizardStepperProps): import("react").JSX.Element;
 //# sourceMappingURL=WizardStepper.d.ts.map

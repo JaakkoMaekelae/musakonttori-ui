@@ -18,7 +18,7 @@ import {
 const TRIGGER_LABEL: Record<string, string> = {
   fi: "Vaihda kieli ja valuutta",
   en: "Change language and currency",
-  sv: {t("auto.byt_språk_och_valuta")},
+  sv: "Byt språk och valuta",
 };
 
 /**

@@ -1,7 +1,6 @@
 "use client";
 
 import { forwardRef } from "react";
-import { useTranslations } from "next-intl";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { cn } from "./utils";
 
@@ -17,8 +16,8 @@ import { cn } from "./utils";
  *     <TabsTrigger value="all">Kaikki</TabsTrigger>
  *     <TabsTrigger value="active">Aktiiviset</TabsTrigger>
  *   </TabsList>
- *   <TabsContent value="all">{t({t("auto.autosisältö_1")})}</TabsContent>
- *   <TabsContent value="active">{t({t("auto.autosisältö_2")})}</TabsContent>
+ *   <TabsContent value="all">Sisältö 1</TabsContent>
+ *   <TabsContent value="active">Sisältö 2</TabsContent>
  * </Tabs>
  */
 

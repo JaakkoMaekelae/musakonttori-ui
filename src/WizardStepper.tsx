@@ -29,6 +29,8 @@ export interface WizardStepperProps {
   /** Names the wizard for screen readers. */
   label: string;
   className?: string;
+  /** Override the per-state word announced to screen readers. Finnish by default. */
+  stateLabels?: Partial<Record<WizardStepState, string>>;
 }
 
 /**
@@ -45,7 +47,7 @@ const STATE: Record<
 > = {
   complete: { glyph: "✓", word: "valmis", tone: "var(--mk-status-success, #10B981)" },
   current: { glyph: "●", word: "nykyinen", tone: "var(--mk-palette-accent-primary, #F44242)" },
-  hasErrors: { glyph: "!", word: {t("auto.sisältää_virheitä")}, tone: "var(--mk-status-error, #EF4444)" },
+  hasErrors: { glyph: "!", word: "sisältää virheitä", tone: "var(--mk-status-error, #EF4444)" },
   inProgress: { glyph: "◐", word: "kesken", tone: "var(--mk-status-warning, #F59E0B)" },
   optional: { glyph: "○", word: "valinnainen", tone: "var(--mk-palette-text-tertiary, #7E8292)" },
   skipped: { glyph: "–", word: "ohitettu", tone: "var(--mk-palette-text-tertiary, #7E8292)", muted: true },
@@ -63,16 +65,16 @@ const STATE: Record<
  * Locked and skipped steps render as plain text rather than links, because a
  * step you cannot enter should not look like something you can click.
  */
-export function WizardStepper({ steps, label, className }: WizardStepperProps) {
-  const t = useTranslations();
+export function WizardStepper({ steps, label, className, stateLabels }: WizardStepperProps) {
   return (
     <nav aria-label={label} className={cn("px-1 py-2", className)}>
       <ol className="flex flex-col gap-0.5">
         {steps.map((step) => {
           const meta = STATE[step.state];
+          const word = stateLabels?.[step.state] ?? meta.word;
           const interactive =
             step.state !== "locked" && (step.href || step.onSelect);
-          const accessibleName = `${step.label} — ${meta.word}${step.hint ? `, ${step.hint}` : ""}`;
+          const accessibleName = `${step.label} — ${word}${step.hint ? `, ${step.hint}` : ""}`;
 
           const inner = (
             <>
@@ -97,7 +99,7 @@ export function WizardStepper({ steps, label, className }: WizardStepperProps) {
                   {step.hint}
                 </span>
               )}
-              <span className="sr-only">— {meta.word}</span>
+              <span className="sr-only">— {word}</span>
             </>
           );
 

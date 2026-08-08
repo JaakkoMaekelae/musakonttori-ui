@@ -1,3 +1,0 @@
-// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/Card.tsx
-// Add these to messages/fi.json and messages/en.json
-  "autosisältöä": "TODO_autosisältöä",

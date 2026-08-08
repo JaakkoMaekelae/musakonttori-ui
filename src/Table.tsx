@@ -184,7 +184,7 @@ function DataTableSkeletonCell({ width }: { width: string }) {
  *
  * @example
  * <DataTable
- *   columns={[{ key: "name", header: "Nimi" }, { key: "email", header: {t("auto.sähköposti")} }]}
+ *   columns={[{ key: "name", header: "Nimi" }, { key: "email", header: "Sähköposti" }]}
  *   data={[{ name: "Matti", email: "m@example.com" }]}
  *   striped
  * />

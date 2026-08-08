@@ -23,7 +23,6 @@ export function AppFooter({
   linkGroups,
   className,
 }: AppFooterProps) {
-  const t = useTranslations();
   const year = new Date().getFullYear();
 
   return (

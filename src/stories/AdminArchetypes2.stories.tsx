@@ -45,7 +45,7 @@ const steps: WizardStep[] = [
   { id: "tracks", label: "Kappaleet", state: "current", href: "#tracks" },
   { id: "people", label: "Osallistujat", state: "hasErrors", href: "#people", hint: "tietoja puuttuu" },
   { id: "dist", label: "Jakelu", state: "notStarted" },
-  { id: "extra", label: {t("auto.lisätiedot")}, state: "skipped" },
+  { id: "extra", label: "Lisätiedot", state: "skipped" },
   { id: "review", label: "Tarkistus", state: "locked" },
 ];
 
@@ -66,17 +66,17 @@ export const Wizard: Story = {
       >
         <AdminFormLayout
           title="Kappaleet"
-          description={t("auto.lisää_julkaisun_kappaleet_ja_niiden_järj")}
+          description="Lisää julkaisun kappaleet ja niiden järjestys."
           stepper={<WizardStepper steps={steps} label="Julkaisun vaiheet" />}
           saveStatus={status}
           savedAt="14.32"
           saveLabels={{
-            unsaved: {t("auto.muutoksia_ei_ole_vielä_tallennettu")},
+            unsaved: "Muutoksia ei ole vielä tallennettu",
             saving: "Tallennetaan…",
-            failed: {t("auto.tallennus_epäonnistui")},
+            failed: "Tallennus epäonnistui",
             savedAt: (t) => `Tallennettu klo ${t}`,
           }}
-          errorSummary={t("auto.osallistujatvaiheesta_puuttuu_tietoja_vo")}
+          errorSummary="Osallistujat-vaiheesta puuttuu tietoja. Voit jatkaa, mutta julkaisua ei voi lähettää ennen niiden täyttämistä."
           secondaryActions={
             <Button size="sm" variant="ghost" onClick={() => setStatus("saving")}>
               Peruuta luonnos
@@ -85,19 +85,21 @@ export const Wizard: Story = {
           actions={
             <>
               <Button size="sm" variant="secondary">Takaisin</Button>
-              <Button size="sm" variant="secondary" onClick={() => setStatus("unsaved")}>{t({t("auto.autotallenna_ja_jatka_myöhemmin")})}</Button>
+              <Button size="sm" variant="secondary" onClick={() => setStatus("unsaved")}>
+                Tallenna ja jatka myöhemmin
+              </Button>
               <Button size="sm" onClick={() => setStatus("saved")}>Jatka osallistujiin</Button>
             </>
           }
         >
           <div className="grid gap-4">
             <FormField label="Kappaleen nimi" htmlFor="t1">
-              <Input id="t1" defaultValue={t("auto.tänään_ryypätään")} />
+              <Input id="t1" defaultValue="Tänään ryypätään" />
             </FormField>
             <FormField
               label="ISRC"
               htmlFor="t2"
-              helpText={t("auto.jätä_tyhjäksi_jos_haluat_että_generoimme")}
+              helpText="Jätä tyhjäksi jos haluat että generoimme sen."
             >
               <Input id="t2" placeholder="FI-XXX-26-00001" />
             </FormField>
@@ -128,7 +130,7 @@ export const Report: Story = {
       >
         <AdminReportLayout
           stale={stale}
-          summary={t("auto.113132026__1_284_riviä__ryhmitelty_artis")}
+          summary="1.1.–31.3.2026 · 1 284 riviä · ryhmitelty artistin mukaan"
           parameters={
             <>
               <Button size="sm" variant="secondary">Q1 2026</Button>
@@ -155,7 +157,7 @@ export const Report: Story = {
             </thead>
             <tbody className="text-[var(--mk-palette-text-secondary,#B0B3C1)]">
               {[
-                [{t("auto.arvi_keräsarvi")}, "4", "12 480 €"],
+                ["Arvi Keräsarvi", "4", "12 480 €"],
                 ["Nova Lume", "2", "8 120 €"],
                 ["Hiekka", "6", "5 940 €"],
                 ["Valo Kollektiivi", "1", "1 210 €"],
@@ -176,12 +178,12 @@ export const Report: Story = {
 
 const logEntries: LogEntry[] = [
   { id: "1", timestamp: "14:02:11", level: "info", message: "Sopimus c_4192 luotu", meta: "j.makela" },
-  { id: "2", timestamp: "14:02:19", level: "debug", message: {t("auto.pdfjono_1_tehtävä")}, meta: "worker-3" },
+  { id: "2", timestamp: "14:02:19", level: "debug", message: "PDF-jono: 1 tehtävä", meta: "worker-3" },
   {
     id: "3",
     timestamp: "14:02:44",
     level: "error",
-    message: {t("auto.pdfgenerointi_epäonnistui")},
+    message: "PDF-generointi epäonnistui",
     meta: "worker-3",
     detail: (
       <pre className="whitespace-pre-wrap text-[0.625rem] leading-relaxed text-[var(--mk-palette-text-secondary,#B0B3C1)]">
@@ -219,7 +221,7 @@ export const LogStream: Story = {
       <AdminLogStream
         entries={logEntries}
         label="Virheloki"
-        footer={<Button size="sm" variant="secondary">{t({t("auto.autolataa_lisää")})}</Button>}
+        footer={<Button size="sm" variant="secondary">Lataa lisää</Button>}
       />
     </AdminPage>
   ),

@@ -17,5 +17,5 @@ export { toast } from "sonner";
  * // Show toast
  * toast.success("Tallennettu onnistuneesti!");
  * toast.error("Jotain meni pieleen");
- * toast.info({t("auto.uusi_päivitys_saatavilla")});
+ * toast.info("Uusi päivitys saatavilla");
  */

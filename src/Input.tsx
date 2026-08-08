@@ -23,8 +23,8 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
  * Follows WCAG 2.2 AA accessibility (aria-invalid, aria-describedby).
  *
  * @example
- * <Input label={t("auto.sähköposti")} type="email" placeholder={t("auto.sinäesimerkkifi")} />
- * <Input label="Nimi" error={t("auto.pakollinen_kenttä")} required />
+ * <Input label="Sähköposti" type="email" placeholder="sinä@esimerkki.fi" />
+ * <Input label="Nimi" error="Pakollinen kenttä" required />
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, hint, required: isRequired, className, id, leftIcon, rightIcon, maxLength, value, defaultValue, ...props }, ref) => {

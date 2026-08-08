@@ -1,3 +1,0 @@
-// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/AdminReportLayout.tsx
-// Add these to messages/fi.json and messages/en.json
-  "113132026__1_284_riviä": "TODO_113132026__1_284_riviä",

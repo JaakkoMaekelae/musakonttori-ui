@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useTransition, type ElementType } from "react";
-import { useTranslations } from "next-intl";
 import { cn } from "./utils";
 
 /* -------------------------------------------------------------------------- */
@@ -71,17 +70,23 @@ export interface SignInLayoutProps {
     showPassword?: string;
     hidePassword?: string;
     signInButton?: string;
+    clerkRedirect?: string;
+    accountsRedirect?: string;
+    orDivider?: string;
   };
 }
 
 const DEFAULT_FORM_LABELS = {
-  emailLabel: {t("auto.sähköposti")},
-  emailPlaceholder: {t("auto.sinäesimerkkifi")},
+  emailLabel: "Sähköposti",
+  emailPlaceholder: "sinä@esimerkki.fi",
   passwordLabel: "Salasana",
   passwordPlaceholder: "••••••••",
-  showPassword: {t("auto.näytä_salasana")},
+  showPassword: "Näytä salasana",
   hidePassword: "Piilota salasana",
   signInButton: "Kirjaudu",
+  clerkRedirect: "Kirjaudu Clerk-tunnuksella",
+  accountsRedirect: "Kirjaudu Musakonttori-tunnuksella",
+  orDivider: "tai",
 };
 
 /* -------------------------------------------------------------------------- */
@@ -210,8 +215,16 @@ export function SignInLayout({
   className,
   labels,
 }: SignInLayoutProps) {
-  const t = useTranslations();
   const L = { ...DEFAULT_FORM_LABELS, ...labels };
+  // Delegated sign-in redirect: Clerk takes priority when the product opts
+  // into it, since a Clerk-authenticated product has no local password form
+  // of its own to redirect away from — Accounts is the fallback delegation.
+  const delegatedSignIn =
+    authMode === "clerk" && clerkSignInUrl
+      ? { href: clerkSignInUrl, label: L.clerkRedirect }
+      : accountsUrl && accountsFrom
+        ? { href: `${accountsUrl}/sign-in?from=${accountsFrom}`, label: L.accountsRedirect }
+        : null;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -421,11 +434,11 @@ export function SignInLayout({
               </p>
             </div>
 
-            {/* Accounts redirect */}
-            {accountsUrl && accountsFrom ? (
+            {/* Accounts or Clerk redirect — mutually exclusive delegated sign-in options */}
+            {delegatedSignIn ? (
               <div className="mt-8">
                 <a
-                  href={`${accountsUrl}/sign-in?from=${accountsFrom}`}
+                  href={delegatedSignIn.href}
                   className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 font-semibold text-sm transition-colors duration-[160ms] ease-in-out"
                   style={{
                     borderColor: `color-mix(in srgb, ${primary} 55%, transparent)`,
@@ -442,11 +455,11 @@ export function SignInLayout({
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3" />
                   </svg>
-                  Kirjaudu Musakonttori-tunnuksella
+                  {delegatedSignIn.label}
                 </a>
                 <div className="flex items-center gap-3 my-5">
                   <div className="flex-1 h-px" style={{ background: "var(--mk-palette-border-subtle, rgba(255,255,255,0.08))" }} />
-                  <span className="text-xs" style={{ color: "var(--mk-palette-text-tertiary, #7E8292)" }}>tai</span>
+                  <span className="text-xs" style={{ color: "var(--mk-palette-text-tertiary, #7E8292)" }}>{L.orDivider}</span>
                   <div className="flex-1 h-px" style={{ background: "var(--mk-palette-border-subtle, rgba(255,255,255,0.08))" }} />
                 </div>
               </div>

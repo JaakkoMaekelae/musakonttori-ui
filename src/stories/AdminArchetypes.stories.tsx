@@ -43,9 +43,9 @@ const dashboardNav = (
       {
         id: "views",
         items: [
-          { id: "today", label: {t("auto.tänään")} },
+          { id: "today", label: "Tänään" },
           { id: "month", label: "Kuukausi" },
-          { id: "quarter", label: {t("auto.neljännes")} },
+          { id: "quarter", label: "Neljännes" },
         ],
       },
     ]}
@@ -57,7 +57,7 @@ export const Dashboard: Story = {
     <AdminPage rail={rail} nav={dashboardNav} label="Yleiskuva">
       <AdminPageHeader
         title="Yleiskuva"
-        description={t("auto.päivitetty_5_min_sitten__142_sopimusta")}
+        description="Päivitetty 5 min sitten · 142 sopimusta"
         actions={<Button size="sm">Vie raportti</Button>}
       />
       <AdminContent>
@@ -68,7 +68,7 @@ export const Dashboard: Story = {
             delta={{ value: "+6", direction: "up", comparedTo: "vs. edellinen kuukausi" }}
           />
           <StatTile
-            label={t("auto.odottaa_hyväksyntää")}
+            label="Odottaa hyväksyntää"
             value="7"
             delta={{
               value: "+3",
@@ -78,7 +78,7 @@ export const Dashboard: Story = {
             }}
           />
           <StatTile
-            label={t("auto.erääntyy_30_pv")}
+            label="Erääntyy 30 pv"
             value="14"
             delta={{ value: "0", direction: "flat", comparedTo: "vs. viime viikko" }}
           />
@@ -90,15 +90,15 @@ export const Dashboard: Story = {
         </StatRow>
 
         <div className="mt-4 grid gap-3 lg:grid-cols-2">
-          <AdminSection title={t("auto.hyväksyntäjono")} description="Vanhimmat ensin">
+          <AdminSection title="Hyväksyntäjono" description="Vanhimmat ensin">
             <AdminSystemState
               kind="empty"
               size="inline"
-              title={t("auto.jono_on_tyhjä")}
-              description={t("auto.kaikki_hyväksynnät_on_käsitelty")}
+              title="Jono on tyhjä"
+              description="Kaikki hyväksynnät on käsitelty."
             />
           </AdminSection>
-          <AdminSection title={t("auto.viimeisimmät_tapahtumat")}>
+          <AdminSection title="Viimeisimmät tapahtumat">
             <AdminSystemState kind="loading" size="inline" title="Haetaan tapahtumia…" />
           </AdminSection>
         </div>
@@ -122,15 +122,15 @@ export const Settings: Story = {
               label: "Organisaatio",
               items: [
                 { id: "general", label: "Yleiset" },
-                { id: "branding", label: {t("auto.brändi")} },
+                { id: "branding", label: "Brändi" },
                 { id: "locales", label: "Kielet" },
               ],
             },
             {
               id: "access",
-              label: {t("auto.käyttöoikeudet")},
+              label: "Käyttöoikeudet",
               items: [
-                { id: "users", label: {t("auto.käyttäjät")}, count: 24 },
+                { id: "users", label: "Käyttäjät", count: 24 },
                 { id: "roles", label: "Roolit" },
                 { id: "keys", label: "API-avaimet" },
               ],
@@ -144,7 +144,7 @@ export const Settings: Story = {
         <div className="grid gap-3">
           <AdminSection
             title="Organisaation nimi"
-            description={t("auto.näkyy_sopimuksissa_ja_laskuilla")}
+            description="Näkyy sopimuksissa ja laskuilla."
             action={<Button size="sm" variant="secondary">Muokkaa</Button>}
           >
             <p className="text-[0.8125rem] text-[var(--mk-palette-text-primary,#F0F0F3)]">
@@ -154,7 +154,7 @@ export const Settings: Story = {
 
           <AdminSection
             title="Oletusrojalti"
-            description={t("auto.käytetään_uusien_sopimusten_pohjana")}
+            description="Käytetään uusien sopimusten pohjana."
           >
             <p className="font-[var(--mk-font-mono)] text-[0.8125rem] tabular-nums text-[var(--mk-palette-text-primary,#F0F0F3)]">
               18 %
@@ -165,8 +165,8 @@ export const Settings: Story = {
             <AdminSystemState
               kind="forbidden"
               size="inline"
-              title={t("auto.ei_käyttöoikeutta")}
-              description={t("auto.vain_organisaation_omistaja_voi_muuttaa_")}
+              title="Ei käyttöoikeutta"
+              description="Vain organisaation omistaja voi muuttaa näitä asetuksia."
             />
           </AdminSection>
         </div>
@@ -178,7 +178,7 @@ export const Settings: Story = {
 export const ZoneStates: Story = {
   render: () => (
     <AdminPage rail={rail} nav={dashboardNav} label="Tilat">
-      <AdminPageHeader title={t("auto.järjestelmätilat")} description={t("auto.yksi_per_vyöhyke_ei_per_sivu")} />
+      <AdminPageHeader title="Järjestelmätilat" description="Yksi per vyöhyke, ei per sivu" />
       <AdminContent>
         <div className="grid gap-3 lg:grid-cols-2">
           <AdminSection title="loading">
@@ -190,24 +190,24 @@ export const ZoneStates: Story = {
               size="inline"
               title="Ei tuloksia"
               description="Suodattimet rajaavat kaiken pois."
-              action={<Button size="sm" variant="secondary">{t({t("auto.autotyhjennä_suodattimet")})}</Button>}
+              action={<Button size="sm" variant="secondary">Tyhjennä suodattimet</Button>}
             />
           </AdminSection>
           <AdminSection title="error">
             <AdminSystemState
               kind="error"
               size="inline"
-              title={t("auto.lataus_epäonnistui")}
+              title="Lataus epäonnistui"
               description="Yhteys tietokantaan katkesi."
-              action={<Button size="sm">{t({t("auto.autoyritä_uudelleen")})}</Button>}
+              action={<Button size="sm">Yritä uudelleen</Button>}
             />
           </AdminSection>
           <AdminSection title="forbidden">
             <AdminSystemState
               kind="forbidden"
               size="inline"
-              title={t("auto.ei_käyttöoikeutta")}
-              description={t("auto.pyydä_oikeutta_ylläpitäjältä")}
+              title="Ei käyttöoikeutta"
+              description="Pyydä oikeutta ylläpitäjältä."
             />
           </AdminSection>
         </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
 import { safeHref } from "./safeHref";
 
 const COOKIE_NAME = "mk_cookie_consent";
@@ -47,10 +46,36 @@ function storeConsent(analytics: boolean, marketing: boolean) {
 
 export interface CookieConsentBannerProps {
   privacyHref?: string;
+  /** Built-in copy and button labels. Finnish defaults. */
+  labels?: {
+    regionLabel?: string;
+    title?: string;
+    description?: string;
+    details?: string;
+    privacyLink?: string;
+    showDetails?: string;
+    hideDetails?: string;
+    necessaryOnly?: string;
+    acceptAll?: string;
+  };
 }
 
-export function CookieConsentBanner({ privacyHref }: CookieConsentBannerProps) {
-  const t = useTranslations();
+const DEFAULT_LABELS = {
+  regionLabel: "Evästeasetukset",
+  title: "Evästeet Musakonttorissa",
+  description:
+    "Käytämme välttämättömiä evästeitä kirjautumiseen, turvallisuuteen ja kieli- tai maa-asetuksiin. Analytiikkaa ja markkinointia käytetään vain suostumuksellasi.",
+  details:
+    "Välttämättömät evästeet ovat aina käytössä. Jos hyväksyt kaikki, tallennamme myös analytiikka- ja markkinointisuostumuksen palvelun parantamista varten.",
+  privacyLink: "Tietosuojaseloste",
+  showDetails: "Lisätiedot",
+  hideDetails: "Piilota tiedot",
+  necessaryOnly: "Vain välttämättömät",
+  acceptAll: "Hyväksy kaikki",
+};
+
+export function CookieConsentBanner({ privacyHref, labels }: CookieConsentBannerProps) {
+  const L = { ...DEFAULT_LABELS, ...labels };
   const [visible, setVisible] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
 
@@ -71,7 +96,7 @@ export function CookieConsentBanner({ privacyHref }: CookieConsentBannerProps) {
   return (
     <aside
       role="region"
-      aria-label={t("auto.evästeasetukset")}
+      aria-label={L.regionLabel}
       className="mk-cookie-shell"
     >
       <div className="mk-cookie-card">
@@ -79,14 +104,16 @@ export function CookieConsentBanner({ privacyHref }: CookieConsentBannerProps) {
           MK
         </div>
         <div className="mk-cookie-copy">
-          <h2>{t({t("auto.autoevästeet_musakonttorissa")})}</h2>
-          <p>{t({t("auto.autokäytämme_välttämättömiä_evästeitä_ki")})}</p>
+          <h2>{L.title}</h2>
+          <p>{L.description}</p>
           {detailsOpen ? (
-            <div id="mk-cookie-details" className="mk-cookie-details">{t({t("auto.autovälttämättömät_evästeet_ovat_aina_kä")})}</div>
+            <div id="mk-cookie-details" className="mk-cookie-details">
+              {L.details}
+            </div>
           ) : null}
           {privacyHref ? (
             <a className="mk-cookie-link" href={safeHref(privacyHref)}>
-              Tietosuojaseloste
+              {L.privacyLink}
             </a>
           ) : null}
         </div>
@@ -98,18 +125,22 @@ export function CookieConsentBanner({ privacyHref }: CookieConsentBannerProps) {
             aria-controls="mk-cookie-details"
             onClick={() => setDetailsOpen((open) => !open)}
           >
-            {detailsOpen ? "Piilota tiedot" : {t("auto.lisätiedot")}}
+            {detailsOpen ? L.hideDetails : L.showDetails}
           </button>
           <button
             type="button"
             className="mk-cookie-button mk-cookie-secondary"
             onClick={() => choose(false, false)}
-          >{t({t("auto.autovain_välttämättömät")})}</button>
+          >
+            {L.necessaryOnly}
+          </button>
           <button
             type="button"
             className="mk-cookie-button mk-cookie-primary"
             onClick={() => choose(true, true)}
-          >{t({t("auto.autohyväksy_kaikki")})}</button>
+          >
+            {L.acceptAll}
+          </button>
         </div>
       </div>
       <style>{`

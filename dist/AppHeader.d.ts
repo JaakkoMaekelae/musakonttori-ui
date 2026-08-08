@@ -13,6 +13,19 @@ export interface AppHeaderProps {
     onSignOut?: () => void;
     signInHref?: string;
     className?: string;
+    /** Translation labels. Finnish defaults for backward compatibility. */
+    labels?: {
+        mainNav?: string;
+        openUserMenu?: string;
+        userAvatar?: string;
+        userMenu?: string;
+        account?: string;
+        organizations?: string;
+        signOut?: string;
+        signIn?: string;
+        closeMenu?: string;
+        openMenu?: string;
+    };
 }
-export declare function AppHeader({ productName, productHref, navItems, user, onSignOut, signInHref, className, }: AppHeaderProps): import("react").JSX.Element;
+export declare function AppHeader({ productName, productHref, navItems, user, onSignOut, signInHref, className, labels, }: AppHeaderProps): import("react").JSX.Element;
 //# sourceMappingURL=AppHeader.d.ts.map

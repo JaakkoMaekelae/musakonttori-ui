@@ -35,7 +35,7 @@ export interface CardProps
  * @example
  * <Card variant="elevated">
  *   <CardHeader>Otsikko</CardHeader>
- *   <CardContent>{t({t("auto.autosisältöä")})}</CardContent>
+ *   <CardContent>Sisältöä...</CardContent>
  *   <CardFooter>Toiminnot</CardFooter>
  * </Card>
  */

@@ -37,6 +37,19 @@ export interface SignInLayoutProps {
     securityNote: string;
     errorMessage?: string;
     className?: string;
+    /** Built-in form labels. Finnish defaults. */
+    labels?: {
+        emailLabel?: string;
+        emailPlaceholder?: string;
+        passwordLabel?: string;
+        passwordPlaceholder?: string;
+        showPassword?: string;
+        hidePassword?: string;
+        signInButton?: string;
+        clerkRedirect?: string;
+        accountsRedirect?: string;
+        orDivider?: string;
+    };
 }
 /**
  * Reusable sign-in split-panel layout.
@@ -48,5 +61,5 @@ export interface SignInLayoutProps {
  * Consumer passes all strings, icons, and the auth handler — this component
  * owns zero product-specific copy or logic.
  */
-export declare function SignInLayout({ productName, productTagline, brandEyebrow, brandTitle, brandTitleAccent, brandDescription, benefits, previewTitle, previewValue, previewStatus, previewOrderName, previewOrderId, previewOrderStatus, previewOrderAmount, formTitle, formSubtitle, formDescription, onSignIn, accountsUrl, accountsFrom, registerHref, registerLabel, registerTitle, registerDescription, backHref, backLabel, securityNote, errorMessage, className, }: SignInLayoutProps): import("react").JSX.Element;
+export declare function SignInLayout({ productName, productTagline, brandEyebrow, brandTitle, brandTitleAccent, brandDescription, benefits, previewTitle, previewValue, previewStatus, previewOrderName, previewOrderId, previewOrderStatus, previewOrderAmount, formTitle, formSubtitle, formDescription, onSignIn, authMode, clerkSignInUrl, accountsUrl, accountsFrom, registerHref, registerLabel, registerTitle, registerDescription, backHref, backLabel, securityNote, errorMessage, className, labels, }: SignInLayoutProps): import("react").JSX.Element;
 //# sourceMappingURL=SignInLayout.d.ts.map

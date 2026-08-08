@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
 import { Menu, X, User, LogOut, Building2, ChevronDown } from "lucide-react";
 import { cn } from "./utils";
 import { safeHref } from "./safeHref";
@@ -21,16 +20,26 @@ export interface AppHeaderProps {
     openUserMenu?: string;
     userAvatar?: string;
     userMenu?: string;
+    account?: string;
+    organizations?: string;
     signOut?: string;
+    signIn?: string;
+    closeMenu?: string;
+    openMenu?: string;
   };
 }
 
 const DEFAULT_LABELS = {
-  mainNav: {t("auto.päävalikko")},
-  openUserMenu: {t("auto.avaa_käyttäjävalikko")},
-  userAvatar: {t("auto.käyttäjä")},
-  userMenu: {t("auto.käyttäjävalikko")},
+  mainNav: "Päävalikko",
+  openUserMenu: "Avaa käyttäjävalikko",
+  userAvatar: "Käyttäjä",
+  userMenu: "Käyttäjävalikko",
+  account: "Tili",
+  organizations: "Organisaatiot",
   signOut: "Kirjaudu ulos",
+  signIn: "Kirjaudu",
+  closeMenu: "Sulje valikko",
+  openMenu: "Avaa valikko",
 };
 
 export function AppHeader({
@@ -43,7 +52,6 @@ export function AppHeader({
   className,
   labels,
 }: AppHeaderProps) {
-  const t = useTranslations();
   const L = { ...DEFAULT_LABELS, ...labels };
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -209,7 +217,7 @@ export function AppHeader({
                     )}
                   >
                     <User className="h-4 w-4" />
-                    Tili
+                    {L.account}
                   </a>
                   <a
                     href="/organisaatiot"
@@ -221,7 +229,7 @@ export function AppHeader({
                     )}
                   >
                     <Building2 className="h-4 w-4" />
-                    Organisaatiot
+                    {L.organizations}
                   </a>
 
                   <div className="border-t border-[var(--mk-palette-border-subtle,#E4E4E7)] dark:border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] mt-1 pt-1">
@@ -240,7 +248,7 @@ export function AppHeader({
                       )}
                     >
                       <LogOut className="h-4 w-4" />
-                      Kirjaudu ulos
+                      {L.signOut}
                     </button>
                   </div>
                 </div>
@@ -257,7 +265,7 @@ export function AppHeader({
                 "active:bg-[var(--mk-palette-bg-brand-active,#A51E23)]",
               )}
             >
-              Kirjaudu
+              {L.signIn}
             </a>
           )}
 
@@ -269,7 +277,7 @@ export function AppHeader({
               "md:hidden inline-flex h-9 w-9 items-center justify-center rounded-lg transition-colors",
               "hover:bg-[var(--mk-palette-bg-surface-hover,#F4F4F5)] dark:hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)]",
             )}
-            aria-label={mobileOpen ? "Sulje valikko" : "Avaa valikko"}
+            aria-label={mobileOpen ? L.closeMenu : L.openMenu}
             aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -311,7 +319,7 @@ export function AppHeader({
                   "hover:bg-[var(--mk-palette-bg-brand-hover,#BF2227)]",
                 )}
               >
-                Kirjaudu
+                {L.signIn}
               </a>
             )}
             {/* Mobile market switcher */}

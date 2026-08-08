@@ -1,6 +1,0 @@
-// Auto-generated i18n keys for /Users/jaakkomakela/own_projects/musakonttori-ui/src/AppHeader.tsx
-// Add these to messages/fi.json and messages/en.json
-  "päävalikko": "TODO_päävalikko",
-  "avaa_käyttäjävalikko": "TODO_avaa_käyttäjävalikko",
-  "käyttäjä": "TODO_käyttäjä",
-  "käyttäjävalikko": "TODO_käyttäjävalikko",

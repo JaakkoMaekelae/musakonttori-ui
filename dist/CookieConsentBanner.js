@@ -29,7 +29,19 @@ function storeConsent(analytics, marketing) {
     document.cookie = `${COOKIE_NAME}=${encodeURIComponent(JSON.stringify(consent))}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax; Secure`;
     window.dispatchEvent(new CustomEvent("mk-cookie-consent-changed", { detail: consent }));
 }
-export function CookieConsentBanner({ privacyHref }) {
+const DEFAULT_LABELS = {
+    regionLabel: "Evästeasetukset",
+    title: "Evästeet Musakonttorissa",
+    description: "Käytämme välttämättömiä evästeitä kirjautumiseen, turvallisuuteen ja kieli- tai maa-asetuksiin. Analytiikkaa ja markkinointia käytetään vain suostumuksellasi.",
+    details: "Välttämättömät evästeet ovat aina käytössä. Jos hyväksyt kaikki, tallennamme myös analytiikka- ja markkinointisuostumuksen palvelun parantamista varten.",
+    privacyLink: "Tietosuojaseloste",
+    showDetails: "Lisätiedot",
+    hideDetails: "Piilota tiedot",
+    necessaryOnly: "Vain välttämättömät",
+    acceptAll: "Hyväksy kaikki",
+};
+export function CookieConsentBanner({ privacyHref, labels }) {
+    const L = { ...DEFAULT_LABELS, ...labels };
     const [visible, setVisible] = useState(false);
     const [detailsOpen, setDetailsOpen] = useState(false);
     useEffect(() => {
@@ -45,7 +57,7 @@ export function CookieConsentBanner({ privacyHref }) {
     }, []);
     if (!visible)
         return null;
-    return (_jsxs("aside", { role: "region", "aria-label": "Ev\u00E4steasetukset", className: "mk-cookie-shell", children: [_jsxs("div", { className: "mk-cookie-card", children: [_jsx("div", { className: "mk-cookie-mark", "aria-hidden": "true", children: "MK" }), _jsxs("div", { className: "mk-cookie-copy", children: [_jsx("h2", { children: "Ev\u00E4steet Musakonttorissa" }), _jsx("p", { children: "K\u00E4yt\u00E4mme v\u00E4ltt\u00E4m\u00E4tt\u00F6mi\u00E4 ev\u00E4steit\u00E4 kirjautumiseen, turvallisuuteen ja kieli- tai maa-asetuksiin. Analytiikkaa ja markkinointia k\u00E4ytet\u00E4\u00E4n vain suostumuksellasi." }), detailsOpen ? (_jsx("div", { id: "mk-cookie-details", className: "mk-cookie-details", children: "V\u00E4ltt\u00E4m\u00E4tt\u00F6m\u00E4t ev\u00E4steet ovat aina k\u00E4yt\u00F6ss\u00E4. Jos hyv\u00E4ksyt kaikki, tallennamme my\u00F6s analytiikka- ja markkinointisuostumuksen palvelun parantamista varten." })) : null, privacyHref ? (_jsx("a", { className: "mk-cookie-link", href: safeHref(privacyHref), children: "Tietosuojaseloste" })) : null] }), _jsxs("div", { className: "mk-cookie-actions", children: [_jsx("button", { type: "button", className: "mk-cookie-button mk-cookie-ghost", "aria-expanded": detailsOpen, "aria-controls": "mk-cookie-details", onClick: () => setDetailsOpen((open) => !open), children: detailsOpen ? "Piilota tiedot" : "Lisätiedot" }), _jsx("button", { type: "button", className: "mk-cookie-button mk-cookie-secondary", onClick: () => choose(false, false), children: "Vain v\u00E4ltt\u00E4m\u00E4tt\u00F6m\u00E4t" }), _jsx("button", { type: "button", className: "mk-cookie-button mk-cookie-primary", onClick: () => choose(true, true), children: "Hyv\u00E4ksy kaikki" })] })] }), _jsx("style", { children: `
+    return (_jsxs("aside", { role: "region", "aria-label": L.regionLabel, className: "mk-cookie-shell", children: [_jsxs("div", { className: "mk-cookie-card", children: [_jsx("div", { className: "mk-cookie-mark", "aria-hidden": "true", children: "MK" }), _jsxs("div", { className: "mk-cookie-copy", children: [_jsx("h2", { children: L.title }), _jsx("p", { children: L.description }), detailsOpen ? (_jsx("div", { id: "mk-cookie-details", className: "mk-cookie-details", children: L.details })) : null, privacyHref ? (_jsx("a", { className: "mk-cookie-link", href: safeHref(privacyHref), children: L.privacyLink })) : null] }), _jsxs("div", { className: "mk-cookie-actions", children: [_jsx("button", { type: "button", className: "mk-cookie-button mk-cookie-ghost", "aria-expanded": detailsOpen, "aria-controls": "mk-cookie-details", onClick: () => setDetailsOpen((open) => !open), children: detailsOpen ? L.hideDetails : L.showDetails }), _jsx("button", { type: "button", className: "mk-cookie-button mk-cookie-secondary", onClick: () => choose(false, false), children: L.necessaryOnly }), _jsx("button", { type: "button", className: "mk-cookie-button mk-cookie-primary", onClick: () => choose(true, true), children: L.acceptAll })] })] }), _jsx("style", { children: `
         .mk-cookie-shell {
           position: fixed;
           inset-inline: 0;
