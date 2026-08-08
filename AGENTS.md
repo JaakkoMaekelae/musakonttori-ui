@@ -74,3 +74,34 @@ Lue koko ohje: `../MUSAKONTTORI_AI_STANDARDS.md`
 ### Hookit
 - `.husky/pre-commit`: `pnpm lint-staged`
 - `.husky/pre-push`: `pnpm prisma generate && pnpm typecheck`
+
+## TypeScript — 0 virhettä (PAKOLLINEN)
+
+> Koko ohje: `../MUSAKONTTORI_AI_STANDARDS.md` § 9.
+
+**Tyyppivirheellinen koodi ei ole keskeneräistä, se on rikki.** Tämä ohjaa koodin
+kirjoittamista, ei vain pushia.
+
+- Tehtävä ei ole valmis ennen kuin `pnpm typecheck` (`tsc --noEmit`) antaa **0 errors**
+  koko projektissa — ei vain muutetuissa tiedostoissa
+- Prisma-projekteissa aja `pnpm db:generate` ennen typecheckiä, muuten virheet ovat valheellisia
+- Korjaa koodi tai tyyppi. Älä vaienna virhettä
+- **Kielletty**: `@ts-ignore`, `@ts-nocheck`, `as any` / `as unknown as X` virheen kiertämiseen,
+  `!` non-null-assertio vaientamiseen, `typescript.ignoreBuildErrors`, `strict`-asetusten löysentäminen,
+  `eslint-disable @typescript-eslint/no-explicit-any` tyyppidriftin peittämiseen
+- **Ainoa sallittu poikkeus**: `@ts-expect-error` + perustelu kommentissa, vain kun kolmannen
+  osapuolen tyypit ovat väärin. Se hajoaa itsestään kun upstream korjaantuu — `@ts-ignore` ei
+- Jos muutoksesi paljastavat vanhoja tyyppivirheitä: korjaa tai raportoi ne. Älä piilota
+- Älä raportoi työtä valmiiksi ajamatta typecheckiä JA buildia
+
+### Build kuuluu samaan tarkistukseen
+
+- `pnpm build` pitää mennä läpi ennen kuin tehtävä on valmis — typecheck yksin ei riitä
+- Buildi löytää sen mitä `tsc --noEmit` ei näe: Next.js route- ja PageProps-tyypit,
+  `generateMetadata` / `generateStaticParams` -signatuurit, server/client-rajan rikkomukset,
+  puuttuvat `"use client"` -direktiivit, dynaamiset importit ja build-aikaiset env-tarkistukset
+- Järjestys: `pnpm db:generate` → `pnpm typecheck` → `pnpm test` → `pnpm build`
+- Buildin kaatuessa **älä** lisää `typescript.ignoreBuildErrors`- tai `eslint.ignoreDuringBuilds`
+  -lippua äläkä poista tiedostoa buildista — korjaa syy
+- Jos buildi vaatii env-muuttujia joita ei ole: `SKIP_ENV_VALIDATION=1 pnpm build` ja mainitse se
+  raportissa. Buildin ohittaminen kokonaan ei ole vaihtoehto
