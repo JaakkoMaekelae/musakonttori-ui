@@ -105,3 +105,23 @@ kirjoittamista, ei vain pushia.
   -lippua äläkä poista tiedostoa buildista — korjaa syy
 - Jos buildi vaatii env-muuttujia joita ei ole: `SKIP_ENV_VALIDATION=1 pnpm build` ja mainitse se
   raportissa. Buildin ohittaminen kokonaan ei ole vaihtoehto
+
+### Pushia ei saa tehdä `--no-verify`-lipulla — koskaan
+
+`git push --no-verify` (ja `git commit --no-verify`) on kielletty poikkeuksetta.
+Ei "vain tämän kerran", ei "hookki on rikki", ei "kiire". Jos pre-push-hookki
+epäonnistuu:
+
+1. Lue virhe. Se on todellinen — hookki ei valehtele
+2. Korjaa syy: aja `pnpm db:generate` → `pnpm typecheck` → `pnpm test` → `pnpm build`
+   käsin ja korjaa jokainen virhe
+3. Jos hookki itse on rikki (väärä komento, puuttuva riippuvuus) — korjaa hookki,
+   älä ohita sitä
+4. Vasta kun kaikki neljä menevät läpi puhtaasti, pushaa ilman lippuja
+
+`--no-verify` ei koskaan ole oikea vastaus epäonnistuneeseen tarkistukseen — se ei
+korjaa virhettä, se vain piilottaa sen seuraavalle, joka pullaa reposta.
+
+### NEVER use --no-verify or force push
+
+`git commit --no-verify`, `git push --no-verify`, and `git push --force*` are FORBIDDEN. No exceptions. If hooks fail, fix the root cause — never bypass them.

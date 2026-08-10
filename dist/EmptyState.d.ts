@@ -1,7 +1,9 @@
 import type { ReactNode } from "react";
 export interface EmptyStateAction {
     label: string;
-    onClick: () => void;
+    onClick?: () => void;
+    /** Render as link. If provided, onClick is ignored. */
+    href?: string;
 }
 export interface EmptyStateProps {
     /** Custom icon (lucide-react component) */
@@ -10,7 +12,7 @@ export interface EmptyStateProps {
     title: string;
     /** Description text */
     description?: string;
-    /** Action button (either label+onClick object or direct ReactNode) */
+    /** Action button (either label+onClick/href object or direct ReactNode) */
     action?: EmptyStateAction | ReactNode;
     className?: string;
 }
@@ -25,6 +27,10 @@ export interface EmptyStateProps {
  *   title="Ei tapahtumia"
  *   description="Et ole vielä luonut yhtään tapahtumaa."
  *   action={{ label: "Luo tapahtuma", onClick: () => {} }}
+ * />
+ * <EmptyState
+ *   title="Ei tuotteita"
+ *   action={{ label: "Selaa tuotteita", href: "/products" }}
  * />
  */
 export declare function EmptyState({ icon, title, description, action, className, }: EmptyStateProps): import("react").JSX.Element;

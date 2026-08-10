@@ -390,9 +390,9 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: Service
             {/* Bundle pricing examples */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               {[
-                { count: 2, discount: 20, standalone: "n. 20 €", bundle: "n. 16 €", labelFi: "Perusduo", labelEn: "Basic Duo", descFi: "Esim. Links + Promo", descEn: "e.g. Links + Promo" },
-                { count: 4, discount: 44, standalone: "n. 40 €", bundle: "n. 22 €", labelFi: "Kasvupaketti", labelEn: "Growth Pack", descFi: "Esim. Links + Promo + SoundLaunch + Mastering", descEn: "e.g. Links + Promo + SoundLaunch + Mastering", highlighted: true },
-                { count: 8, discount: 49, standalone: "65,23 €", bundle: "32,90 €", labelFi: "Kaikki palvelut", labelEn: "All Services", descFi: "Koko ekosysteemi yhdellä hinnalla", descEn: "The entire ecosystem, one price" },
+                { count: 2, discount: 20, standalone: "n. 20 €", standaloneEn: "approx. €20", bundle: "n. 16 €", bundleEn: "approx. €16", labelFi: "Perusduo", labelEn: "Basic Duo", descFi: "Esim. Links + Promo", descEn: "e.g. Links + Promo" },
+                { count: 4, discount: 44, standalone: "n. 40 €", standaloneEn: "approx. €40", bundle: "n. 22 €", bundleEn: "approx. €22", labelFi: "Kasvupaketti", labelEn: "Growth Pack", descFi: "Esim. Links + Promo + SoundLaunch + Mastering", descEn: "e.g. Links + Promo + SoundLaunch + Mastering", highlighted: true },
+                { count: 8, discount: 49, standalone: "65,23 €", standaloneEn: "€65.23", bundle: "32,90 €", bundleEn: "€32.90", labelFi: "Kaikki palvelut", labelEn: "All Services", descFi: "Koko ekosysteemi yhdellä hinnalla", descEn: "The entire ecosystem, one price" },
               ].map((pkg) => (
                 <div
                   key={pkg.count}
@@ -411,14 +411,14 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: Service
                     {pkg.count} {isFi ? "palvelua" : "services"}
                   </div>
                   <div className="text-3xl font-bold text-gray-900 mb-1">
-                    {pkg.bundle}
-                    <span className="text-base font-normal text-gray-400">/kk</span>
+                    {isFi ? pkg.bundle : pkg.bundleEn}
+                    <span className="text-base font-normal text-gray-400">{isFi ? "/kk" : "/mo"}</span>
                   </div>
                   <div className="text-xs text-green-600 font-medium mb-3">
                     -{pkg.discount} % {isFi ? "bundlessa" : "in bundle"}
                   </div>
                   <div className="text-xs text-gray-400 line-through mb-1">
-                    {isFi ? "erikseen" : "separately"} {pkg.standalone}/kk
+                    {isFi ? "erikseen" : "separately"} {isFi ? pkg.standalone : pkg.standaloneEn}{isFi ? "/kk" : "/mo"}
                   </div>
                   <div className="text-xs text-gray-500">
                     {isFi ? pkg.descFi : pkg.descEn}

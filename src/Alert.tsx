@@ -28,6 +28,8 @@ export interface AlertProps {
   children: React.ReactNode;
   /** Dismiss handler - if provided, shows X button */
   onDismiss?: () => void;
+  /** Accessible label for the dismiss button. Override for the app's own locale. */
+  dismissLabel?: string;
   className?: string;
 }
 
@@ -47,6 +49,7 @@ export function Alert({
   title,
   children,
   onDismiss,
+  dismissLabel = "Sulje ilmoitus",
   className,
 }: AlertProps) {
   return (
@@ -80,7 +83,7 @@ export function Alert({
         <button
           onClick={onDismiss}
           className="ml-3 shrink-0 rounded p-0.5 opacity-60 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current"
-          aria-label="Sulje ilmoitus"
+          aria-label={dismissLabel}
         >
           <svg
             className="h-4 w-4"

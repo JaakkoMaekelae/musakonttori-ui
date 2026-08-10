@@ -15,6 +15,10 @@ export interface ModalProps {
   children: ReactNode;
   /** Footer (typically action buttons) */
   footer?: ReactNode;
+  /** Accessible label for the close button. Override for the app's own locale. */
+  closeLabel?: string;
+  /** Accessible name for the dialog when no title is given. Override for the app's own locale. */
+  dialogLabel?: string;
   className?: string;
 }
 
@@ -38,6 +42,8 @@ export function Modal({
   title,
   children,
   footer,
+  closeLabel = "Sulje",
+  dialogLabel = "Dialog",
   className,
 }: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -118,7 +124,7 @@ export function Modal({
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? "modal-title" : undefined}
-      aria-label={title ? undefined : "Dialog"}
+      aria-label={title ? undefined : dialogLabel}
     >
       <div
         ref={modalRef}
@@ -137,7 +143,7 @@ export function Modal({
               data-modal-close
               onClick={onClose}
               className="rounded-lg p-1 text-[var(--mk-palette-text-secondary,#B0B3C1)] transition-colors hover:bg-[var(--mk-palette-bg-surface,#1E2130)] hover:text-[var(--mk-palette-text-primary,#F0F0F3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-bg-brand,#DC2626)]"
-              aria-label="Sulje"
+              aria-label={closeLabel}
             >
               <svg
                 className="h-5 w-5"

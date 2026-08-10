@@ -61,7 +61,10 @@ export interface SignInLayoutProps {
 
   className?: string;
 
-  /** Built-in form labels. Finnish defaults. */
+  /** Current language, e.g. "fi". Built-in: fi, en, sv — unlisted locales fall back to fi. */
+  locale?: string;
+
+  /** Override any of the form's own built-in strings. Built-in: fi, en, sv. */
   labels?: {
     emailLabel?: string;
     emailPlaceholder?: string;
@@ -76,18 +79,62 @@ export interface SignInLayoutProps {
   };
 }
 
-const DEFAULT_FORM_LABELS = {
-  emailLabel: "Sähköposti",
-  emailPlaceholder: "sinä@esimerkki.fi",
-  passwordLabel: "Salasana",
-  passwordPlaceholder: "••••••••",
-  showPassword: "Näytä salasana",
-  hidePassword: "Piilota salasana",
-  signInButton: "Kirjaudu",
-  clerkRedirect: "Kirjaudu Clerk-tunnuksella",
-  accountsRedirect: "Kirjaudu Musakonttori-tunnuksella",
-  orDivider: "tai",
+/**
+ * The form's own built-in chrome — field labels, the show/hide password
+ * toggle, delegated-sign-in copy — keyed per locale like LocaleSwitcherModal's
+ * `LABELS`. All product-specific copy (`productName`, `formTitle`,
+ * `securityNote`, etc.) stays a required prop; this table only covers the
+ * handful of small strings the form owns so every consumer does not have to
+ * spell out "email" and "password" by hand. Unlisted locales fall back to
+ * Finnish — the historical default, kept for backward compatibility with
+ * consumers that render this layout without passing `locale`.
+ */
+const SIGN_IN_FORM_LABELS: Record<string, Required<NonNullable<SignInLayoutProps["labels"]>>> = {
+  fi: {
+    emailLabel: "Sähköposti",
+    emailPlaceholder: "sinä@esimerkki.fi",
+    passwordLabel: "Salasana",
+    passwordPlaceholder: "••••••••",
+    showPassword: "Näytä salasana",
+    hidePassword: "Piilota salasana",
+    signInButton: "Kirjaudu",
+    clerkRedirect: "Kirjaudu Clerk-tunnuksella",
+    accountsRedirect: "Kirjaudu Musakonttori-tunnuksella",
+    orDivider: "tai",
+  },
+  en: {
+    emailLabel: "Email",
+    emailPlaceholder: "you@example.com",
+    passwordLabel: "Password",
+    passwordPlaceholder: "••••••••",
+    showPassword: "Show password",
+    hidePassword: "Hide password",
+    signInButton: "Sign in",
+    clerkRedirect: "Sign in with Clerk",
+    accountsRedirect: "Sign in with your Musakonttori account",
+    orDivider: "or",
+  },
+  sv: {
+    emailLabel: "E-post",
+    emailPlaceholder: "du@exempel.se",
+    passwordLabel: "Lösenord",
+    passwordPlaceholder: "••••••••",
+    showPassword: "Visa lösenord",
+    hidePassword: "Dölj lösenord",
+    signInButton: "Logga in",
+    clerkRedirect: "Logga in med Clerk",
+    accountsRedirect: "Logga in med ditt Musakonttori-konto",
+    orDivider: "eller",
+  },
 };
+
+function formLabelsFor(
+  locale: string | undefined,
+  override?: SignInLayoutProps["labels"]
+): Required<NonNullable<SignInLayoutProps["labels"]>> {
+  const base = SIGN_IN_FORM_LABELS[locale ?? "fi"] ?? SIGN_IN_FORM_LABELS.fi!;
+  return override ? { ...base, ...override } : base;
+}
 
 /* -------------------------------------------------------------------------- */
 /*  Sub-components                                                            */
@@ -213,9 +260,10 @@ export function SignInLayout({
   securityNote,
   errorMessage,
   className,
+  locale,
   labels,
 }: SignInLayoutProps) {
-  const L = { ...DEFAULT_FORM_LABELS, ...labels };
+  const L = formLabelsFor(locale, labels);
   // Delegated sign-in redirect: Clerk takes priority when the product opts
   // into it, since a Clerk-authenticated product has no local password form
   // of its own to redirect away from — Accounts is the fallback delegation.

@@ -15,6 +15,8 @@ export interface BreadcrumbProps {
   className?: string;
   homeHref?: string;
   homeLabel?: string;
+  /** Accessible name for the breadcrumb nav landmark. Override for the app's own locale. */
+  navLabel?: string;
   linkComponent?: ComponentType<AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }>;
 }
 
@@ -23,12 +25,13 @@ export function Breadcrumb({
   className,
   homeHref,
   homeLabel = "Etusivu",
+  navLabel = "Murupolku",
   linkComponent: LinkComponent,
 }: BreadcrumbProps) {
   const Link = LinkComponent ?? ("a" as unknown as ComponentType<AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }>);
 
   return (
-    <nav aria-label="Murupolku" className={cn("flex items-center gap-1 text-sm text-text-muted", className)}>
+    <nav aria-label={navLabel} className={cn("flex items-center gap-1 text-sm text-text-muted", className)}>
       {homeHref ? (
         <Link href={safeHref(homeHref)} className="hover:text-text-primary transition-colors" aria-label={homeLabel}>
           <Home className="h-4 w-4" />

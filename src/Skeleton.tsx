@@ -3,6 +3,8 @@ import { cn } from "./utils";
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Variant: text (line), circular (circle), rectangular */
   variant?: "text" | "circular" | "rectangular";
+  /** Accessible label announced while loading. Override for the app's own locale. */
+  label?: string;
 }
 
 /**
@@ -18,7 +20,7 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
  * <Skeleton variant="circular" className="h-12 w-12" />
  * <Skeleton variant="rectangular" className="h-32 w-full" />
  */
-export function Skeleton({ variant = "text", className, ...props }: SkeletonProps) {
+export function Skeleton({ variant = "text", className, label = "Ladataan...", ...props }: SkeletonProps) {
   return (
     <div
       className={cn(
@@ -29,7 +31,7 @@ export function Skeleton({ variant = "text", className, ...props }: SkeletonProp
         className,
       )}
       role="status"
-      aria-label="Ladataan..."
+      aria-label={label}
       {...props}
     />
   );
@@ -41,6 +43,8 @@ export interface TableSkeletonProps {
   /** Number of columns */
   cols?: number;
   className?: string;
+  /** Accessible label announced while loading. Override for the app's own locale. */
+  label?: string;
 }
 
 /**
@@ -50,9 +54,9 @@ export interface TableSkeletonProps {
  * @example
  * <TableSkeleton rows={5} cols={4} />
  */
-export function TableSkeleton({ rows = 5, cols = 4, className }: TableSkeletonProps) {
+export function TableSkeleton({ rows = 5, cols = 4, className, label = "Ladataan taulukkoa..." }: TableSkeletonProps) {
   return (
-    <div className={cn("space-y-3", className)} role="status" aria-label="Ladataan taulukkoa...">
+    <div className={cn("space-y-3", className)} role="status" aria-label={label}>
       {Array.from({ length: rows }).map((_, i) => (
         <div key={i} className="flex gap-4">
           {Array.from({ length: cols }).map((_, j) => (

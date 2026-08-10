@@ -32,11 +32,42 @@ function getInitialTheme(): Theme {
   return "light";
 }
 
-export interface ThemeToggleProps {
-  className?: string;
+export interface ThemeToggleLabels {
+  toLight: string;
+  toDark: string;
 }
 
-export function ThemeToggle({ className }: ThemeToggleProps) {
+/**
+ * The toggle's only accessible name — it renders a bare icon, so this is all a
+ * screen reader announces. Keyed per locale like LocaleSwitcherModal's own
+ * labels, so a product not in Finnish does not get a Finnish announcement by
+ * default; anything not listed here falls back to Finnish, the family's
+ * historical default for this component.
+ */
+const THEME_TOGGLE_LABELS: Record<string, ThemeToggleLabels> = {
+  fi: { toLight: "Vaihda vaaleaan teemaan", toDark: "Vaihda tummaan teemaan" },
+  en: { toLight: "Switch to light theme", toDark: "Switch to dark theme" },
+  sv: { toLight: "Byt till ljust tema", toDark: "Byt till mörkt tema" },
+};
+
+function themeLabelsFor(
+  locale: string | undefined,
+  override?: Partial<ThemeToggleLabels>
+): ThemeToggleLabels {
+  const base = THEME_TOGGLE_LABELS[locale ?? "fi"] ?? THEME_TOGGLE_LABELS.fi!;
+  return override ? { ...base, ...override } : base;
+}
+
+export interface ThemeToggleProps {
+  className?: string;
+  /** Current language, e.g. "fi". Built-in: fi, en, sv — unlisted locales fall back to fi. */
+  locale?: string;
+  /** Override either accessible label directly. */
+  labels?: Partial<ThemeToggleLabels>;
+}
+
+export function ThemeToggle({ className, locale, labels }: ThemeToggleProps) {
+  const L = themeLabelsFor(locale, labels);
   const [dark, setDark] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -66,7 +97,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         className,
       )}
       suppressHydrationWarning
-      aria-label={dark ? "Vaihda vaaleaan teemaan" : "Vaihda tummaan teemaan"}
+      aria-label={dark ? L.toLight : L.toDark}
     >
       {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>

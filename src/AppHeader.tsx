@@ -6,6 +6,19 @@ import { cn } from "./utils";
 import { safeHref } from "./safeHref";
 import { ThemeToggle } from "./ThemeToggle";
 
+export interface AppHeaderLabels {
+  mainNav?: string;
+  openUserMenu?: string;
+  userAvatar?: string;
+  userMenu?: string;
+  account?: string;
+  organizations?: string;
+  signOut?: string;
+  signIn?: string;
+  closeMenu?: string;
+  openMenu?: string;
+}
+
 export interface AppHeaderProps {
   productName: string;
   productHref?: string;
@@ -14,33 +27,67 @@ export interface AppHeaderProps {
   onSignOut?: () => void;
   signInHref?: string;
   className?: string;
-  /** Translation labels. Finnish defaults for backward compatibility. */
-  labels?: {
-    mainNav?: string;
-    openUserMenu?: string;
-    userAvatar?: string;
-    userMenu?: string;
-    account?: string;
-    organizations?: string;
-    signOut?: string;
-    signIn?: string;
-    closeMenu?: string;
-    openMenu?: string;
-  };
+  /** Current language, e.g. "fi". Built-in: fi, en, sv — unlisted locales fall back to fi. */
+  locale?: string;
+  /** Override any of the header's own strings. Built-in: fi, en, sv. */
+  labels?: AppHeaderLabels;
 }
 
-const DEFAULT_LABELS = {
-  mainNav: "Päävalikko",
-  openUserMenu: "Avaa käyttäjävalikko",
-  userAvatar: "Käyttäjä",
-  userMenu: "Käyttäjävalikko",
-  account: "Tili",
-  organizations: "Organisaatiot",
-  signOut: "Kirjaudu ulos",
-  signIn: "Kirjaudu",
-  closeMenu: "Sulje valikko",
-  openMenu: "Avaa valikko",
+/**
+ * The header's own chrome, in the languages the family actually ships UI in.
+ *
+ * Keyed per locale like LocaleSwitcherModal's `LABELS` — a product that does
+ * not pass `locale` keeps today's Finnish text exactly (the historical
+ * default, kept for backward compatibility), and a product in English or
+ * Swedish gets real translations instead of Finnish leaking through every
+ * consumer that forgot to override all ten strings by hand.
+ */
+const APP_HEADER_LABELS: Record<string, Required<AppHeaderLabels>> = {
+  fi: {
+    mainNav: "Päävalikko",
+    openUserMenu: "Avaa käyttäjävalikko",
+    userAvatar: "Käyttäjä",
+    userMenu: "Käyttäjävalikko",
+    account: "Tili",
+    organizations: "Organisaatiot",
+    signOut: "Kirjaudu ulos",
+    signIn: "Kirjaudu",
+    closeMenu: "Sulje valikko",
+    openMenu: "Avaa valikko",
+  },
+  en: {
+    mainNav: "Main menu",
+    openUserMenu: "Open user menu",
+    userAvatar: "User",
+    userMenu: "User menu",
+    account: "Account",
+    organizations: "Organizations",
+    signOut: "Sign out",
+    signIn: "Sign in",
+    closeMenu: "Close menu",
+    openMenu: "Open menu",
+  },
+  sv: {
+    mainNav: "Huvudmeny",
+    openUserMenu: "Öppna användarmenyn",
+    userAvatar: "Användare",
+    userMenu: "Användarmeny",
+    account: "Konto",
+    organizations: "Organisationer",
+    signOut: "Logga ut",
+    signIn: "Logga in",
+    closeMenu: "Stäng menyn",
+    openMenu: "Öppna menyn",
+  },
 };
+
+function headerLabelsFor(
+  locale: string | undefined,
+  override?: AppHeaderLabels
+): Required<AppHeaderLabels> {
+  const base = APP_HEADER_LABELS[locale ?? "fi"] ?? APP_HEADER_LABELS.fi!;
+  return override ? { ...base, ...override } : base;
+}
 
 export function AppHeader({
   productName,
@@ -50,9 +97,10 @@ export function AppHeader({
   onSignOut,
   signInHref = "/auth/sign-in",
   className,
+  locale,
   labels,
 }: AppHeaderProps) {
-  const L = { ...DEFAULT_LABELS, ...labels };
+  const L = headerLabelsFor(locale, labels);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -143,7 +191,7 @@ export function AppHeader({
 
         {/* Right: Tools */}
         <div className="flex items-center gap-2">
-          <ThemeToggle />
+          <ThemeToggle locale={locale} />
 
           {user ? (
             /* User menu */

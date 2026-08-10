@@ -3,7 +3,9 @@ import { Button } from "./Button";
 
 export interface EmptyStateAction {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
+  /** Render as link. If provided, onClick is ignored. */
+  href?: string;
 }
 
 export interface EmptyStateProps {
@@ -13,7 +15,7 @@ export interface EmptyStateProps {
   title: string;
   /** Description text */
   description?: string;
-  /** Action button (either label+onClick object or direct ReactNode) */
+  /** Action button (either label+onClick/href object or direct ReactNode) */
   action?: EmptyStateAction | ReactNode;
   className?: string;
 }
@@ -50,6 +52,10 @@ function DefaultIcon() {
  *   description="Et ole vielä luonut yhtään tapahtumaa."
  *   action={{ label: "Luo tapahtuma", onClick: () => {} }}
  * />
+ * <EmptyState
+ *   title="Ei tuotteita"
+ *   action={{ label: "Selaa tuotteita", href: "/products" }}
+ * />
  */
 export function EmptyState({
   icon,
@@ -79,10 +85,19 @@ export function EmptyState({
       )}
       {action && (
         <div className="mt-6">
-          {typeof action === "object" && action !== null && "label" in action && "onClick" in action ? (
-            <Button variant="primary" onClick={(action as EmptyStateAction).onClick}>
-              {(action as EmptyStateAction).label}
-            </Button>
+          {typeof action === "object" && action !== null && "label" in action ? (
+            (action as EmptyStateAction).href ? (
+              <a
+                href={(action as EmptyStateAction).href}
+                className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-semibold transition-colors bg-[var(--mk-palette-bg-brand,#DC2626)] text-white hover:bg-[var(--mk-palette-bg-brand-hover,#B91C1C)]"
+              >
+                {(action as EmptyStateAction).label}
+              </a>
+            ) : (
+              <Button variant="primary" onClick={(action as EmptyStateAction).onClick}>
+                {(action as EmptyStateAction).label}
+              </Button>
+            )
           ) : (
             action as ReactNode
           )}

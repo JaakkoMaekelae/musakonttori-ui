@@ -13,6 +13,8 @@ export interface AppFooterProps {
   companyName?: string;
   links?: { label: string; href: string }[];
   linkGroups?: AppFooterLinkGroup[];
+  /** Copyright line after the year and company name. Override for the app's own locale. */
+  rightsText?: string;
   className?: string;
 }
 
@@ -21,6 +23,7 @@ export function AppFooter({
   companyName = "Musakonttori",
   links,
   linkGroups,
+  rightsText = "Kaikki oikeudet pidätetään.",
   className,
 }: AppFooterProps) {
   const year = new Date().getFullYear();
@@ -101,7 +104,7 @@ export function AppFooter({
           )}
         >
           <p className="text-xs text-zinc-500">
-            &copy; {year} {companyName}. Kaikki oikeudet pidätetään.
+            &copy; {year} {companyName}. {rightsText}
           </p>
         </div>
       </div>

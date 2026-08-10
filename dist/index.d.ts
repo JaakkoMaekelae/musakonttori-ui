@@ -52,7 +52,7 @@ export { Switch } from "./Switch";
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider, } from "./Tooltip";
 export { Progress, type ProgressProps } from "./Progress";
 export { Popover, PopoverAnchor, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger, } from "./Popover";
-export { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuGroup, DropdownMenuSub, } from "./DropdownMenu";
+export { DropdownMenu, DropdownMenuPortal, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, } from "./DropdownMenu";
 export { Sheet, SheetTrigger, SheetClose, SheetPortal, SheetOverlay, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription, } from "./Sheet";
 export { type SheetContentProps } from "./Sheet";
 export { ThemeProvider, useTheme, type ThemeProviderProps } from "./ThemeProvider";

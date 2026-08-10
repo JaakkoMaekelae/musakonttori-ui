@@ -29,10 +29,13 @@ export const DialogClose = DialogPrimitive.Close;
 export const DialogPortal = DialogPrimitive.Portal;
 export const DialogOverlay = DialogPrimitive.Overlay;
 
-export interface DialogContentProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {}
+export interface DialogContentProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
+  /** Accessible label for the close button. Override for the app's own locale. */
+  closeLabel?: string;
+}
 
 export const DialogContent = forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
-  ({ className, children, ...props }, ref) => (
+  ({ className, children, closeLabel = "Sulje", ...props }, ref) => (
     <DialogPortal>
       <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
       <DialogPrimitive.Content
@@ -49,7 +52,7 @@ export const DialogContent = forwardRef<React.ElementRef<typeof DialogPrimitive.
         {children}
         <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-[var(--mk-palette-bg-surface,#1E2130)] transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-bg-brand,#DC2626)] focus:ring-offset-2 disabled:pointer-events-none">
           <X className="h-4 w-4 text-[var(--mk-palette-text-secondary,#B0B3C1)]" />
-          <span className="sr-only">Sulje</span>
+          <span className="sr-only">{closeLabel}</span>
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPortal>
@@ -102,10 +105,12 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export interface DialogFooterProps extends React.HTMLAttributes<HTMLDivElement> {
   showCloseButton?: boolean;
+  /** Accessible label for the close button. Override for the app's own locale. */
+  closeLabel?: string;
 }
 
 export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
-  ({ className, showCloseButton, children, ...props }, ref) => (
+  ({ className, showCloseButton, closeLabel = "Sulje", children, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
@@ -118,7 +123,7 @@ export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
       {showCloseButton && (
         <DialogPrimitive.Close className="rounded-sm opacity-70 ring-offset-[var(--mk-palette-bg-surface,#1E2130)] transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-bg-brand,#DC2626)] focus:ring-offset-2 disabled:pointer-events-none">
           <X className="h-4 w-4 text-[var(--mk-palette-text-secondary,#B0B3C1)]" />
-          <span className="sr-only">Sulje</span>
+          <span className="sr-only">{closeLabel}</span>
         </DialogPrimitive.Close>
       )}
     </div>

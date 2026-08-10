@@ -15,7 +15,11 @@ function DefaultIcon() {
  *   description="Et ole vielä luonut yhtään tapahtumaa."
  *   action={{ label: "Luo tapahtuma", onClick: () => {} }}
  * />
+ * <EmptyState
+ *   title="Ei tuotteita"
+ *   action={{ label: "Selaa tuotteita", href: "/products" }}
+ * />
  */
 export function EmptyState({ icon, title, description, action, className = "", }) {
-    return (_jsxs("div", { className: `mx-auto flex max-w-md flex-col items-center justify-center py-12 text-center ${className}`, children: [icon ? (_jsx("div", { className: "mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--mk-palette-bg-surface,#1E2130)]", children: icon })) : (_jsx("div", { className: "mb-4", children: _jsx(DefaultIcon, {}) })), _jsx("h3", { className: "text-lg font-semibold text-[var(--mk-palette-text-primary,#F0F0F3)]", children: title }), description && (_jsx("p", { className: "mt-1 max-w-sm text-sm text-[var(--mk-palette-text-secondary,#B0B3C1)]", children: description })), action && (_jsx("div", { className: "mt-6", children: typeof action === "object" && action !== null && "label" in action && "onClick" in action ? (_jsx(Button, { variant: "primary", onClick: action.onClick, children: action.label })) : action }))] }));
+    return (_jsxs("div", { className: `mx-auto flex max-w-md flex-col items-center justify-center py-12 text-center ${className}`, children: [icon ? (_jsx("div", { className: "mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--mk-palette-bg-surface,#1E2130)]", children: icon })) : (_jsx("div", { className: "mb-4", children: _jsx(DefaultIcon, {}) })), _jsx("h3", { className: "text-lg font-semibold text-[var(--mk-palette-text-primary,#F0F0F3)]", children: title }), description && (_jsx("p", { className: "mt-1 max-w-sm text-sm text-[var(--mk-palette-text-secondary,#B0B3C1)]", children: description })), action && (_jsx("div", { className: "mt-6", children: typeof action === "object" && action !== null && "label" in action ? (action.href ? (_jsx("a", { href: action.href, className: "inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-semibold transition-colors bg-[var(--mk-palette-bg-brand,#DC2626)] text-white hover:bg-[var(--mk-palette-bg-brand-hover,#B91C1C)]", children: action.label })) : (_jsx(Button, { variant: "primary", onClick: action.onClick, children: action.label }))) : action }))] }));
 }
