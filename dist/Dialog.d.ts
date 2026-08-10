@@ -22,6 +22,8 @@ export declare const DialogClose: import("react").ForwardRefExoticComponent<Dial
 export declare const DialogPortal: import("react").FC<DialogPrimitive.DialogPortalProps>;
 export declare const DialogOverlay: import("react").ForwardRefExoticComponent<DialogPrimitive.DialogOverlayProps & import("react").RefAttributes<HTMLDivElement>>;
 export interface DialogContentProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
+    /** Accessible label for the close button. Override for the app's own locale. */
+    closeLabel?: string;
 }
 export declare const DialogContent: import("react").ForwardRefExoticComponent<DialogContentProps & import("react").RefAttributes<HTMLDivElement>>;
 export interface DialogHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -35,6 +37,8 @@ export interface DialogDescriptionProps extends React.ComponentPropsWithoutRef<t
 export declare const DialogDescription: import("react").ForwardRefExoticComponent<DialogDescriptionProps & import("react").RefAttributes<HTMLParagraphElement>>;
 export interface DialogFooterProps extends React.HTMLAttributes<HTMLDivElement> {
     showCloseButton?: boolean;
+    /** Accessible label for the close button. Override for the app's own locale. */
+    closeLabel?: string;
 }
 export declare const DialogFooter: import("react").ForwardRefExoticComponent<DialogFooterProps & import("react").RefAttributes<HTMLDivElement>>;
 //# sourceMappingURL=Dialog.d.ts.map

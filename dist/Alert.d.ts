@@ -8,6 +8,8 @@ export interface AlertProps {
     children: React.ReactNode;
     /** Dismiss handler - if provided, shows X button */
     onDismiss?: () => void;
+    /** Accessible label for the dismiss button. Override for the app's own locale. */
+    dismissLabel?: string;
     className?: string;
 }
 /**
@@ -21,6 +23,6 @@ export interface AlertProps {
  * <Alert variant="success" title="Tallennettu!">Tapahtuma on luotu onnistuneesti.</Alert>
  * <Alert variant="error" onDismiss={() => setError(null)}>Jotain meni pieleen.</Alert>
  */
-export declare function Alert({ variant, title, children, onDismiss, className, }: AlertProps): import("react").JSX.Element;
+export declare function Alert({ variant, title, children, onDismiss, dismissLabel, className, }: AlertProps): import("react").JSX.Element;
 export {};
 //# sourceMappingURL=Alert.d.ts.map

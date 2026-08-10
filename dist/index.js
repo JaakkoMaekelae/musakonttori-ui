@@ -46,4 +46,14 @@ export { MARKETS, MARKET_CURRENCIES, APP_LOCALES, getMarketByCountry, getMarketB
 export { applyGeoDetection } from "./geoDetection";
 export { AppHeader } from "./AppHeader";
 export { AppFooter, } from "./AppFooter";
+export { Textarea } from "./Textarea";
+export { Separator } from "./Separator";
+export { Label } from "./Label";
+export { Switch } from "./Switch";
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider, } from "./Tooltip";
+export { Progress } from "./Progress";
+export { Popover, PopoverAnchor, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger, } from "./Popover";
+export { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuGroup, DropdownMenuSub, } from "./DropdownMenu";
+export { Sheet, SheetTrigger, SheetClose, SheetPortal, SheetOverlay, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription, } from "./Sheet";
+export { ThemeProvider, useTheme } from "./ThemeProvider";
 export { ServiceCatalog, SERVICES, } from "./ServiceCatalog";

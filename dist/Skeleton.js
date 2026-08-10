@@ -13,8 +13,8 @@ import { cn } from "./utils";
  * <Skeleton variant="circular" className="h-12 w-12" />
  * <Skeleton variant="rectangular" className="h-32 w-full" />
  */
-export function Skeleton({ variant = "text", className, ...props }) {
-    return (_jsx("div", { className: cn("animate-pulse bg-[var(--mk-palette-bg-surface,#1E2130)]", variant === "text" && "h-4 w-full rounded-md", variant === "circular" && "rounded-full", variant === "rectangular" && "rounded-lg", className), role: "status", "aria-label": "Ladataan...", ...props }));
+export function Skeleton({ variant = "text", className, label = "Ladataan...", ...props }) {
+    return (_jsx("div", { className: cn("animate-pulse bg-[var(--mk-palette-bg-surface,#1E2130)]", variant === "text" && "h-4 w-full rounded-md", variant === "circular" && "rounded-full", variant === "rectangular" && "rounded-lg", className), role: "status", "aria-label": label, ...props }));
 }
 /**
  * Special table loading Skeleton. Renders rows × columns
@@ -23,6 +23,6 @@ export function Skeleton({ variant = "text", className, ...props }) {
  * @example
  * <TableSkeleton rows={5} cols={4} />
  */
-export function TableSkeleton({ rows = 5, cols = 4, className }) {
-    return (_jsx("div", { className: cn("space-y-3", className), role: "status", "aria-label": "Ladataan taulukkoa...", children: Array.from({ length: rows }).map((_, i) => (_jsx("div", { className: "flex gap-4", children: Array.from({ length: cols }).map((_, j) => (_jsx(Skeleton, { className: "h-8 flex-1" }, j))) }, i))) }));
+export function TableSkeleton({ rows = 5, cols = 4, className, label = "Ladataan taulukkoa..." }) {
+    return (_jsx("div", { className: cn("space-y-3", className), role: "status", "aria-label": label, children: Array.from({ length: rows }).map((_, i) => (_jsx("div", { className: "flex gap-4", children: Array.from({ length: cols }).map((_, j) => (_jsx(Skeleton, { className: "h-8 flex-1" }, j))) }, i))) }));
 }

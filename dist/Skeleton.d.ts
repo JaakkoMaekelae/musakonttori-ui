@@ -1,6 +1,8 @@
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
     /** Variant: text (line), circular (circle), rectangular */
     variant?: "text" | "circular" | "rectangular";
+    /** Accessible label announced while loading. Override for the app's own locale. */
+    label?: string;
 }
 /**
  * Musakonttori Skeleton - loading animation placeholder.
@@ -15,13 +17,15 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
  * <Skeleton variant="circular" className="h-12 w-12" />
  * <Skeleton variant="rectangular" className="h-32 w-full" />
  */
-export declare function Skeleton({ variant, className, ...props }: SkeletonProps): import("react").JSX.Element;
+export declare function Skeleton({ variant, className, label, ...props }: SkeletonProps): import("react").JSX.Element;
 export interface TableSkeletonProps {
     /** Number of rows */
     rows?: number;
     /** Number of columns */
     cols?: number;
     className?: string;
+    /** Accessible label announced while loading. Override for the app's own locale. */
+    label?: string;
 }
 /**
  * Special table loading Skeleton. Renders rows × columns
@@ -30,5 +34,5 @@ export interface TableSkeletonProps {
  * @example
  * <TableSkeleton rows={5} cols={4} />
  */
-export declare function TableSkeleton({ rows, cols, className }: TableSkeletonProps): import("react").JSX.Element;
+export declare function TableSkeleton({ rows, cols, className, label }: TableSkeletonProps): import("react").JSX.Element;
 //# sourceMappingURL=Skeleton.d.ts.map

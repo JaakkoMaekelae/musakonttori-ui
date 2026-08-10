@@ -29,19 +29,53 @@ function storeConsent(analytics, marketing) {
     document.cookie = `${COOKIE_NAME}=${encodeURIComponent(JSON.stringify(consent))}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax; Secure`;
     window.dispatchEvent(new CustomEvent("mk-cookie-consent-changed", { detail: consent }));
 }
-const DEFAULT_LABELS = {
-    regionLabel: "Evästeasetukset",
-    title: "Evästeet Musakonttorissa",
-    description: "Käytämme välttämättömiä evästeitä kirjautumiseen, turvallisuuteen ja kieli- tai maa-asetuksiin. Analytiikkaa ja markkinointia käytetään vain suostumuksellasi.",
-    details: "Välttämättömät evästeet ovat aina käytössä. Jos hyväksyt kaikki, tallennamme myös analytiikka- ja markkinointisuostumuksen palvelun parantamista varten.",
-    privacyLink: "Tietosuojaseloste",
-    showDetails: "Lisätiedot",
-    hideDetails: "Piilota tiedot",
-    necessaryOnly: "Vain välttämättömät",
-    acceptAll: "Hyväksy kaikki",
+/**
+ * The banner's own copy, keyed per locale like LocaleSwitcherModal's
+ * `LABELS`. Unlisted locales fall back to Finnish — the historical default,
+ * kept for backward compatibility with consumers that render this banner
+ * without passing `locale`.
+ */
+const COOKIE_BANNER_LABELS = {
+    fi: {
+        regionLabel: "Evästeasetukset",
+        title: "Evästeet Musakonttorissa",
+        description: "Käytämme välttämättömiä evästeitä kirjautumiseen, turvallisuuteen ja kieli- tai maa-asetuksiin. Analytiikkaa ja markkinointia käytetään vain suostumuksellasi.",
+        details: "Välttämättömät evästeet ovat aina käytössä. Jos hyväksyt kaikki, tallennamme myös analytiikka- ja markkinointisuostumuksen palvelun parantamista varten.",
+        privacyLink: "Tietosuojaseloste",
+        showDetails: "Lisätiedot",
+        hideDetails: "Piilota tiedot",
+        necessaryOnly: "Vain välttämättömät",
+        acceptAll: "Hyväksy kaikki",
+    },
+    en: {
+        regionLabel: "Cookie settings",
+        title: "Cookies at Musakonttori",
+        description: "We use necessary cookies for sign-in, security and language or region settings. Analytics and marketing cookies are used only with your consent.",
+        details: "Necessary cookies are always active. If you accept all, we also store analytics and marketing consent to improve the service.",
+        privacyLink: "Privacy policy",
+        showDetails: "More details",
+        hideDetails: "Hide details",
+        necessaryOnly: "Necessary only",
+        acceptAll: "Accept all",
+    },
+    sv: {
+        regionLabel: "Cookieinställningar",
+        title: "Cookies hos Musakonttori",
+        description: "Vi använder nödvändiga cookies för inloggning, säkerhet samt språk- och regioninställningar. Analys- och marknadsföringscookies används endast med ditt samtycke.",
+        details: "Nödvändiga cookies är alltid aktiva. Om du godkänner allt lagrar vi även samtycke för analys och marknadsföring för att förbättra tjänsten.",
+        privacyLink: "Integritetspolicy",
+        showDetails: "Mer information",
+        hideDetails: "Dölj information",
+        necessaryOnly: "Endast nödvändiga",
+        acceptAll: "Acceptera alla",
+    },
 };
-export function CookieConsentBanner({ privacyHref, labels }) {
-    const L = { ...DEFAULT_LABELS, ...labels };
+function cookieLabelsFor(locale, override) {
+    const base = COOKIE_BANNER_LABELS[locale ?? "fi"] ?? COOKIE_BANNER_LABELS.fi;
+    return override ? { ...base, ...override } : base;
+}
+export function CookieConsentBanner({ privacyHref, locale, labels }) {
+    const L = cookieLabelsFor(locale, labels);
     const [visible, setVisible] = useState(false);
     const [detailsOpen, setDetailsOpen] = useState(false);
     useEffect(() => {

@@ -8,9 +8,11 @@ export interface BreadcrumbProps {
     className?: string;
     homeHref?: string;
     homeLabel?: string;
+    /** Accessible name for the breadcrumb nav landmark. Override for the app's own locale. */
+    navLabel?: string;
     linkComponent?: ComponentType<AnchorHTMLAttributes<HTMLAnchorElement> & {
         href: string;
     }>;
 }
-export declare function Breadcrumb({ items, className, homeHref, homeLabel, linkComponent: LinkComponent, }: BreadcrumbProps): import("react").JSX.Element;
+export declare function Breadcrumb({ items, className, homeHref, homeLabel, navLabel, linkComponent: LinkComponent, }: BreadcrumbProps): import("react").JSX.Element;
 //# sourceMappingURL=Breadcrumb.d.ts.map

@@ -10,6 +10,10 @@ export interface ModalProps {
     children: ReactNode;
     /** Footer (typically action buttons) */
     footer?: ReactNode;
+    /** Accessible label for the close button. Override for the app's own locale. */
+    closeLabel?: string;
+    /** Accessible name for the dialog when no title is given. Override for the app's own locale. */
+    dialogLabel?: string;
     className?: string;
 }
 /**
@@ -23,5 +27,5 @@ export interface ModalProps {
  *   <p>Oletko varma?</p>
  * </Modal>
  */
-export declare function Modal({ isOpen, onClose, title, children, footer, className, }: ModalProps): import("react").JSX.Element | null;
+export declare function Modal({ isOpen, onClose, title, children, footer, closeLabel, dialogLabel, className, }: ModalProps): import("react").JSX.Element | null;
 //# sourceMappingURL=Modal.d.ts.map
