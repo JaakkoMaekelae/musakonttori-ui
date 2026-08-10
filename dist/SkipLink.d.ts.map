@@ -1,0 +1,1 @@
+{"version":3,"file":"SkipLink.d.ts","sourceRoot":"","sources":["../src/SkipLink.tsx"],"names":[],"mappings":"AAEA,MAAM,WAAW,aAAa;IAC5B,0DAA0D;IAC1D,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,6CAA6C;IAC7C,KAAK,CAAC,EAAE,MAAM,CAAC;IACf,SAAS,CAAC,EAAE,MAAM,CAAC;CACpB;AAED;;;;;;;;;GASG;AACH,wBAAgB,QAAQ,CAAC,EACvB,QAAyB,EACzB,KAA0B,EAC1B,SAAc,GACf,EAAE,aAAa,+BAmBf"}

@@ -296,6 +296,8 @@ export {
 } from "./Sheet";
 export { type SheetContentProps } from "./Sheet";
 export { ThemeProvider, useTheme, type ThemeProviderProps } from "./ThemeProvider";
+export { SkipLink, type SkipLinkProps } from "./SkipLink";
+export { OfflineIndicator, type OfflineIndicatorProps } from "./OfflineIndicator";
 export {
   ServiceCatalog,
   SERVICES,

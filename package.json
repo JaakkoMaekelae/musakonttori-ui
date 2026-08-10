@@ -192,6 +192,10 @@
       "import": "./dist/Label.js",
       "types": "./dist/Label.d.ts"
     },
+    "./offline-indicator": {
+      "import": "./dist/OfflineIndicator.js",
+      "types": "./dist/OfflineIndicator.d.ts"
+    },
     "./popover": {
       "import": "./dist/Popover.js",
       "types": "./dist/Popover.d.ts"
@@ -207,6 +211,14 @@
     "./sheet": {
       "import": "./dist/Sheet.js",
       "types": "./dist/Sheet.d.ts"
+    },
+    "./sheet": {
+      "import": "./dist/Sheet.js",
+      "types": "./dist/Sheet.d.ts"
+    },
+    "./skip-link": {
+      "import": "./dist/SkipLink.js",
+      "types": "./dist/SkipLink.d.ts"
     },
     "./switch": {
       "import": "./dist/Switch.js",

@@ -56,5 +56,7 @@ export { DropdownMenu, DropdownMenuPortal, DropdownMenuTrigger, DropdownMenuCont
 export { Sheet, SheetTrigger, SheetClose, SheetPortal, SheetOverlay, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription, } from "./Sheet";
 export { type SheetContentProps } from "./Sheet";
 export { ThemeProvider, useTheme, type ThemeProviderProps } from "./ThemeProvider";
+export { SkipLink, type SkipLinkProps } from "./SkipLink";
+export { OfflineIndicator, type OfflineIndicatorProps } from "./OfflineIndicator";
 export { ServiceCatalog, SERVICES, type ServiceCatalogProps, type ServiceEntry, } from "./ServiceCatalog";
 //# sourceMappingURL=index.d.ts.map

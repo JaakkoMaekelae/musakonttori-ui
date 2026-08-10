@@ -56,4 +56,6 @@ export { Popover, PopoverAnchor, PopoverContent, PopoverDescription, PopoverHead
 export { DropdownMenu, DropdownMenuPortal, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, } from "./DropdownMenu";
 export { Sheet, SheetTrigger, SheetClose, SheetPortal, SheetOverlay, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription, } from "./Sheet";
 export { ThemeProvider, useTheme } from "./ThemeProvider";
+export { SkipLink } from "./SkipLink";
+export { OfflineIndicator } from "./OfflineIndicator";
 export { ServiceCatalog, SERVICES, } from "./ServiceCatalog";
