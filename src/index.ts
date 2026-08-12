@@ -298,6 +298,12 @@ export { type SheetContentProps } from "./Sheet";
 export { ThemeProvider, useTheme, type ThemeProviderProps } from "./ThemeProvider";
 export { SkipLink, type SkipLinkProps } from "./SkipLink";
 export { OfflineIndicator, type OfflineIndicatorProps } from "./OfflineIndicator";
+export { KbdHint, type KbdHintProps } from "./KbdHint";
+export { PageHeader, type PageHeaderProps } from "./PageHeader";
+export { BulkActionBar, type BulkActionBarProps, type BulkAction } from "./BulkActionBar";
+export { EditLockIndicator, type EditLockIndicatorProps } from "./EditLockIndicator";
+export { PlaceholderButton, type PlaceholderButtonProps } from "./PlaceholderButton";
+export { ConfirmationDialog, type ConfirmationDialogProps } from "./ConfirmationDialog";
 export {
   ServiceCatalog,
   SERVICES,

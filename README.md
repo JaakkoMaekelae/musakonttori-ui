@@ -1,92 +1,50 @@
-# @musakonttori/ui
+---
+type: index
+status: active
+owner: Musakonttori
+---
 
-Shared Musakonttori UI components and design tokens.
+# Musakonttori Obsidian Vault — Future State
 
-**Documentation:** [Architecture](docs/architecture.md) · [Disaster recovery](docs/disaster-recovery.md) ·
-[Ecosystem architecture](../MUSAKONTTORI_ARCHITECTURE.md)
+This package contains the future-state product documentation for the Musakonttori ecosystem.
 
-## Usage
+## Start here
 
-```tsx
-import { Avatar, Badge, Button, Chip } from "@musakonttori/ui";
-```
+- [[00 Musakonttori HQ]]
+- [[01 Ecosystem Map]]
+- [[02 Shared Platform]]
+- [[03 Product Matrix]]
+- [[04 Master Roadmap]]
 
-Named subpath exports are also available (`@musakonttori/ui/button` and so on).
+## Products
 
-## Development
+- [[10 Stageflow]]
+- [[11 Ticketing]]
+- [[12 LiveGuide]]
+- [[13 SmartLink]]
+- [[14 Market]]
+- [[15 SoundLaunch]]
+- [[16 Mastering]]
 
-```bash
-pnpm dev            # tsc --watch
-pnpm build          # build tokens + tsc -p tsconfig.build.json → dist/
-pnpm build:tokens   # regenerate design tokens
-pnpm typecheck      # tsc --noEmit
-pnpm lint
-pnpm test           # vitest run
-pnpm storybook      # storybook dev -p 6006
-```
+## Documentation principle
 
-## Components
+These files describe **what each product should become**, not only what exists today.
 
-- **Button** — primary, secondary, ghost and destructive variants with size options; auto-spinner on
-  async `onClick`
-- **Badge** — read-only statuses with semantic tones and optional status dots
-- **Chip** — metadata, selectable filters and removable values. Selection and removal are separate modes
-  to keep the markup accessible
-- **Avatar** — user or organization image with generated initials, image-error fallback, sizes, shapes,
-  tones and localized presence labels
-- **AvatarGroup** — accessible overlapping layout for multiple avatars
+Use them as the product source of truth for:
 
-### Chip or Badge?
+- Vision
+- Scope
+- Future capabilities
+- Product boundaries
+- Shared services
+- Integrations
+- Company dashboards
+- Super Admin
+- APIs
+- Data
+- AI
+- Monetization
+- Roadmap
+- Definition of Done
 
-Use a `Badge` when the value communicates state, such as "Julkaistu" or "Virhe".
-Use a `Chip` when the value is content or a control, such as a category, selected city, or quick filter.
-
-```tsx
-<Badge variant="success" dot>
-  Julkaistu
-</Badge>
-
-<Chip selected={period === "week"} onPress={() => setPeriod("week")}>
-  Tällä viikolla
-</Chip>
-
-<Chip removeLabel="Poista Helsinki" onRemove={() => removeCity("Helsinki")}>
-  Helsinki
-</Chip>
-```
-
-### Avatar
-
-Always pass the full localized display name. The component generates the fallback initials and replaces
-a failed image automatically.
-
-```tsx
-<Avatar
-  name="Aino Aurora Laine"
-  src={profile.imageUrl}
-  status="online"
-  statusLabel="Paikalla"
-/>
-```
-
-## Conventions
-
-- **Styling**: Tailwind CSS 4 + class-variance-authority + tailwind-merge + clsx
-- **Primitives**: Radix UI (Dialog, Select, Slot, Tabs)
-- **Icons**: lucide-react
-- **Toasts**: sonner
-- **Testing**: Vitest + Testing Library + jsdom
-- **Peer framework**: React 19.2.8, Next 16.2.12
-
-## Release Discipline
-
-Two kinds of change carry different blast radius:
-
-| Change | Affects |
-|--------|---------|
-| Component API or markup | consumers of that component |
-| **Design token** (colour, spacing, radius) | every surface in every product at once |
-
-Token changes deserve the same review as an API change — a contrast token can break WCAG 2.2 AA
-compliance platform-wide. Always review Storybook visually before releasing: a type check passes happily
-on an invisible button.
+Detailed implementation tickets should live in the development task system, while Obsidian stores the durable product and architecture knowledge.

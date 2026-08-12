@@ -12,6 +12,10 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./bulk-action-bar": {
+      "import": "./dist/BulkActionBar.js",
+      "types": "./dist/BulkActionBar.d.ts"
+    },
     "./button": {
       "import": "./dist/Button.js",
       "types": "./dist/Button.d.ts"
@@ -60,6 +64,10 @@
       "import": "./dist/Toast.js",
       "types": "./dist/Toast.d.ts"
     },
+    "./edit-lock-indicator": {
+      "import": "./dist/EditLockIndicator.js",
+      "types": "./dist/EditLockIndicator.d.ts"
+    },
     "./empty-state": {
       "import": "./dist/EmptyState.js",
       "types": "./dist/EmptyState.d.ts"
@@ -87,6 +95,10 @@
     "./breadcrumb": {
       "import": "./dist/Breadcrumb.js",
       "types": "./dist/Breadcrumb.d.ts"
+    },
+    "./confirmation-dialog": {
+      "import": "./dist/ConfirmationDialog.js",
+      "types": "./dist/ConfirmationDialog.d.ts"
     },
     "./cookie-consent-banner": {
       "import": "./dist/CookieConsentBanner.js",
@@ -187,6 +199,10 @@
     "./dropdown-menu": {
       "import": "./dist/DropdownMenu.js",
       "types": "./dist/DropdownMenu.d.ts"
+    },
+    "./kbd-hint": {
+      "import": "./dist/KbdHint.js",
+      "types": "./dist/KbdHint.d.ts"
     },
     "./label": {
       "import": "./dist/Label.js",

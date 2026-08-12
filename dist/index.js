@@ -58,4 +58,10 @@ export { Sheet, SheetTrigger, SheetClose, SheetPortal, SheetOverlay, SheetConten
 export { ThemeProvider, useTheme } from "./ThemeProvider";
 export { SkipLink } from "./SkipLink";
 export { OfflineIndicator } from "./OfflineIndicator";
+export { KbdHint } from "./KbdHint";
+export { PageHeader } from "./PageHeader";
+export { BulkActionBar } from "./BulkActionBar";
+export { EditLockIndicator } from "./EditLockIndicator";
+export { PlaceholderButton } from "./PlaceholderButton";
+export { ConfirmationDialog } from "./ConfirmationDialog";
 export { ServiceCatalog, SERVICES, } from "./ServiceCatalog";
