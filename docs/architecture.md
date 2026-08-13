@@ -14,7 +14,7 @@ SoundLaunch, Promo)
 
 | Item | Value |
 |------|-------|
-| Peer framework | React 19.2.8, Next 16.2.12 |
+| Peer framework | React 19.2.8, Next 16.3.x (uusin) |
 | Styling | Tailwind 4.3.3, CSS variables for tokens |
 | Build | `pnpm build` → `dist/`; `pnpm build:tokens` generates design tokens |
 | Docs | Storybook 8.6 (`storybook`, `build-storybook`) |
