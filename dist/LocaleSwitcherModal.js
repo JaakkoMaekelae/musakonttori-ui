@@ -195,19 +195,22 @@ function labelsFor(locale, override) {
     return override ? { ...base, ...override } : base;
 }
 /**
- * Languages to offer for a country, narrowed to what the product routes.
+ * Languages to offer, narrowed to what the product routes.
  *
- * When a country speaks nothing the product serves — Greece, in an app that
- * routes fi and en — the answer is the product's own locales rather than an
- * empty grid. Offering a language that 404s is worse than offering one that is
- * not local.
+ * With `supported`, show the product's FULL set so every routed locale
+ * (fi, en, …) is always reachable — a geo-detected country only orders its
+ * native languages first, it never hides the rest. Hiding fi/en because the
+ * visitor's browser/IP reported another country made the primary locales
+ * unreachable. Without `supported` (product serves every language) the
+ * country's spoken languages are offered directly.
  */
 function languagesFor(country, supported) {
     const spoken = [...new Set(COUNTRY_LANGUAGES[country] ?? ["fi", "en"])];
     if (!supported?.length)
         return spoken;
-    const offered = spoken.filter((code) => supported.includes(code));
-    return offered.length > 0 ? offered : [...supported];
+    const preferred = spoken.filter((code) => supported.includes(code));
+    const rest = supported.filter((code) => !preferred.includes(code));
+    return [...preferred, ...rest];
 }
 // All supported language metadata. Exported because the trigger renders the
 // same flag and name as the tile the user picked — two tables would drift.
