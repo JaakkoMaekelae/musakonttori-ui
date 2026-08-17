@@ -30,7 +30,7 @@ export declare const APP_LOCALES: readonly {
 export declare function getMarketByCountry(country: string | null | undefined): CountryMarket;
 /** Look up market by locale. Falls back to FI. */
 export declare function getMarketByLocale(locale: string): CountryMarket;
-/** Get the default locale for a country. */
+/** Get the default locale for a country: Suomi → fi, muut maat → en. */
 export declare function getLocaleForCountry(country: string | null | undefined): string;
 /** Get the currency for a country. */
 export declare function getCurrencyForCountry(country: string | null | undefined): string;

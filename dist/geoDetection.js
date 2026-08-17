@@ -18,6 +18,24 @@
  */
 import { getLocaleForCountry, getCurrencyForCountry, COUNTRY_COOKIE, LOCALE_COOKIE, CURRENCY_COOKIE } from "./markets";
 /**
+ * Resolve the default locale for a visitor.
+ *
+ * Priority:
+ *   1. Käyttäjätunnuksen default-kieli (`preferredLocale` — esim. sessionista).
+ *   2. Aiemmin valittu kieli (`mk_locale`-eväste).
+ *   3. Geo: Suomi → fi, muut maat → en.
+ */
+export function geoDefaultLocale(req, preferredLocale) {
+    if (preferredLocale === "fi" || preferredLocale === "en")
+        return preferredLocale;
+    const existing = req.cookies.get(LOCALE_COOKIE)?.value;
+    if (existing === "fi" || existing === "en")
+        return existing;
+    const country = getHeader(req.headers, "x-vercel-ip-country") ??
+        getHeader(req.headers, "cf-ipcountry");
+    return getLocaleForCountry(country) === "fi" ? "fi" : "en";
+}
+/**
  * Apply geo-detection cookies based on Vercel country header.
  * Only sets cookies if they don't already exist (respects user choice).
  */

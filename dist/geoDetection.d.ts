@@ -35,6 +35,15 @@ interface GeoResponse {
     };
 }
 /**
+ * Resolve the default locale for a visitor.
+ *
+ * Priority:
+ *   1. Käyttäjätunnuksen default-kieli (`preferredLocale` — esim. sessionista).
+ *   2. Aiemmin valittu kieli (`mk_locale`-eväste).
+ *   3. Geo: Suomi → fi, muut maat → en.
+ */
+export declare function geoDefaultLocale(req: GeoRequest, preferredLocale?: string | null): "fi" | "en";
+/**
  * Apply geo-detection cookies based on Vercel country header.
  * Only sets cookies if they don't already exist (respects user choice).
  */
