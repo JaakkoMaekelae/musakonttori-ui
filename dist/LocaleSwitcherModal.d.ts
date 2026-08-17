@@ -25,6 +25,7 @@ export declare function readLocalePrefs(): LocalePrefs | null;
 export interface LocaleSwitcherLabels {
     title: string;
     subtitle: string;
+    country: string;
     language: string;
     currency: string;
     saved: string;
@@ -36,6 +37,17 @@ export declare const LANGUAGE_LABELS: Record<string, {
     name: string;
     subtitle: string;
 }>;
+/**
+ * EU member states offered as an explicit country choice. The country drives
+ * VAT (buyer's country = place of supply), so only VAT-bearing countries are
+ * listed — not a general atlas. Ordering: the product's home market first,
+ * then the rest of the EU alphabetically.
+ */
+export declare const EU_COUNTRY_OPTIONS: readonly {
+    code: string;
+    name: string;
+    flag: string;
+}[];
 export interface LocaleSwitcherModalProps {
     open: boolean;
     onClose: () => void;
@@ -60,6 +72,7 @@ export interface LocaleSwitcherModalProps {
     labels?: Partial<LocaleSwitcherLabels>;
     onLocaleChange?: (locale: string) => void;
     onCurrencyChange?: (currency: string) => void;
+    onCountryChange?: (country: string) => void;
 }
-export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, }: LocaleSwitcherModalProps): import("react").ReactPortal | null;
+export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, }: LocaleSwitcherModalProps): import("react").ReactPortal | null;
 //# sourceMappingURL=LocaleSwitcherModal.d.ts.map

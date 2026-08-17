@@ -164,30 +164,33 @@ const COUNTRY_CURRENCY = {
 const LABELS = {
     fi: {
         title: "Alueasetukset",
-        subtitle: "Kieli ja valuutta",
+        subtitle: "Maa, kieli ja valuutta",
+        country: "Maa",
         language: "Kieli",
         currency: "Valuutta",
         saved: "Asetukset tallennetaan selaimeen",
         close: "Sulje",
-        dialog: "Kieli- ja valuutta-asetukset",
+        dialog: "Maa-, kieli- ja valuutta-asetukset",
     },
     en: {
         title: "Regional settings",
-        subtitle: "Language and currency",
+        subtitle: "Country, language and currency",
+        country: "Country",
         language: "Language",
         currency: "Currency",
         saved: "Saved in your browser",
         close: "Close",
-        dialog: "Language and currency settings",
+        dialog: "Country, language and currency settings",
     },
     sv: {
         title: "Regionala inställningar",
-        subtitle: "Språk och valuta",
+        subtitle: "Land, språk och valuta",
+        country: "Land",
         language: "Språk",
         currency: "Valuta",
         saved: "Sparas i din webbläsare",
         close: "Stäng",
-        dialog: "Inställningar för språk och valuta",
+        dialog: "Inställningar för land, språk och valuta",
     },
 };
 function labelsFor(locale, override) {
@@ -254,7 +257,42 @@ const CURRENCIES_INFO = {
     CHF: { symbol: "CHF", flag: "🇨🇭", name: "Swiss Franc" },
     ISK: { symbol: "kr", flag: "🇮🇸", name: "Icelandic Króna" },
 };
-export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", currentCurrency = "EUR", currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, }) {
+/**
+ * EU member states offered as an explicit country choice. The country drives
+ * VAT (buyer's country = place of supply), so only VAT-bearing countries are
+ * listed — not a general atlas. Ordering: the product's home market first,
+ * then the rest of the EU alphabetically.
+ */
+export const EU_COUNTRY_OPTIONS = [
+    { code: "FI", name: "Finland", flag: "🇫🇮" },
+    { code: "SE", name: "Sweden", flag: "🇸🇪" },
+    { code: "AT", name: "Austria", flag: "🇦🇹" },
+    { code: "BE", name: "Belgium", flag: "🇧🇪" },
+    { code: "BG", name: "Bulgaria", flag: "🇧🇬" },
+    { code: "CY", name: "Cyprus", flag: "🇨🇾" },
+    { code: "CZ", name: "Czech Republic", flag: "🇨🇿" },
+    { code: "DE", name: "Germany", flag: "🇩🇪" },
+    { code: "DK", name: "Denmark", flag: "🇩🇰" },
+    { code: "EE", name: "Estonia", flag: "🇪🇪" },
+    { code: "EL", name: "Greece", flag: "🇬🇷" },
+    { code: "ES", name: "Spain", flag: "🇪🇸" },
+    { code: "FR", name: "France", flag: "🇫🇷" },
+    { code: "HR", name: "Croatia", flag: "🇭🇷" },
+    { code: "HU", name: "Hungary", flag: "🇭🇺" },
+    { code: "IE", name: "Ireland", flag: "🇮🇪" },
+    { code: "IT", name: "Italy", flag: "🇮🇹" },
+    { code: "LT", name: "Lithuania", flag: "🇱🇹" },
+    { code: "LU", name: "Luxembourg", flag: "🇱🇺" },
+    { code: "LV", name: "Latvia", flag: "🇱🇻" },
+    { code: "MT", name: "Malta", flag: "🇲🇹" },
+    { code: "NL", name: "Netherlands", flag: "🇳🇱" },
+    { code: "PL", name: "Poland", flag: "🇵🇱" },
+    { code: "PT", name: "Portugal", flag: "🇵🇹" },
+    { code: "RO", name: "Romania", flag: "🇷🇴" },
+    { code: "SI", name: "Slovenia", flag: "🇸🇮" },
+    { code: "SK", name: "Slovakia", flag: "🇸🇰" },
+];
+export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", currentCurrency = "EUR", currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, }) {
     const modalRef = useRef(null);
     const [locale, setLocale] = useState(currentLocale);
     const [currency, setCurrency] = useState(currentCurrency);
@@ -335,6 +373,11 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
         writePrefs({ locale, currency: cur, country });
         onCurrencyChange?.(cur);
     };
+    const handleCountryChange = (code) => {
+        setCountry(code);
+        writePrefs({ locale, currency, country: code });
+        onCountryChange?.(code);
+    };
     // Selected/unselected class strings (theme-aware via CSS variable fallbacks)
     const selectedClass = cn("border-[var(--mk-palette-primary,#BF2227)] bg-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.08))] ring-1 ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]");
     const unselectedClass = cn("border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.12))] bg-[var(--mk-palette-bg-surface-secondary,#F4F4F5)]");
@@ -354,7 +397,11 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
                         background: `var(--mk-palette-bg-surface, #FFFFFF)`,
                         borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
                         color: `var(--mk-palette-text-primary, #111113)`,
-                    }, children: [_jsx("button", { type: "button", onClick: handleClose, className: "absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10", "aria-label": l.close, style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: _jsx(X, { className: "h-4 w-4" }) }), _jsxs("div", { className: "flex items-center gap-3 mb-6", children: [_jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl", style: { background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` }, children: _jsx(Globe, { className: "h-5 w-5", style: { color: `var(--mk-palette-primary, #BF2227)` } }) }), _jsxs("div", { children: [_jsx("h2", { className: "text-lg font-bold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: l.title }), _jsx("p", { className: "text-sm", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: l.subtitle })] })] }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: l.language }), _jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-3", children: uniqueLangCodes.map((code) => {
+                    }, children: [_jsx("button", { type: "button", onClick: handleClose, className: "absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10", "aria-label": l.close, style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: _jsx(X, { className: "h-4 w-4" }) }), _jsxs("div", { className: "flex items-center gap-3 mb-6", children: [_jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl", style: { background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` }, children: _jsx(Globe, { className: "h-5 w-5", style: { color: `var(--mk-palette-primary, #BF2227)` } }) }), _jsxs("div", { children: [_jsx("h2", { className: "text-lg font-bold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: l.title }), _jsx("p", { className: "text-sm", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: l.subtitle })] })] }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: l.country }), _jsx("select", { value: country, onChange: (e) => handleCountryChange(e.target.value), className: "w-full rounded-xl border px-4 py-3 text-sm font-medium transition focus:outline-none focus:ring-2", style: {
+                                        background: `var(--mk-palette-bg-surface-secondary, #F4F4F5)`,
+                                        borderColor: `var(--mk-palette-border-subtle, rgba(128,128,128,0.12))`,
+                                        color: `var(--mk-palette-text-primary, #111113)`,
+                                    }, children: EU_COUNTRY_OPTIONS.map((c) => (_jsxs("option", { value: c.code, children: [c.flag, " ", c.name] }, c.code))) })] }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: l.language }), _jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-3", children: uniqueLangCodes.map((code) => {
                                         const lang = LANGUAGE_LABELS[code];
                                         if (!lang)
                                             return null;

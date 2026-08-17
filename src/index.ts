@@ -103,6 +103,7 @@ export {
   readLocalePrefs,
   LOCALE_PREFS_EVENT,
   LANGUAGE_LABELS,
+  EU_COUNTRY_OPTIONS,
   type LocaleSwitcherModalProps,
   type LocaleSwitcherLabels,
   type LocalePrefs,
@@ -239,6 +240,22 @@ export {
   type Market,
 } from "./markets";
 export { applyGeoDetection } from "./geoDetection";
+export {
+  EU_VAT_RATES,
+  EU_COUNTRY_NAMES,
+  EU_COUNTRY_CODES,
+  isEUCountry,
+  getProductVATRate,
+  getVATRate,
+  determineVATScheme,
+  calculateVAT,
+  validateVATID,
+  type VATSchemeType,
+  type ProductType,
+  type VatRates,
+  type VATResult,
+  type VATIdValidation,
+} from "./vat";
 export { AppHeader, type AppHeaderProps } from "./AppHeader";
 export {
   AppFooter,
