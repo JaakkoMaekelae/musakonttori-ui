@@ -10,114 +10,142 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "default": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
     "./bulk-action-bar": {
       "import": "./dist/BulkActionBar.js",
+      "default": "./dist/BulkActionBar.js",
       "types": "./dist/BulkActionBar.d.ts"
     },
     "./button": {
       "import": "./dist/Button.js",
+      "default": "./dist/Button.js",
       "types": "./dist/Button.d.ts"
     },
     "./avatar-radix": {
       "import": "./dist/AvatarRadix.js",
+      "default": "./dist/AvatarRadix.js",
       "types": "./dist/AvatarRadix.d.ts"
     },
     "./badge": {
       "import": "./dist/Badge.js",
+      "default": "./dist/Badge.js",
       "types": "./dist/Badge.d.ts"
     },
     "./chip": {
       "import": "./dist/Chip.js",
+      "default": "./dist/Chip.js",
       "types": "./dist/Chip.d.ts"
     },
     "./avatar": {
       "import": "./dist/Avatar.js",
+      "default": "./dist/Avatar.js",
       "types": "./dist/Avatar.d.ts"
     },
     "./input": {
       "import": "./dist/Input.js",
+      "default": "./dist/Input.js",
       "types": "./dist/Input.d.ts"
     },
     "./card": {
       "import": "./dist/Card.js",
+      "default": "./dist/Card.js",
       "types": "./dist/Card.d.ts"
     },
     "./dialog": {
       "import": "./dist/Dialog.js",
+      "default": "./dist/Dialog.js",
       "types": "./dist/Dialog.d.ts"
     },
     "./table": {
       "import": "./dist/Table.js",
+      "default": "./dist/Table.js",
       "types": "./dist/Table.d.ts"
     },
     "./select": {
       "import": "./dist/Select.js",
+      "default": "./dist/Select.js",
       "types": "./dist/Select.d.ts"
     },
     "./skeleton": {
       "import": "./dist/Skeleton.js",
+      "default": "./dist/Skeleton.js",
       "types": "./dist/Skeleton.d.ts"
     },
     "./toast": {
       "import": "./dist/Toast.js",
+      "default": "./dist/Toast.js",
       "types": "./dist/Toast.d.ts"
     },
     "./edit-lock-indicator": {
       "import": "./dist/EditLockIndicator.js",
+      "default": "./dist/EditLockIndicator.js",
       "types": "./dist/EditLockIndicator.d.ts"
     },
     "./empty-state": {
       "import": "./dist/EmptyState.js",
+      "default": "./dist/EmptyState.js",
       "types": "./dist/EmptyState.d.ts"
     },
     "./form-field": {
       "import": "./dist/FormField.js",
+      "default": "./dist/FormField.js",
       "types": "./dist/FormField.d.ts"
     },
     "./spinner": {
       "import": "./dist/Spinner.js",
+      "default": "./dist/Spinner.js",
       "types": "./dist/Spinner.d.ts"
     },
     "./alert": {
       "import": "./dist/Alert.js",
+      "default": "./dist/Alert.js",
       "types": "./dist/Alert.d.ts"
     },
     "./tabs": {
       "import": "./dist/Tabs.js",
+      "default": "./dist/Tabs.js",
       "types": "./dist/Tabs.d.ts"
     },
     "./modal": {
       "import": "./dist/Modal.js",
+      "default": "./dist/Modal.js",
       "types": "./dist/Modal.d.ts"
     },
     "./breadcrumb": {
       "import": "./dist/Breadcrumb.js",
+      "default": "./dist/Breadcrumb.js",
       "types": "./dist/Breadcrumb.d.ts"
     },
     "./confirmation-dialog": {
       "import": "./dist/ConfirmationDialog.js",
+      "default": "./dist/ConfirmationDialog.js",
       "types": "./dist/ConfirmationDialog.d.ts"
     },
     "./cookie-consent-banner": {
       "import": "./dist/CookieConsentBanner.js",
+      "default": "./dist/CookieConsentBanner.js",
       "types": "./dist/CookieConsentBanner.d.ts"
     },
     "./locale-switcher-modal": {
       "import": "./dist/LocaleSwitcherModal.js",
+      "default": "./dist/LocaleSwitcherModal.js",
       "types": "./dist/LocaleSwitcherModal.d.ts"
     },
     "./theme-toggle": {
       "import": "./dist/ThemeToggle.js",
+      "default": "./dist/ThemeToggle.js",
       "types": "./dist/ThemeToggle.d.ts"
     },
     "./utils": {
       "import": "./dist/utils.js",
+      "default": "./dist/utils.js",
       "types": "./dist/utils.d.ts"
     },
     "./tokens": {
       "import": "./dist/tokens.js",
+      "default": "./dist/tokens.js",
       "types": "./dist/tokens.d.ts"
     },
     "./tokens.css": {
@@ -126,134 +154,162 @@
     },
     "./admin-shell": {
       "import": "./dist/AdminShell.js",
+      "default": "./dist/AdminShell.js",
       "types": "./dist/AdminShell.d.ts"
     },
     "./admin-rail": {
       "import": "./dist/AdminRail.js",
+      "default": "./dist/AdminRail.js",
       "types": "./dist/AdminRail.d.ts"
     },
     "./admin-nav": {
       "import": "./dist/AdminNav.js",
+      "default": "./dist/AdminNav.js",
       "types": "./dist/AdminNav.d.ts"
     },
     "./admin-detail-panel": {
       "import": "./dist/AdminDetailPanel.js",
+      "default": "./dist/AdminDetailPanel.js",
       "types": "./dist/AdminDetailPanel.d.ts"
     },
     "./workspace": {
       "import": "./dist/Workspace.js",
+      "default": "./dist/Workspace.js",
       "types": "./dist/Workspace.d.ts"
     },
     "./use-view-cursor": {
       "import": "./dist/useViewCursor.js",
+      "default": "./dist/useViewCursor.js",
       "types": "./dist/useViewCursor.d.ts"
     },
     "./admin-page-header": {
       "import": "./dist/AdminPageHeader.js",
+      "default": "./dist/AdminPageHeader.js",
       "types": "./dist/AdminPageHeader.d.ts"
     },
     "./admin-page": {
       "import": "./dist/AdminPage.js",
+      "default": "./dist/AdminPage.js",
       "types": "./dist/AdminPage.d.ts"
     },
     "./admin-system-state": {
       "import": "./dist/AdminSystemState.js",
+      "default": "./dist/AdminSystemState.js",
       "types": "./dist/AdminSystemState.d.ts"
     },
     "./stat-tile": {
       "import": "./dist/StatTile.js",
+      "default": "./dist/StatTile.js",
       "types": "./dist/StatTile.d.ts"
     },
     "./wizard-stepper": {
       "import": "./dist/WizardStepper.js",
+      "default": "./dist/WizardStepper.js",
       "types": "./dist/WizardStepper.d.ts"
     },
     "./admin-form-layout": {
       "import": "./dist/AdminFormLayout.js",
+      "default": "./dist/AdminFormLayout.js",
       "types": "./dist/AdminFormLayout.d.ts"
     },
     "./admin-report-layout": {
       "import": "./dist/AdminReportLayout.js",
+      "default": "./dist/AdminReportLayout.js",
       "types": "./dist/AdminReportLayout.d.ts"
     },
     "./admin-log-stream": {
       "import": "./dist/AdminLogStream.js",
+      "default": "./dist/AdminLogStream.js",
       "types": "./dist/AdminLogStream.d.ts"
     },
     "./sign-in-layout": {
       "import": "./dist/SignInLayout.js",
+      "default": "./dist/SignInLayout.js",
       "types": "./dist/SignInLayout.d.ts"
     },
     "./app-header": {
       "import": "./dist/AppHeader.js",
+      "default": "./dist/AppHeader.js",
       "types": "./dist/AppHeader.d.ts"
     },
     "./app-footer": {
       "import": "./dist/AppFooter.js",
+      "default": "./dist/AppFooter.js",
       "types": "./dist/AppFooter.d.ts"
     },
     "./markets": {
       "import": "./dist/markets.js",
+      "default": "./dist/markets.js",
       "types": "./dist/markets.d.ts"
     },
     "./dropdown-menu": {
       "import": "./dist/DropdownMenu.js",
+      "default": "./dist/DropdownMenu.js",
       "types": "./dist/DropdownMenu.d.ts"
     },
     "./kbd-hint": {
       "import": "./dist/KbdHint.js",
+      "default": "./dist/KbdHint.js",
       "types": "./dist/KbdHint.d.ts"
     },
     "./label": {
       "import": "./dist/Label.js",
+      "default": "./dist/Label.js",
       "types": "./dist/Label.d.ts"
     },
     "./offline-indicator": {
       "import": "./dist/OfflineIndicator.js",
+      "default": "./dist/OfflineIndicator.js",
       "types": "./dist/OfflineIndicator.d.ts"
     },
     "./popover": {
       "import": "./dist/Popover.js",
+      "default": "./dist/Popover.js",
       "types": "./dist/Popover.d.ts"
     },
     "./progress": {
       "import": "./dist/Progress.js",
+      "default": "./dist/Progress.js",
       "types": "./dist/Progress.d.ts"
     },
     "./separator": {
       "import": "./dist/Separator.js",
+      "default": "./dist/Separator.js",
       "types": "./dist/Separator.d.ts"
     },
     "./sheet": {
       "import": "./dist/Sheet.js",
-      "types": "./dist/Sheet.d.ts"
-    },
-    "./sheet": {
-      "import": "./dist/Sheet.js",
+      "default": "./dist/Sheet.js",
       "types": "./dist/Sheet.d.ts"
     },
     "./skip-link": {
       "import": "./dist/SkipLink.js",
+      "default": "./dist/SkipLink.js",
       "types": "./dist/SkipLink.d.ts"
     },
     "./switch": {
       "import": "./dist/Switch.js",
+      "default": "./dist/Switch.js",
       "types": "./dist/Switch.d.ts"
     },
     "./textarea": {
       "import": "./dist/Textarea.js",
+      "default": "./dist/Textarea.js",
       "types": "./dist/Textarea.d.ts"
     },
     "./theme-provider": {
       "import": "./dist/ThemeProvider.js",
+      "default": "./dist/ThemeProvider.js",
       "types": "./dist/ThemeProvider.d.ts"
     },
     "./tooltip": {
       "import": "./dist/Tooltip.js",
+      "default": "./dist/Tooltip.js",
       "types": "./dist/Tooltip.d.ts"
     },
     "./geoDetection": {
       "import": "./dist/geoDetection.js",
+      "default": "./dist/geoDetection.js",
       "types": "./dist/geoDetection.d.ts"
     }
   },
