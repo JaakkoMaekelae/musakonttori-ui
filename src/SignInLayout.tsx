@@ -74,7 +74,6 @@ export interface SignInLayoutProps {
     hidePassword?: string;
     signInButton?: string;
     clerkRedirect?: string;
-    accountsRedirect?: string;
     orDivider?: string;
   };
 }
@@ -99,7 +98,6 @@ const SIGN_IN_FORM_LABELS: Record<string, Required<NonNullable<SignInLayoutProps
     hidePassword: "Piilota salasana",
     signInButton: "Kirjaudu",
     clerkRedirect: "Kirjaudu Clerk-tunnuksella",
-    accountsRedirect: "Kirjaudu Musakonttori-tunnuksella",
     orDivider: "tai",
   },
   en: {
@@ -111,7 +109,6 @@ const SIGN_IN_FORM_LABELS: Record<string, Required<NonNullable<SignInLayoutProps
     hidePassword: "Hide password",
     signInButton: "Sign in",
     clerkRedirect: "Sign in with Clerk",
-    accountsRedirect: "Sign in with your Musakonttori account",
     orDivider: "or",
   },
   sv: {
@@ -123,7 +120,6 @@ const SIGN_IN_FORM_LABELS: Record<string, Required<NonNullable<SignInLayoutProps
     hidePassword: "Dölj lösenord",
     signInButton: "Logga in",
     clerkRedirect: "Logga in med Clerk",
-    accountsRedirect: "Logga in med ditt Musakonttori-konto",
     orDivider: "eller",
   },
 };
@@ -249,8 +245,9 @@ export function SignInLayout({
   onSignIn,
   authMode = "credentials",
   clerkSignInUrl,
-  accountsUrl,
-  accountsFrom,
+  // accounts delegation removed per product decision; props kept for consumer compat
+  accountsUrl: _accountsUrl,
+  accountsFrom: _accountsFrom,
   registerHref,
   registerLabel,
   registerTitle,
@@ -270,9 +267,7 @@ export function SignInLayout({
   const delegatedSignIn =
     authMode === "clerk" && clerkSignInUrl
       ? { href: clerkSignInUrl, label: L.clerkRedirect }
-      : accountsUrl && accountsFrom
-        ? { href: `${accountsUrl}/sign-in?from=${accountsFrom}`, label: L.accountsRedirect }
-        : null;
+      : null;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -321,7 +316,7 @@ export function SignInLayout({
         }}
       >
         {/* ===== LEFT: Brand panel ===== */}
-        <div className="relative flex min-h-[720px] flex-col overflow-hidden p-[clamp(36px,4.5vw,72px)] max-sm:min-h-auto max-sm:p-[26px_clamp(22px,7vw,54px)_32px]" style={{ isolation: "isolate" }}>
+        <div className="relative hidden min-h-[720px] flex-col overflow-hidden p-[clamp(36px,4.5vw,72px)] max-sm:hidden sm:flex" style={{ isolation: "isolate" }}>
           {/* Grid-dot background */}
           <div
             aria-hidden="true"
