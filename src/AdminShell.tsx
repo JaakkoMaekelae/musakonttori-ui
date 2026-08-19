@@ -163,6 +163,7 @@ const SHELL_CSS = `
     var(--mk-shell-nav-width, 200px)
     minmax(0, 1fr)
     0;
+  grid-template-rows: minmax(0, 1fr);
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
