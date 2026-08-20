@@ -1,4 +1,5 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { memo } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "./utils";
 const chipVariants = cva([
@@ -47,7 +48,7 @@ function ChipContents({ children, leadingIcon, }) {
  * select or remove. Selection and removal are intentionally mutually
  * exclusive so the component never creates nested buttons.
  */
-export function Chip(props) {
+export const Chip = memo(function Chip(props) {
     if ("onPress" in props && typeof props.onPress === "function") {
         const { children, leadingIcon, variant, size, selected = false, className, onPress, type = "button", ...buttonProps } = props;
         return (_jsx("button", { type: type, "aria-pressed": selected, className: cn(chipVariants({ variant, size, selected, className })), onClick: onPress, ...buttonProps, children: _jsx(ChipContents, { leadingIcon: leadingIcon, children: children }) }));
@@ -62,5 +63,5 @@ export function Chip(props) {
     }
     const { children, leadingIcon, variant, size, className, ...spanProps } = props;
     return (_jsx("span", { className: cn(chipVariants({ variant, size, selected: false, className })), ...spanProps, children: _jsx(ChipContents, { leadingIcon: leadingIcon, children: children }) }));
-}
+});
 export { chipVariants };

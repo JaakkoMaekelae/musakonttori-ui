@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 export interface StatTileDelta {
     /** Signed change, already formatted: "+12.4 %", "−1 240 €". */
     value: string;
@@ -38,11 +38,11 @@ export interface StatTileProps {
  *    grayscale print and forced-colors mode. `upIsGood` exists because for
  *    churn, error rate or cost, a rise is the bad news.
  */
-export declare function StatTile({ label, value, delta, trend, hero, className, }: StatTileProps): import("react").JSX.Element;
+export declare const StatTile: import("react").NamedExoticComponent<StatTileProps>;
 export interface StatRowProps {
     children: ReactNode;
     className?: string;
 }
 /** Equal-width tiles that wrap instead of shrinking below readability. */
-export declare function StatRow({ children, className }: StatRowProps): import("react").JSX.Element;
+export declare const StatRow: import("react").NamedExoticComponent<StatRowProps>;
 //# sourceMappingURL=StatTile.d.ts.map

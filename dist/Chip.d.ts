@@ -35,6 +35,6 @@ export type ChipProps = StaticChipProps | SelectableChipProps | RemovableChipPro
  * select or remove. Selection and removal are intentionally mutually
  * exclusive so the component never creates nested buttons.
  */
-export declare function Chip(props: ChipProps): import("react").JSX.Element;
+export declare const Chip: import("react").NamedExoticComponent<ChipProps>;
 export { chipVariants };
 //# sourceMappingURL=Chip.d.ts.map

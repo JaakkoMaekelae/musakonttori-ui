@@ -1,6 +1,6 @@
 "use client";
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
-import { forwardRef, useEffect, useState, } from "react";
+import { forwardRef, memo, useState, } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "./utils";
 const avatarVariants = cva([
@@ -75,16 +75,14 @@ function getInitials(name) {
  * presence. The user's full name is always required; callers do not need to
  * duplicate initial generation across products.
  */
-export const Avatar = forwardRef(({ name, src, alt = name, fallback, fallbackClassName, imageClassName, imageProps, status, statusLabel, size = "md", shape, tone, className, ...props }, ref) => {
-    const [imageFailed, setImageFailed] = useState(false);
-    useEffect(() => {
-        setImageFailed(false);
-    }, [src]);
+export const Avatar = memo(forwardRef(({ name, src, alt = name, fallback, fallbackClassName, imageClassName, imageProps, status, statusLabel, size = "md", shape, tone, className, ...props }, ref) => {
+    const [failedSrc, setFailedSrc] = useState(null);
+    const imageFailed = failedSrc === src;
     return (_jsxs("span", { ref: ref, "data-avatar": "", className: cn(avatarVariants({ size, shape, tone, className })), ...props, children: [_jsx("span", { role: src && !imageFailed ? undefined : "img", "aria-label": src && !imageFailed ? undefined : name, "aria-hidden": src && !imageFailed ? true : undefined, className: cn("flex size-full items-center justify-center font-semibold", fallbackClassName), children: fallback ?? getInitials(name) }), src && !imageFailed ? (_jsx("img", { ...imageProps, src: src, alt: alt, className: cn("absolute inset-0 size-full object-cover", imageClassName), onError: (event) => {
-                    setImageFailed(true);
+                    setFailedSrc(src);
                     imageProps?.onError?.(event);
                 } })) : null, status ? (_jsxs(_Fragment, { children: [_jsx("span", { "aria-hidden": "true", className: cn("absolute bottom-0 right-0 rounded-full", "border-[var(--mk-palette-bg-surface,#FFFFFF)]", getStatusClass(status), getStatusSize(size ?? "md")) }), _jsx("span", { className: "sr-only", children: statusLabel })] })) : null] }));
-});
+}));
 Avatar.displayName = "Avatar";
 /**
  * Overlapping layout for multiple `Avatar` components.

@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { Check, Globe, X } from "lucide-react";
 import { cn } from "./utils";
 const STORAGE_KEY = "mk-locale-prefs-v2";
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 /** Broadcast so other controls on the page (a header flag, a price list) re-read. */
 export const LOCALE_PREFS_EVENT = "mk-locale-prefs-changed";
 export function readLocalePrefs() {
@@ -292,8 +293,9 @@ export const EU_COUNTRY_OPTIONS = [
     { code: "SI", name: "Slovenia", flag: "🇸🇮" },
     { code: "SK", name: "Slovakia", flag: "🇸🇰" },
 ];
-export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", currentCurrency = "EUR", currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, }) {
+export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", currentCurrency = "EUR", currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, showCurrency = true, }) {
     const modalRef = useRef(null);
+    const previousActiveElement = useRef(null);
     const [locale, setLocale] = useState(currentLocale);
     const [currency, setCurrency] = useState(currentCurrency);
     const [visible, setVisible] = useState(false);
@@ -343,17 +345,55 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
         setVisible(false);
         setTimeout(onClose, 250);
     }, [onClose]);
-    // Escape key
+    // Escape key + focus trap
+    const handleKeyDown = useCallback((e) => {
+        if (e.key === "Escape") {
+            handleClose();
+            return;
+        }
+        if (e.key === "Tab" && modalRef.current) {
+            const focusable = modalRef.current.querySelectorAll(FOCUSABLE_SELECTOR);
+            if (focusable.length === 0) {
+                e.preventDefault();
+                return;
+            }
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey) {
+                if (document.activeElement === first && last) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            }
+            else {
+                if (document.activeElement === last && first) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        }
+    }, [handleClose]);
     useEffect(() => {
         if (!open)
             return;
-        const handleKey = (e) => {
-            if (e.key === "Escape")
-                handleClose();
+        previousActiveElement.current = document.activeElement;
+        document.addEventListener("keydown", handleKeyDown);
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+            if (previousActiveElement.current instanceof HTMLElement) {
+                previousActiveElement.current.focus();
+            }
         };
-        document.addEventListener("keydown", handleKey);
-        return () => document.removeEventListener("keydown", handleKey);
-    }, [open, handleClose]);
+    }, [open, handleKeyDown]);
+    // Focus first focusable element once the panel is mounted
+    useEffect(() => {
+        if (!mounted)
+            return;
+        requestAnimationFrame(() => {
+            const focusable = modalRef.current?.querySelector(FOCUSABLE_SELECTOR);
+            focusable?.focus();
+        });
+    }, [mounted]);
     // Compute the language and currency options for the selected country
     const countryCur = COUNTRY_CURRENCY[country] || "EUR";
     const currencyCodes = countryCur === "EUR"
@@ -406,7 +446,7 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
                                         if (!lang)
                                             return null;
                                         return (_jsxs("button", { type: "button", onClick: () => handleLocaleChange(code), className: cn("relative flex flex-col items-start gap-0.5 rounded-xl border px-4 py-3 text-left transition-all", locale === code ? selectedClass : unselectedClass, locale !== code && "hover:border-[var(--mk-palette-border-default,rgba(128,128,128,0.25))]"), children: [_jsxs("div", { className: "flex w-full items-center justify-between", children: [_jsx("span", { className: "text-2xl", children: lang.flag }), locale === code && (_jsx(Check, { className: "h-4 w-4 shrink-0", style: { color: `var(--mk-palette-primary, #BF2227)` } }))] }), _jsx("span", { className: "mt-1 text-sm font-semibold", style: { color: `var(--mk-palette-text-primary, #111113)` }, children: lang.name }), _jsx("span", { className: "text-[11px]", style: { color: `var(--mk-palette-text-secondary, #5F6068)` }, children: lang.subtitle })] }, code));
-                                    }) })] }), currencyCodes.length > 1 && (_jsxs(_Fragment, { children: [_jsx("div", { className: "my-5 h-px", style: { background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` } }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: l.currency }), _jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-4", children: currencyCodes.map((code) => {
+                                    }) })] }), showCurrency && currencyCodes.length > 1 && (_jsxs(_Fragment, { children: [_jsx("div", { className: "my-5 h-px", style: { background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` } }), _jsxs("section", { className: "mb-6", children: [_jsx("h3", { className: "mb-3 text-xs font-semibold uppercase tracking-[0.2em]", style: { color: `var(--mk-palette-text-muted, #9CA3AF)` }, children: l.currency }), _jsx("div", { className: "grid grid-cols-2 gap-2 sm:grid-cols-4", children: currencyCodes.map((code) => {
                                                 const cur = CURRENCIES_INFO[code];
                                                 if (!cur)
                                                     return null;

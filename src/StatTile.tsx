@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import { cn } from "./utils";
 
 export interface StatTileDelta {
@@ -56,7 +56,7 @@ function deltaTone(d: StatTileDelta): string {
  *    grayscale print and forced-colors mode. `upIsGood` exists because for
  *    churn, error rate or cost, a rise is the bad news.
  */
-export function StatTile({
+export const StatTile = memo(function StatTile({
   label,
   value,
   delta,
@@ -101,7 +101,7 @@ export function StatTile({
       {trend && <div className="mt-2.5">{trend}</div>}
     </div>
   );
-}
+});
 
 export interface StatRowProps {
   children: ReactNode;
@@ -109,7 +109,7 @@ export interface StatRowProps {
 }
 
 /** Equal-width tiles that wrap instead of shrinking below readability. */
-export function StatRow({ children, className }: StatRowProps) {
+export const StatRow = memo(function StatRow({ children, className }: StatRowProps) {
   return (
     <div
       className={cn(
@@ -120,4 +120,4 @@ export function StatRow({ children, className }: StatRowProps) {
       {children}
     </div>
   );
-}
+});

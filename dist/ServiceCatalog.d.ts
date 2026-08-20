@@ -22,6 +22,7 @@ export declare const SERVICES: ServiceEntry[];
 export interface ServiceCatalogProps {
     locale?: string;
     hideFooterCta?: boolean;
+    excludeKeys?: string[];
 }
-export declare function ServiceCatalog({ locale, hideFooterCta }: ServiceCatalogProps): import("react").JSX.Element;
+export declare function ServiceCatalog({ locale, hideFooterCta, excludeKeys }: ServiceCatalogProps): import("react").JSX.Element;
 //# sourceMappingURL=ServiceCatalog.d.ts.map

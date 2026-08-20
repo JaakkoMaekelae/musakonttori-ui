@@ -142,7 +142,7 @@ export function AppHeader({
         .toUpperCase()
         .slice(0, 2)
     : user?.email
-    ? user.email[0]!.toUpperCase()
+    ? (user.email[0] ?? productName[0] ?? "?").toUpperCase()
     : null;
 
   return (

@@ -22,7 +22,6 @@ const SIGN_IN_FORM_LABELS = {
         hidePassword: "Piilota salasana",
         signInButton: "Kirjaudu",
         clerkRedirect: "Kirjaudu Clerk-tunnuksella",
-        accountsRedirect: "Kirjaudu Musakonttori-tunnuksella",
         orDivider: "tai",
     },
     en: {
@@ -34,7 +33,6 @@ const SIGN_IN_FORM_LABELS = {
         hidePassword: "Hide password",
         signInButton: "Sign in",
         clerkRedirect: "Sign in with Clerk",
-        accountsRedirect: "Sign in with your Musakonttori account",
         orDivider: "or",
     },
     sv: {
@@ -46,7 +44,6 @@ const SIGN_IN_FORM_LABELS = {
         hidePassword: "Dölj lösenord",
         signInButton: "Logga in",
         clerkRedirect: "Logga in med Clerk",
-        accountsRedirect: "Logga in med ditt Musakonttori-konto",
         orDivider: "eller",
     },
 };
@@ -95,16 +92,16 @@ function SuccessCheckIcon() {
  * Consumer passes all strings, icons, and the auth handler — this component
  * owns zero product-specific copy or logic.
  */
-export function SignInLayout({ productName, productTagline, brandEyebrow, brandTitle, brandTitleAccent, brandDescription, benefits, previewTitle, previewValue, previewStatus, previewOrderName, previewOrderId, previewOrderStatus, previewOrderAmount, formTitle, formSubtitle, formDescription, onSignIn, authMode = "credentials", clerkSignInUrl, accountsUrl, accountsFrom, registerHref, registerLabel, registerTitle, registerDescription, backHref, backLabel, securityNote, errorMessage, className, locale, labels, }) {
+export function SignInLayout({ productName, productTagline, brandEyebrow, brandTitle, brandTitleAccent, brandDescription, benefits, previewTitle, previewValue, previewStatus, previewOrderName, previewOrderId, previewOrderStatus, previewOrderAmount, formTitle, formSubtitle, formDescription, onSignIn, authMode = "credentials", clerkSignInUrl, 
+// accounts delegation removed per product decision; props kept for consumer compat
+accountsUrl: _accountsUrl, accountsFrom: _accountsFrom, registerHref, registerLabel, registerTitle, registerDescription, backHref, backLabel, securityNote, errorMessage, className, locale, labels, }) {
     const L = formLabelsFor(locale, labels);
     // Delegated sign-in redirect: Clerk takes priority when the product opts
     // into it, since a Clerk-authenticated product has no local password form
     // of its own to redirect away from — Accounts is the fallback delegation.
     const delegatedSignIn = authMode === "clerk" && clerkSignInUrl
         ? { href: clerkSignInUrl, label: L.clerkRedirect }
-        : accountsUrl && accountsFrom
-            ? { href: `${accountsUrl}/sign-in?from=${accountsFrom}`, label: L.accountsRedirect }
-            : null;
+        : null;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -136,7 +133,7 @@ export function SignInLayout({ productName, productTagline, brandEyebrow, brandT
                     borderColor: "var(--mk-palette-border-subtle, rgba(255,255,255,0.08))",
                     background: "var(--mk-palette-bg-elevated, var(--mk-palette-bg-surface, #1A1D27))",
                     boxShadow: "var(--mk-shadow-xl, 0 20px 60px rgba(0,0,0,0.4))",
-                }, children: [_jsxs("div", { className: "relative flex min-h-[720px] flex-col overflow-hidden p-[clamp(36px,4.5vw,72px)] max-sm:min-h-auto max-sm:p-[26px_clamp(22px,7vw,54px)_32px]", style: { isolation: "isolate" }, children: [_jsx("div", { "aria-hidden": "true", className: "absolute inset-0 -z-10", style: {
+                }, children: [_jsxs("div", { className: "relative hidden min-h-[720px] flex-col overflow-hidden p-[clamp(36px,4.5vw,72px)] max-sm:hidden sm:flex", style: { isolation: "isolate" }, children: [_jsx("div", { "aria-hidden": "true", className: "absolute inset-0 -z-10", style: {
                                     background: `
                 linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),

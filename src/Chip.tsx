@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type {
   ButtonHTMLAttributes,
   HTMLAttributes,
@@ -131,7 +132,7 @@ function ChipContents({
  * select or remove. Selection and removal are intentionally mutually
  * exclusive so the component never creates nested buttons.
  */
-export function Chip(props: ChipProps) {
+export const Chip = memo(function Chip(props: ChipProps) {
   if ("onPress" in props && typeof props.onPress === "function") {
     const {
       children,
@@ -218,6 +219,6 @@ export function Chip(props: ChipProps) {
       <ChipContents leadingIcon={leadingIcon}>{children}</ChipContents>
     </span>
   );
-}
+});
 
 export { chipVariants };

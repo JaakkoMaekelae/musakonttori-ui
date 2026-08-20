@@ -161,6 +161,8 @@ export interface LocaleSwitcherProps {
    */
   onLocaleChange?: (locale: string) => void;
   onCurrencyChange?: (currency: string) => void;
+  /** Hide the currency section in the modal. Currency still applies. */
+  showCurrency?: boolean;
   /**
    * "flag" shows the language flag alone — the default, and what the header
    * of every product uses. "full" adds the language name, for footers and
@@ -190,6 +192,7 @@ export function LocaleSwitcher({
   labels,
   onLocaleChange,
   onCurrencyChange,
+  showCurrency = true,
   variant = "flag",
   className,
 }: LocaleSwitcherProps) {
@@ -224,6 +227,7 @@ export function LocaleSwitcher({
         labels={labels}
         onLocaleChange={onLocaleChange}
         onCurrencyChange={onCurrencyChange}
+        showCurrency={showCurrency}
       />
     </>
   );

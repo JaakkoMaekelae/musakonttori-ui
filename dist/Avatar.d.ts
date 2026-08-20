@@ -30,7 +30,7 @@ export type AvatarProps = AvatarBaseProps & PresenceProps;
  * presence. The user's full name is always required; callers do not need to
  * duplicate initial generation across products.
  */
-export declare const Avatar: import("react").ForwardRefExoticComponent<AvatarProps & import("react").RefAttributes<HTMLSpanElement>>;
+export declare const Avatar: import("react").NamedExoticComponent<AvatarProps & import("react").RefAttributes<HTMLSpanElement>>;
 export interface AvatarGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, "aria-label"> {
     /** Localized name for the group, for example "Projektin jäsenet". */
     label: string;

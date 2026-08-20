@@ -7,6 +7,9 @@ import { cn } from "./utils";
 
 const STORAGE_KEY = "mk-locale-prefs-v2";
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export interface LocalePrefs {
   locale: string;
   currency: string;
@@ -332,6 +335,8 @@ export interface LocaleSwitcherModalProps {
   onLocaleChange?: (locale: string) => void;
   onCurrencyChange?: (currency: string) => void;
   onCountryChange?: (country: string) => void;
+  /** Hide the currency section. Currency still follows the selected country. */
+  showCurrency?: boolean;
 }
 
 export function LocaleSwitcherModal({
@@ -345,8 +350,10 @@ export function LocaleSwitcherModal({
   onLocaleChange,
   onCurrencyChange,
   onCountryChange,
+  showCurrency = true,
 }: LocaleSwitcherModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const previousActiveElement = useRef<Element | null>(null);
   const [locale, setLocale] = useState(currentLocale);
   const [currency, setCurrency] = useState(currentCurrency);
   const [visible, setVisible] = useState(false);
@@ -397,15 +404,60 @@ export function LocaleSwitcherModal({
     setTimeout(onClose, 250);
   }, [onClose]);
 
-  // Escape key
+  // Escape key + focus trap
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleClose();
+        return;
+      }
+
+      if (e.key === "Tab" && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+        if (focusable.length === 0) {
+          e.preventDefault();
+          return;
+        }
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first && last) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last && first) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    },
+    [handleClose],
+  );
+
   useEffect(() => {
     if (!open) return;
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleClose();
+    previousActiveElement.current = document.activeElement;
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      if (previousActiveElement.current instanceof HTMLElement) {
+        previousActiveElement.current.focus();
+      }
     };
-    document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
-  }, [open, handleClose]);
+  }, [open, handleKeyDown]);
+
+  // Focus first focusable element once the panel is mounted
+  useEffect(() => {
+    if (!mounted) return;
+    requestAnimationFrame(() => {
+      const focusable = modalRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+      focusable?.focus();
+    });
+  }, [mounted]);
 
   // Compute the language and currency options for the selected country
   const countryCur = COUNTRY_CURRENCY[country] || "EUR";
@@ -571,7 +623,7 @@ export function LocaleSwitcherModal({
           </div>
         </section>
 
-        {currencyCodes.length > 1 && (
+        {showCurrency && currencyCodes.length > 1 && (
           <>
             <div className="my-5 h-px" style={{ background: `var(--mk-palette-border-subtle, rgba(128,128,128,0.08))` }} />
 

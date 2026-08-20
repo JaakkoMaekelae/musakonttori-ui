@@ -2,7 +2,7 @@
 
 import {
   forwardRef,
-  useEffect,
+  memo,
   useState,
   type HTMLAttributes,
   type ImgHTMLAttributes,
@@ -126,7 +126,7 @@ function getInitials(name: string): string {
  * presence. The user's full name is always required; callers do not need to
  * duplicate initial generation across products.
  */
-export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
+export const Avatar = memo(forwardRef<HTMLSpanElement, AvatarProps>(
   (
     {
       name,
@@ -146,11 +146,8 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
     },
     ref
   ) => {
-    const [imageFailed, setImageFailed] = useState(false);
-
-    useEffect(() => {
-      setImageFailed(false);
-    }, [src]);
+    const [failedSrc, setFailedSrc] = useState<string | null>(null);
+    const imageFailed = failedSrc === src;
 
     return (
       <span
@@ -180,7 +177,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
               imageClassName
             )}
             onError={(event) => {
-              setImageFailed(true);
+              setFailedSrc(src);
               imageProps?.onError?.(event);
             }}
           />
@@ -202,7 +199,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
       </span>
     );
   }
-);
+));
 
 Avatar.displayName = "Avatar";
 

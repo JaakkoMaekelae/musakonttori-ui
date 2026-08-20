@@ -128,7 +128,7 @@ export const SERVICES: ServiceEntry[] = [
     ],
     ctaLabelFi: "Julkaise musiikki",
     ctaLabelEn: "Release music",
-    url: (locale: string) => `https://musakonttori-sopimushallinta.vercel.app/${locale}/julkaisu`,
+    url: () => `https://musakonttori-soundlaunch.vercel.app`,
     available: true,
   },
   {
@@ -274,10 +274,12 @@ const modelBadge: Record<string, { labelFi: string; labelEn: string; color: stri
 export interface ServiceCatalogProps {
   locale?: string;
   hideFooterCta?: boolean;
+  excludeKeys?: string[];
 }
 
-export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: ServiceCatalogProps) {
+export function ServiceCatalog({ locale = "fi", hideFooterCta = false, excludeKeys = [] }: ServiceCatalogProps) {
   const isFi = locale === "fi";
+  const services = excludeKeys.length > 0 ? SERVICES.filter((svc) => !excludeKeys.includes(svc.key)) : SERVICES;
 
   return (
     <section className="sect" id="kaikki-palvelut">
@@ -293,17 +295,11 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false }: Service
             {isFi
               ? "Jokaisella palvelulla on oma hinnoittelumallinsa. Valitse tarvitsemasi palvelut — mitä enemmän käytät, sitä edullisemmaksi kokonaisuus tulee."
               : "Each service has its own pricing model. Choose the services you need — the more you use, the better the overall price."}
-            <br />
-            <span className="text-sm text-gray-400 mt-1 block">
-              {isFi
-                ? "StageFlow ja Market ovat tulossa. Kysy tarjous: hello@musakonttori.fi"
-                : "StageFlow and Market coming soon. Request a quote: hello@musakonttori.fi"}
-            </span>
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SERVICES.map((svc) => {
+          {services.map((svc) => {
             const badge = modelBadge[svc.pricingModel] ?? { labelFi: svc.pricingModel, labelEn: svc.pricingModel, color: "bg-gray-50 text-gray-600 border-gray-200" };
             const href = svc.url(locale);
 

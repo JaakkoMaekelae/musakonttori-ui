@@ -1,4 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { memo } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "./utils";
 const badgeVariants = cva("inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors", {
@@ -109,7 +110,7 @@ function getDotColor(variant) {
  * <Badge variant="success">Aktiivinen</Badge>
  * <Badge tone="error" dot pulse>Virhe</Badge>
  */
-export function Badge({ variant = "neutral", tone, dot = false, pulse = false, surface = "dark", className, children, ...props }) {
+export const Badge = memo(function Badge({ variant = "neutral", tone, dot = false, pulse = false, surface = "dark", className, children, ...props }) {
     const resolved = resolveVariant(variant, tone);
     // On a light surface the variant's own colours are replaced outright rather
     // than layered, so the dark fill cannot bleed through.
@@ -117,4 +118,4 @@ export function Badge({ variant = "neutral", tone, dot = false, pulse = false, s
     return (_jsxs("span", { className: surfaceClass
             ? cn("inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors", surfaceClass, className)
             : cn(badgeVariants({ variant: resolved, className })), ...props, children: [dot && (_jsxs("span", { className: "relative flex h-2 w-2", children: [_jsx("span", { className: cn("absolute inline-flex h-full w-full rounded-full", getDotColor(resolved)) }), pulse && (_jsx("span", { className: cn("absolute inline-flex h-full w-full animate-ping rounded-full opacity-75", getDotColor(resolved)) }))] })), children] }));
-}
+});

@@ -73,6 +73,8 @@ export interface LocaleSwitcherModalProps {
     onLocaleChange?: (locale: string) => void;
     onCurrencyChange?: (currency: string) => void;
     onCountryChange?: (country: string) => void;
+    /** Hide the currency section. Currency still follows the selected country. */
+    showCurrency?: boolean;
 }
-export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, }: LocaleSwitcherModalProps): import("react").ReactPortal | null;
+export declare function LocaleSwitcherModal({ open, onClose, currentLocale, currentCurrency, currentCountry, supportedLocales, labels, onLocaleChange, onCurrencyChange, onCountryChange, showCurrency, }: LocaleSwitcherModalProps): import("react").ReactPortal | null;
 //# sourceMappingURL=LocaleSwitcherModal.d.ts.map

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./utils";
 
@@ -178,7 +179,7 @@ function getDotColor(variant: BadgeVariant): string {
  * <Badge variant="success">Aktiivinen</Badge>
  * <Badge tone="error" dot pulse>Virhe</Badge>
  */
-export function Badge({
+export const Badge = memo(function Badge({
   variant = "neutral",
   tone,
   dot = false,
@@ -227,4 +228,4 @@ export function Badge({
       {children}
     </span>
   );
-}
+});

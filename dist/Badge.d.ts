@@ -27,6 +27,6 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement>, Varia
  * <Badge variant="success">Aktiivinen</Badge>
  * <Badge tone="error" dot pulse>Virhe</Badge>
  */
-export declare function Badge({ variant, tone, dot, pulse, surface, className, children, ...props }: BadgeProps): import("react").JSX.Element;
+export declare const Badge: import("react").NamedExoticComponent<BadgeProps>;
 export {};
 //# sourceMappingURL=Badge.d.ts.map
