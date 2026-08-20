@@ -55,6 +55,8 @@ export interface LocaleSwitcherProps {
     onCurrencyChange?: (currency: string) => void;
     /** Hide the currency section in the modal. Currency still applies. */
     showCurrency?: boolean;
+    /** Hide the country section in the modal. Country still applies. */
+    showCountry?: boolean;
     /**
      * "flag" shows the language flag alone — the default, and what the header
      * of every product uses. "full" adds the language name, for footers and
@@ -75,5 +77,5 @@ export interface LocaleSwitcherProps {
  * noise and the duplicated "FI · FI" read as a bug. Country and currency live
  * inside the modal and stay in the accessible name.
  */
-export declare function LocaleSwitcher({ locale, currency, country, supportedLocales, labels, onLocaleChange, onCurrencyChange, showCurrency, variant, className, }: LocaleSwitcherProps): import("react").JSX.Element;
+export declare function LocaleSwitcher({ locale, currency, country, supportedLocales, labels, onLocaleChange, onCurrencyChange, showCurrency, showCountry, variant, className, }: LocaleSwitcherProps): import("react").JSX.Element;
 //# sourceMappingURL=LocaleSwitcher.d.ts.map

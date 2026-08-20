@@ -337,6 +337,8 @@ export interface LocaleSwitcherModalProps {
   onCountryChange?: (country: string) => void;
   /** Hide the currency section. Currency still follows the selected country. */
   showCurrency?: boolean;
+  /** Hide the country section. Country still drives language ordering/currency. */
+  showCountry?: boolean;
 }
 
 export function LocaleSwitcherModal({
@@ -351,6 +353,7 @@ export function LocaleSwitcherModal({
   onCurrencyChange,
   onCountryChange,
   showCurrency = true,
+  showCountry = true,
 }: LocaleSwitcherModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<Element | null>(null);
@@ -564,8 +567,10 @@ export function LocaleSwitcherModal({
         </div>
 
 
-        {/* Country section */}
-        <section className="mb-6">
+        {showCountry && (
+          <>
+            {/* Country section */}
+            <section className="mb-6">
           <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: `var(--mk-palette-text-muted, #9CA3AF)` }}>
             {l.country}
           </h3>
@@ -585,7 +590,9 @@ export function LocaleSwitcherModal({
               </option>
             ))}
           </select>
-        </section>
+            </section>
+          </>
+        )}
 
         {/* Language section */}
         <section className="mb-6">
