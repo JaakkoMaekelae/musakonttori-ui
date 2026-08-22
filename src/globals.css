@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand: #c9252d;
-  --color-brand-hover: #981f20;
+  --color-brand: var(--mk-palette-bg-brand);
+  --color-brand-hover: var(--mk-palette-bg-brand-hover);
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;

@@ -390,7 +390,9 @@ export function LocaleSwitcherModal({
         requestAnimationFrame(() => setVisible(true));
       });
       document.body.style.overflow = "hidden";
-      return;
+      return () => {
+        document.body.style.overflow = "";
+      };
     } else {
       setVisible(false);
       const timer = setTimeout(() => setMounted(false), 300);
@@ -477,6 +479,7 @@ export function LocaleSwitcherModal({
     setLocale(loc);
     writePrefs({ locale: loc, currency, country });
     onLocaleChange?.(loc);
+    onClose();
   };
 
   const handleCurrencyChange = (cur: string) => {

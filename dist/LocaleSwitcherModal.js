@@ -329,7 +329,9 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
                 requestAnimationFrame(() => setVisible(true));
             });
             document.body.style.overflow = "hidden";
-            return;
+            return () => {
+                document.body.style.overflow = "";
+            };
         }
         else {
             setVisible(false);
@@ -407,6 +409,7 @@ export function LocaleSwitcherModal({ open, onClose, currentLocale = "fi", curre
         setLocale(loc);
         writePrefs({ locale: loc, currency, country });
         onLocaleChange?.(loc);
+        onClose();
     };
     const handleCurrencyChange = (cur) => {
         setCurrency(cur);

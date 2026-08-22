@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import {
   LocaleSwitcher,
   LocaleSwitcherTrigger,
@@ -126,6 +126,34 @@ describe("LocaleSwitcher wording", () => {
     expect(screen.getByText("Omat asetukset")).toBeInTheDocument();
     // Unlisted keys keep the built-in string.
     expect(screen.getByText("Maa, kieli ja valuutta")).toBeInTheDocument();
+  });
+});
+
+describe("LocaleSwitcher scroll lock", () => {
+  it("locks body scroll while open and releases it on close", async () => {
+    render(<LocaleSwitcher locale="fi" />);
+    expect(document.body.style.overflow).toBe("");
+    openModal();
+    expect(document.body.style.overflow).toBe("hidden");
+    fireEvent.keyDown(document, { key: "Escape" });
+    // Close animation delays onClose by 250ms before `open` flips.
+    await waitFor(() => expect(document.body.style.overflow).toBe(""));
+  });
+
+  it("releases body scroll after a language is picked", () => {
+    render(<LocaleSwitcher locale="fi" onLocaleChange={() => {}} />);
+    openModal();
+    expect(document.body.style.overflow).toBe("hidden");
+    fireEvent.click(screen.getByText("English"));
+    expect(document.body.style.overflow).toBe("");
+  });
+
+  it("releases body scroll when unmounted while open", () => {
+    const { unmount } = render(<LocaleSwitcher locale="fi" />);
+    openModal();
+    expect(document.body.style.overflow).toBe("hidden");
+    unmount();
+    expect(document.body.style.overflow).toBe("");
   });
 });
 
