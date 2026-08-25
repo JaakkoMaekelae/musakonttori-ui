@@ -178,17 +178,26 @@ const flat = (palette: ThemePalette): Record<string, string> => ({
   "--mk-palette-bg": palette.bg.canvas,
   "--mk-palette-bg-surface": palette.bg.surface,
   "--mk-palette-bg-surface-hover": palette.bg.surfaceHover,
+  // Secondary surface — form fields, unselected tiles (LocaleSwitcherModal).
+  "--mk-palette-bg-surface-secondary": palette.bg.surfaceHover,
   "--mk-palette-bg-muted": palette.bg.muted,
   "--mk-palette-bg-elevated": palette.bg.elevated,
   "--mk-palette-bg-inset": palette.bg.inset,
   "--mk-palette-text-primary": palette.text.primary,
   "--mk-palette-text-secondary": palette.text.secondary,
   "--mk-palette-text-tertiary": palette.text.tertiary,
+  // Muted/tertiary text alias (section labels) — same ramp as tertiary.
+  "--mk-palette-text-muted": palette.text.tertiary,
   "--mk-palette-border-subtle": palette.border.subtle,
   "--mk-palette-border-default": palette.border.default,
   "--mk-palette-border-hover": palette.border.hover,
   "--mk-palette-accent-primary": palette.accent.primary,
   "--mk-palette-accent-soft": palette.accent.soft,
+  // "primary" selection colour + its tints. `primary` itself is the identity
+  // red (theme-constant, added in `constants`); the subtle/ring tints follow
+  // the accent ramp so they stay visible on both themes.
+  "--mk-palette-primary-subtle": palette.accent.soft,
+  "--mk-palette-primary-ring": palette.accent.soft,
   // bg-brand is the *application* accent, not the identity red — Button and
   // friends have always read it as "the primary action colour".
   "--mk-palette-bg-brand": palette.accent.primary,
@@ -201,6 +210,9 @@ const constants: Record<string, string> = {
   "--mk-brand-red-dark": brand.redDark,
   "--mk-brand-red-deep": brand.redDeep,
   "--mk-brand-rose": brand.rose,
+  // Identity red — the "primary" selection/brand colour. Same in both themes
+  // (a logo does not change colour with a theme).
+  "--mk-palette-primary": brand.red,
   "--mk-brand-gradient": `linear-gradient(135deg, ${brand.red}, ${brand.rose})`,
   "--mk-status-success": status.success,
   "--mk-status-warning": status.warning,
