@@ -93,7 +93,7 @@ export function LocaleSwitcherTrigger({ locale, currency = "EUR", variant = "fla
  * noise and the duplicated "FI · FI" read as a bug. Country and currency live
  * inside the modal and stay in the accessible name.
  */
-export function LocaleSwitcher({ locale, currency = "EUR", country, supportedLocales, labels, onLocaleChange, onCurrencyChange, showCurrency = true, showCountry = true, variant = "flag", className, }) {
+export function LocaleSwitcher({ locale, currency = "EUR", country, supportedLocales, labels, onLocaleChange, onCurrencyChange, showCurrency = true, showCountry = false, variant = "flag", className, }) {
     const [open, setOpen] = useState(false);
     // Any trigger, anywhere on the page, can open this modal.
     useEffect(() => {
