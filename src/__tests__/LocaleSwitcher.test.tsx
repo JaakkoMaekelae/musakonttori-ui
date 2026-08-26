@@ -125,7 +125,7 @@ describe("LocaleSwitcher wording", () => {
     openModal();
     expect(screen.getByText("Omat asetukset")).toBeInTheDocument();
     // Unlisted keys keep the built-in string.
-    expect(screen.getByText("Maa, kieli ja valuutta")).toBeInTheDocument();
+    expect(screen.getByText("Kieli ja valuutta")).toBeInTheDocument();
   });
 });
 
@@ -158,17 +158,24 @@ describe("LocaleSwitcher scroll lock", () => {
 });
 
 describe("LocaleSwitcher country handling", () => {
-  // The country is now an explicit choice again: it drives VAT (buyer's
-  // country = place of supply), so the modal offers a country select, and the
-  // selected country still narrows which languages and currencies are offered.
+  // Country is detected from the visitor's IP (or the server's `country` prop),
+  // never manually picked — so the modal offers no country select by default.
+  // The detected country still narrows which languages and currencies are shown.
 
-  it("renders a country control", () => {
+  it("does not render a country control by default", () => {
     render(<LocaleSwitcher locale="fi" country="FI" />);
+    openModal();
+    expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
+    expect(screen.queryByText("Maa")).not.toBeInTheDocument();
+    // The heading promises language + currency only.
+    expect(screen.getByText("Kieli ja valuutta")).toBeInTheDocument();
+  });
+
+  it("can still show a country control when a product opts in", () => {
+    render(<LocaleSwitcher locale="fi" country="FI" showCountry />);
     openModal();
     expect(screen.getByRole("combobox")).toBeInTheDocument();
     expect(screen.getByText("Maa")).toBeInTheDocument();
-    // The heading now promises a country section too.
-    expect(screen.getByText("Maa, kieli ja valuutta")).toBeInTheDocument();
   });
 
   it("offers the languages of the country it is given", () => {

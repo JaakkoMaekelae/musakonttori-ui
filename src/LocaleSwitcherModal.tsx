@@ -104,7 +104,7 @@ function detectBrowserCountry(): string {
 
 // Languages offered per detected country — native languages + English
 const COUNTRY_LANGUAGES: Record<string, string[]> = {
-  FI: ["fi", "en"],
+  FI: ["fi", "sv", "en"],
   SE: ["sv", "en"],
   DK: ["da", "en"],
   NO: ["no", "en"],
@@ -112,7 +112,7 @@ const COUNTRY_LANGUAGES: Record<string, string[]> = {
   AT: ["de", "en"],
   CH: ["de", "fr", "it", "en"],
   FR: ["fr", "en"],
-  BE: ["nl", "fr", "en"],
+  BE: ["nl", "fr", "de", "en"],
   NL: ["nl", "en"],
   LU: ["fr", "de", "en"],
   IT: ["it", "en"],
@@ -171,7 +171,7 @@ export interface LocaleSwitcherLabels {
 const LABELS: Record<string, LocaleSwitcherLabels> = {
   fi: {
     title: "Alueasetukset",
-    subtitle: "Maa, kieli ja valuutta",
+    subtitle: "Kieli ja valuutta",
     country: "Maa",
     language: "Kieli",
     currency: "Valuutta",
@@ -181,7 +181,7 @@ const LABELS: Record<string, LocaleSwitcherLabels> = {
   },
   en: {
     title: "Regional settings",
-    subtitle: "Country, language and currency",
+    subtitle: "Language and currency",
     country: "Country",
     language: "Language",
     currency: "Currency",
@@ -191,7 +191,7 @@ const LABELS: Record<string, LocaleSwitcherLabels> = {
   },
   sv: {
     title: "Regionala inställningar",
-    subtitle: "Land, språk och valuta",
+    subtitle: "Språk och valuta",
     country: "Land",
     language: "Språk",
     currency: "Valuta",
@@ -210,14 +210,14 @@ function labelsFor(
 }
 
 /**
- * Languages to offer, narrowed to what the product routes.
+ * Languages to offer for a detected country.
  *
- * With `supported`, show the product's FULL set so every routed locale
- * (fi, en, …) is always reachable — a geo-detected country only orders its
- * native languages first, it never hides the rest. Hiding fi/en because the
- * visitor's browser/IP reported another country made the primary locales
- * unreachable. Without `supported` (product serves every language) the
- * country's spoken languages are offered directly.
+ * Country comes from IP geo-detection (or the server's `currentCountry`), never
+ * a manual pick, so the modal only offers the languages commonly used in that
+ * country — not the product's full set. `supported` narrows that to what the
+ * product actually routes; if the intersection is empty (the product routes
+ * none of the country's spoken languages) it falls back to the full supported
+ * set so the modal is never empty.
  */
 function languagesFor(
   country: string,
@@ -225,9 +225,8 @@ function languagesFor(
 ): string[] {
   const spoken = [...new Set(COUNTRY_LANGUAGES[country] ?? ["fi", "en"])];
   if (!supported?.length) return spoken;
-  const preferred = spoken.filter((code) => supported.includes(code));
-  const rest = supported.filter((code) => !preferred.includes(code));
-  return [...preferred, ...rest];
+  const filtered = spoken.filter((code) => supported.includes(code));
+  return filtered.length > 0 ? filtered : [...supported];
 }
 
 // All supported language metadata. Exported because the trigger renders the
@@ -353,7 +352,7 @@ export function LocaleSwitcherModal({
   onCurrencyChange,
   onCountryChange,
   showCurrency = true,
-  showCountry = true,
+  showCountry = false,
 }: LocaleSwitcherModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<Element | null>(null);

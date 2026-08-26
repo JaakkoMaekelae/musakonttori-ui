@@ -195,7 +195,7 @@ export function LocaleSwitcher({
   onLocaleChange,
   onCurrencyChange,
   showCurrency = true,
-  showCountry = true,
+  showCountry = false,
   variant = "flag",
   className,
 }: LocaleSwitcherProps) {
