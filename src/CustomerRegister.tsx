@@ -203,7 +203,6 @@ export function CustomerRegister({
   className,
 }: CustomerRegisterProps) {
   const L = labelsFor(locale, labels);
-  const consumer = accountTypes.find((t) => !t.requiresOrganization);
 
   const [step, setStep] = useState<'account' | 'organization' | 'workspace'>(
     'account',
@@ -228,12 +227,12 @@ export function CustomerRegister({
     accountTypes.find((t) => t.value === accountType)?.requiresOrganization,
   );
 
-  const stepLabels = consumer
-    ? [L.stepAccount, L.stepWorkspace]
-    : [L.stepAccount, L.stepOrganization, L.stepWorkspace];
+  const stepLabels = requiresOrg
+    ? [L.stepAccount, L.stepOrganization, L.stepWorkspace]
+    : [L.stepAccount, L.stepWorkspace];
 
   const stepIndex =
-    step === 'account' ? 0 : step === 'organization' ? 1 : consumer ? 1 : 2;
+    step === 'account' ? 0 : step === 'organization' ? 1 : requiresOrg ? 2 : 1;
 
   const primary =
     'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';

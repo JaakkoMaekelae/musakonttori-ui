@@ -105,7 +105,6 @@ function slugify(value) {
 /* -------------------------------------------------------------------------- */
 export function CustomerRegister({ productName, registerTitle, accountTypes, workspaceTypes, signInHref, locale, onRegister, onCreateOrganization, onCreateWorkspace, onFinish, labels, className, }) {
     const L = labelsFor(locale, labels);
-    const consumer = accountTypes.find((t) => !t.requiresOrganization);
     const [step, setStep] = useState('account');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -120,10 +119,10 @@ export function CustomerRegister({ productName, registerTitle, accountTypes, wor
     const [wsSlug, setWsSlug] = useState('');
     const [wsType, setWsType] = useState(workspaceTypes[0] ?? '');
     const requiresOrg = Boolean(accountTypes.find((t) => t.value === accountType)?.requiresOrganization);
-    const stepLabels = consumer
-        ? [L.stepAccount, L.stepWorkspace]
-        : [L.stepAccount, L.stepOrganization, L.stepWorkspace];
-    const stepIndex = step === 'account' ? 0 : step === 'organization' ? 1 : consumer ? 1 : 2;
+    const stepLabels = requiresOrg
+        ? [L.stepAccount, L.stepOrganization, L.stepWorkspace]
+        : [L.stepAccount, L.stepWorkspace];
+    const stepIndex = step === 'account' ? 0 : step === 'organization' ? 1 : requiresOrg ? 2 : 1;
     const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';
     function handleRegister(e) {
         e.preventDefault();
