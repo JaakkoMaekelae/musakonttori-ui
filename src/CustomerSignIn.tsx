@@ -345,6 +345,7 @@ export function CustomerSignIn({
 
             {error || errorMessage ? (
               <p
+                role="alert"
                 className="text-center text-sm"
                 style={{
                   color:

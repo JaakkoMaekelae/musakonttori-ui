@@ -134,7 +134,7 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
                             }, children: L.signInEmail }), hasMagic && (_jsxs(_Fragment, { children: [_jsxs("div", { className: "my-1 flex items-center gap-3", children: [_jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } }), _jsx("span", { className: "text-xs", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: L.or }), _jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } })] }), _jsx("button", { type: "button", disabled: loading, onClick: handleMagicLink, className: "rounded-xl border px-4 py-2 text-sm transition-colors", style: {
                                         borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                                         color: 'var(--mk-palette-text-primary, #F0F0F3)',
-                                    }, children: L.sendMagicLink })] })), error || errorMessage ? (_jsx("p", { className: "text-center text-sm", style: {
+                                    }, children: L.sendMagicLink })] })), error || errorMessage ? (_jsx("p", { role: "alert", className: "text-center text-sm", style: {
                                 color: error === L.errorCheckEmail
                                     ? 'var(--mk-status-success, #22C55E)'
                                     : 'var(--mk-status-error, #EF4444)',
