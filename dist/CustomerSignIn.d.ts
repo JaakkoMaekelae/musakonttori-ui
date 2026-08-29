@@ -39,7 +39,9 @@ export interface CustomerSignInProps {
     }) => void;
     /** Override any built-in string. */
     labels?: Partial<CustomerSignInLabels>;
+    /** External error message (e.g. from a server-action login failure). */
+    errorMessage?: string;
     className?: string;
 }
-export declare function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, className, }: CustomerSignInProps): import("react").JSX.Element;
+export declare function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, errorMessage, className, }: CustomerSignInProps): import("react").JSX.Element;
 //# sourceMappingURL=CustomerSignIn.d.ts.map

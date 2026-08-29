@@ -71,7 +71,7 @@ function labelsFor(locale, override) {
 /* -------------------------------------------------------------------------- */
 /*  Component                                                                 */
 /* -------------------------------------------------------------------------- */
-export function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, className, }) {
+export function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, errorMessage, className, }) {
     const L = labelsFor(locale, labels);
     const [tab, setTab] = useState('email');
     const [email, setEmail] = useState('');
@@ -130,11 +130,11 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
                             }, children: L.signInEmail }), _jsxs("div", { className: "my-1 flex items-center gap-3", children: [_jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } }), _jsx("span", { className: "text-xs", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: L.or }), _jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } })] }), _jsx("button", { type: "button", disabled: loading, onClick: handleMagicLink, className: "rounded-xl border px-4 py-2 text-sm transition-colors", style: {
                                 borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                                 color: 'var(--mk-palette-text-primary, #F0F0F3)',
-                            }, children: L.sendMagicLink }), error && (_jsx("p", { className: "text-center text-sm", style: {
+                            }, children: L.sendMagicLink }), error || errorMessage ? (_jsx("p", { className: "text-center text-sm", style: {
                                 color: error === L.errorCheckEmail
                                     ? 'var(--mk-status-success, #22C55E)'
                                     : 'var(--mk-status-error, #EF4444)',
-                            }, children: error }))] })) : (_jsxs("div", { className: "flex flex-col gap-3", children: [_jsx(SocialButton, { onClick: () => onSignIn('google'), children: L.continueGoogle }), _jsx(SocialButton, { onClick: () => onSignIn('facebook'), children: L.continueFacebook })] })), _jsxs("p", { className: "mt-6 text-center text-sm", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: [L.noAccount, ' ', _jsx("a", { href: registerHref, className: "hover:underline", style: { color: 'var(--mk-palette-accent-primary, #BF2227)' }, children: L.createOne })] })] }) }));
+                            }, children: error || errorMessage })) : null] })) : (_jsxs("div", { className: "flex flex-col gap-3", children: [_jsx(SocialButton, { onClick: () => onSignIn('google'), children: L.continueGoogle }), _jsx(SocialButton, { onClick: () => onSignIn('facebook'), children: L.continueFacebook })] })), _jsxs("p", { className: "mt-6 text-center text-sm", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: [L.noAccount, ' ', _jsx("a", { href: registerHref, className: "hover:underline", style: { color: 'var(--mk-palette-accent-primary, #BF2227)' }, children: L.createOne })] })] }) }));
 }
 function SocialButton({ children, onClick, }) {
     return (_jsx("button", { type: "button", onClick: onClick, className: "flex items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm transition-colors", style: {

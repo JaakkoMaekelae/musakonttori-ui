@@ -53,6 +53,8 @@ export interface CustomerSignInProps {
   ) => void;
   /** Override any built-in string. */
   labels?: Partial<CustomerSignInLabels>;
+  /** External error message (e.g. from a server-action login failure). */
+  errorMessage?: string;
   className?: string;
 }
 
@@ -139,6 +141,7 @@ export function CustomerSignIn({
   locale,
   onSignIn,
   labels,
+  errorMessage,
   className,
 }: CustomerSignInProps) {
   const L = labelsFor(locale, labels);
@@ -313,7 +316,7 @@ export function CustomerSignIn({
               {L.sendMagicLink}
             </button>
 
-            {error && (
+            {error || errorMessage ? (
               <p
                 className="text-center text-sm"
                 style={{
@@ -323,9 +326,9 @@ export function CustomerSignIn({
                       : 'var(--mk-status-error, #EF4444)',
                 }}
               >
-                {error}
+                {error || errorMessage}
               </p>
-            )}
+            ) : null}
           </form>
         ) : (
           <div className="flex flex-col gap-3">
