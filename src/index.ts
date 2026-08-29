@@ -231,6 +231,11 @@ export {
   type CustomerRegisterLabels,
   type CustomerAccountType,
 } from "./CustomerRegister";
+export {
+  CustomerRegisterSimple,
+  type CustomerRegisterSimpleProps,
+  type CustomerRegisterSimpleLabels,
+} from "./CustomerRegisterSimple";
 export { PageSkeleton } from "./PageSkeleton";
 export {
   NotFoundPage,

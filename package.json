@@ -239,6 +239,11 @@
       "default": "./dist/CustomerRegister.js",
       "types": "./dist/CustomerRegister.d.ts"
     },
+    "./customer-register-simple": {
+      "import": "./dist/CustomerRegisterSimple.js",
+      "default": "./dist/CustomerRegisterSimple.js",
+      "types": "./dist/CustomerRegisterSimple.d.ts"
+    },
     "./app-header": {
       "import": "./dist/AppHeader.js",
       "default": "./dist/AppHeader.js",

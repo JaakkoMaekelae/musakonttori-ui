@@ -41,6 +41,7 @@ export { safeHref } from "./safeHref";
 export { SignInLayout, type SignInLayoutProps, type SignInLayoutBenefit, } from "./SignInLayout";
 export { CustomerSignIn, type CustomerSignInProps, type CustomerSignInLabels, type CustomerSignInProvider, } from "./CustomerSignIn";
 export { CustomerRegister, type CustomerRegisterProps, type CustomerRegisterLabels, type CustomerAccountType, } from "./CustomerRegister";
+export { CustomerRegisterSimple, type CustomerRegisterSimpleProps, type CustomerRegisterSimpleLabels, } from "./CustomerRegisterSimple";
 export { PageSkeleton } from "./PageSkeleton";
 export { NotFoundPage, type NotFoundPageProps, type NotFoundLink, } from "./NotFoundPage";
 export { MARKETS, MARKET_CURRENCIES, APP_LOCALES, getMarketByCountry, getMarketByLocale, getLocaleForCountry, getCurrencyForCountry, COUNTRY_COOKIE, LOCALE_COOKIE, CURRENCY_COOKIE, type CountryMarket, type Market, } from "./markets";
