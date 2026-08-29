@@ -43,7 +43,11 @@ export interface CustomerSignInProps {
     errorMessage?: string;
     /** Render only the card (no full-screen wrapper) for embedding in a product layout. */
     bare?: boolean;
+    /** Show the social (Google/Facebook) tab. Default true. */
+    showSocial?: boolean;
+    /** Show the magic-link button. Default true. */
+    showMagicLink?: boolean;
     className?: string;
 }
-export declare function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, errorMessage, bare, className, }: CustomerSignInProps): import("react").JSX.Element;
+export declare function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, errorMessage, bare, showSocial, showMagicLink, className, }: CustomerSignInProps): import("react").JSX.Element;
 //# sourceMappingURL=CustomerSignIn.d.ts.map

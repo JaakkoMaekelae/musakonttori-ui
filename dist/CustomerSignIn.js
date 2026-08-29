@@ -1,5 +1,5 @@
 'use client';
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useState } from 'react';
 import { cn } from './utils';
 /* -------------------------------------------------------------------------- */
@@ -71,13 +71,15 @@ function labelsFor(locale, override) {
 /* -------------------------------------------------------------------------- */
 /*  Component                                                                 */
 /* -------------------------------------------------------------------------- */
-export function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, errorMessage, bare, className, }) {
+export function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, errorMessage, bare, showSocial, showMagicLink, className, }) {
     const L = labelsFor(locale, labels);
     const [tab, setTab] = useState('email');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const hasSocial = showSocial !== false;
+    const hasMagic = showMagicLink !== false;
     async function handleCredentialsSubmit(e) {
         e.preventDefault();
         setLoading(true);
@@ -104,7 +106,7 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
                 borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                 background: 'var(--mk-palette-bg-elevated, #1A1D27)',
                 boxShadow: 'var(--mk-shadow-xl, 0 20px 60px rgba(0,0,0,0.4))',
-            }, children: [_jsx("h1", { className: "mb-1 text-center text-2xl font-bold", style: { color: 'var(--mk-palette-text-primary, #F0F0F3)' }, children: productName }), _jsx("p", { className: "mb-6 text-center text-sm", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: L.subtitle }), _jsxs("div", { className: "mb-6 flex overflow-hidden rounded-xl border", style: { borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' }, children: [_jsx("button", { type: "button", onClick: () => setTab('email'), className: "flex-1 py-2 text-sm font-semibold transition-colors", style: {
+            }, children: [_jsx("h1", { className: "mb-1 text-center text-2xl font-bold", style: { color: 'var(--mk-palette-text-primary, #F0F0F3)' }, children: productName }), _jsx("p", { className: "mb-6 text-center text-sm", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: L.subtitle }), hasSocial && (_jsxs("div", { className: "mb-6 flex overflow-hidden rounded-xl border", style: { borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' }, children: [_jsx("button", { type: "button", onClick: () => setTab('email'), className: "flex-1 py-2 text-sm font-semibold transition-colors", style: {
                                 background: tab === 'email'
                                     ? 'var(--mk-palette-bg-surface, #242838)'
                                     : 'transparent',
@@ -118,7 +120,7 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
                                 color: tab === 'social'
                                     ? 'var(--mk-palette-text-primary, #F0F0F3)'
                                     : 'var(--mk-palette-text-secondary, #B0B3C1)',
-                            }, children: L.tabSocial })] }), tab === 'email' ? (_jsxs("form", { onSubmit: handleCredentialsSubmit, className: "flex flex-col gap-3", children: [_jsx("input", { type: "email", placeholder: L.emailPlaceholder, value: email, onChange: (e) => setEmail(e.target.value), required: true, disabled: loading, className: "w-full rounded-xl border px-3 py-2 text-sm outline-none", style: {
+                            }, children: L.tabSocial })] })), tab === 'email' || !hasSocial ? (_jsxs("form", { onSubmit: handleCredentialsSubmit, className: "flex flex-col gap-3", children: [_jsx("input", { type: "email", placeholder: L.emailPlaceholder, value: email, onChange: (e) => setEmail(e.target.value), required: true, disabled: loading, className: "w-full rounded-xl border px-3 py-2 text-sm outline-none", style: {
                                 borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                                 background: 'var(--mk-palette-bg-surface, #242838)',
                                 color: 'var(--mk-palette-text-primary, #F0F0F3)',
@@ -129,10 +131,10 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
                             } }), resetHref && (_jsx("div", { className: "flex justify-end", children: _jsx("a", { href: resetHref, className: "text-sm", style: { color: 'var(--mk-palette-accent-primary, #BF2227)' }, children: L.forgotPassword }) })), _jsx("button", { type: "submit", disabled: loading, className: "flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold", style: {
                                 background: `linear-gradient(135deg, ${primary}, color-mix(in srgb, ${primary} 60%, #7C3AED))`,
                                 color: 'var(--mk-palette-on-accent, #FFFFFF)',
-                            }, children: L.signInEmail }), _jsxs("div", { className: "my-1 flex items-center gap-3", children: [_jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } }), _jsx("span", { className: "text-xs", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: L.or }), _jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } })] }), _jsx("button", { type: "button", disabled: loading, onClick: handleMagicLink, className: "rounded-xl border px-4 py-2 text-sm transition-colors", style: {
-                                borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
-                                color: 'var(--mk-palette-text-primary, #F0F0F3)',
-                            }, children: L.sendMagicLink }), error || errorMessage ? (_jsx("p", { className: "text-center text-sm", style: {
+                            }, children: L.signInEmail }), hasMagic && (_jsxs(_Fragment, { children: [_jsxs("div", { className: "my-1 flex items-center gap-3", children: [_jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } }), _jsx("span", { className: "text-xs", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: L.or }), _jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } })] }), _jsx("button", { type: "button", disabled: loading, onClick: handleMagicLink, className: "rounded-xl border px-4 py-2 text-sm transition-colors", style: {
+                                        borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
+                                        color: 'var(--mk-palette-text-primary, #F0F0F3)',
+                                    }, children: L.sendMagicLink })] })), error || errorMessage ? (_jsx("p", { className: "text-center text-sm", style: {
                                 color: error === L.errorCheckEmail
                                     ? 'var(--mk-status-success, #22C55E)'
                                     : 'var(--mk-status-error, #EF4444)',

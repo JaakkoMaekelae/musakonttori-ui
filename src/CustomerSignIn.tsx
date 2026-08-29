@@ -57,6 +57,10 @@ export interface CustomerSignInProps {
   errorMessage?: string;
   /** Render only the card (no full-screen wrapper) for embedding in a product layout. */
   bare?: boolean;
+  /** Show the social (Google/Facebook) tab. Default true. */
+  showSocial?: boolean;
+  /** Show the magic-link button. Default true. */
+  showMagicLink?: boolean;
   className?: string;
 }
 
@@ -145,6 +149,8 @@ export function CustomerSignIn({
   labels,
   errorMessage,
   bare,
+  showSocial,
+  showMagicLink,
   className,
 }: CustomerSignInProps) {
   const L = labelsFor(locale, labels);
@@ -153,6 +159,8 @@ export function CustomerSignIn({
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const hasSocial = showSocial !== false;
+  const hasMagic = showMagicLink !== false;
 
   async function handleCredentialsSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -214,47 +222,49 @@ export function CustomerSignIn({
           {L.subtitle}
         </p>
 
-        <div
-          className="mb-6 flex overflow-hidden rounded-xl border"
-          style={{ borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' }}
-        >
-          <button
-            type="button"
-            onClick={() => setTab('email')}
-            className="flex-1 py-2 text-sm font-semibold transition-colors"
-            style={{
-              background:
-                tab === 'email'
-                  ? 'var(--mk-palette-bg-surface, #242838)'
-                  : 'transparent',
-              color:
-                tab === 'email'
-                  ? 'var(--mk-palette-text-primary, #F0F0F3)'
-                  : 'var(--mk-palette-text-secondary, #B0B3C1)',
-            }}
+        {hasSocial && (
+          <div
+            className="mb-6 flex overflow-hidden rounded-xl border"
+            style={{ borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' }}
           >
-            {L.tabEmail}
-          </button>
-          <button
-            type="button"
-            onClick={() => setTab('social')}
-            className="flex-1 py-2 text-sm font-semibold transition-colors"
-            style={{
-              background:
-                tab === 'social'
-                  ? 'var(--mk-palette-bg-surface, #242838)'
-                  : 'transparent',
-              color:
-                tab === 'social'
-                  ? 'var(--mk-palette-text-primary, #F0F0F3)'
-                  : 'var(--mk-palette-text-secondary, #B0B3C1)',
-            }}
-          >
-            {L.tabSocial}
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={() => setTab('email')}
+              className="flex-1 py-2 text-sm font-semibold transition-colors"
+              style={{
+                background:
+                  tab === 'email'
+                    ? 'var(--mk-palette-bg-surface, #242838)'
+                    : 'transparent',
+                color:
+                  tab === 'email'
+                    ? 'var(--mk-palette-text-primary, #F0F0F3)'
+                    : 'var(--mk-palette-text-secondary, #B0B3C1)',
+              }}
+            >
+              {L.tabEmail}
+            </button>
+            <button
+              type="button"
+              onClick={() => setTab('social')}
+              className="flex-1 py-2 text-sm font-semibold transition-colors"
+              style={{
+                background:
+                  tab === 'social'
+                    ? 'var(--mk-palette-bg-surface, #242838)'
+                    : 'transparent',
+                color:
+                  tab === 'social'
+                    ? 'var(--mk-palette-text-primary, #F0F0F3)'
+                    : 'var(--mk-palette-text-secondary, #B0B3C1)',
+              }}
+            >
+              {L.tabSocial}
+            </button>
+          </div>
+        )}
 
-        {tab === 'email' ? (
+        {tab === 'email' || !hasSocial ? (
           <form onSubmit={handleCredentialsSubmit} className="flex flex-col gap-3">
             <input
               type="email"
@@ -308,26 +318,30 @@ export function CustomerSignIn({
               {L.signInEmail}
             </button>
 
-            <div className="my-1 flex items-center gap-3">
-              <div className="flex-1" style={{ height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' }} />
-              <span className="text-xs" style={{ color: 'var(--mk-palette-text-secondary, #B0B3C1)' }}>
-                {L.or}
-              </span>
-              <div className="flex-1" style={{ height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' }} />
-            </div>
+            {hasMagic && (
+              <>
+                <div className="my-1 flex items-center gap-3">
+                  <div className="flex-1" style={{ height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' }} />
+                  <span className="text-xs" style={{ color: 'var(--mk-palette-text-secondary, #B0B3C1)' }}>
+                    {L.or}
+                  </span>
+                  <div className="flex-1" style={{ height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' }} />
+                </div>
 
-            <button
-              type="button"
-              disabled={loading}
-              onClick={handleMagicLink}
-              className="rounded-xl border px-4 py-2 text-sm transition-colors"
-              style={{
-                borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
-                color: 'var(--mk-palette-text-primary, #F0F0F3)',
-              }}
-            >
-              {L.sendMagicLink}
-            </button>
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={handleMagicLink}
+                  className="rounded-xl border px-4 py-2 text-sm transition-colors"
+                  style={{
+                    borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
+                    color: 'var(--mk-palette-text-primary, #F0F0F3)',
+                  }}
+                >
+                  {L.sendMagicLink}
+                </button>
+              </>
+            )}
 
             {error || errorMessage ? (
               <p
