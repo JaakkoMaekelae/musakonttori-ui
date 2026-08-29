@@ -36,7 +36,7 @@ export interface CustomerSignInProps {
         email?: string;
         password?: string;
         callbackUrl?: string;
-    }) => void | Promise<void>;
+    }) => void;
     /** Override any built-in string. */
     labels?: Partial<CustomerSignInLabels>;
     /** External error message (e.g. from a server-action login failure). */
