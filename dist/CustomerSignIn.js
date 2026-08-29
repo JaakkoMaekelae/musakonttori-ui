@@ -78,21 +78,21 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    function handleCredentialsSubmit(e) {
+    async function handleCredentialsSubmit(e) {
         e.preventDefault();
         setLoading(true);
         setError('');
-        onSignIn('credentials', { email, password });
+        await onSignIn('credentials', { email, password });
         setLoading(false);
     }
-    function handleMagicLink() {
+    async function handleMagicLink() {
         if (!email) {
             setError(L.errorEnterEmail);
             return;
         }
         setLoading(true);
         setError(L.errorCheckEmail);
-        onSignIn('nodemailer', { email });
+        await onSignIn('nodemailer', { email });
         setLoading(false);
     }
     const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';

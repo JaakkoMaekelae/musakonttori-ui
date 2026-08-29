@@ -50,7 +50,7 @@ export interface CustomerSignInProps {
   onSignIn: (
     provider: CustomerSignInProvider,
     options?: { email?: string; password?: string; callbackUrl?: string },
-  ) => void;
+  ) => void | Promise<void>;
   /** Override any built-in string. */
   labels?: Partial<CustomerSignInLabels>;
   /** External error message (e.g. from a server-action login failure). */
@@ -151,22 +151,22 @@ export function CustomerSignIn({
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  function handleCredentialsSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleCredentialsSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setError('');
-    onSignIn('credentials', { email, password });
+    await onSignIn('credentials', { email, password });
     setLoading(false);
   }
 
-  function handleMagicLink() {
+  async function handleMagicLink() {
     if (!email) {
       setError(L.errorEnterEmail);
       return;
     }
     setLoading(true);
     setError(L.errorCheckEmail);
-    onSignIn('nodemailer', { email });
+    await onSignIn('nodemailer', { email });
     setLoading(false);
   }
 
