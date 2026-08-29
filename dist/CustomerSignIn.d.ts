@@ -41,7 +41,9 @@ export interface CustomerSignInProps {
     labels?: Partial<CustomerSignInLabels>;
     /** External error message (e.g. from a server-action login failure). */
     errorMessage?: string;
+    /** Render only the card (no full-screen wrapper) for embedding in a product layout. */
+    bare?: boolean;
     className?: string;
 }
-export declare function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, errorMessage, className, }: CustomerSignInProps): import("react").JSX.Element;
+export declare function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, errorMessage, bare, className, }: CustomerSignInProps): import("react").JSX.Element;
 //# sourceMappingURL=CustomerSignIn.d.ts.map

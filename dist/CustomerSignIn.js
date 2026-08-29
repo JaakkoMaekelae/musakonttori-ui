@@ -71,7 +71,7 @@ function labelsFor(locale, override) {
 /* -------------------------------------------------------------------------- */
 /*  Component                                                                 */
 /* -------------------------------------------------------------------------- */
-export function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, errorMessage, className, }) {
+export function CustomerSignIn({ productName, registerHref, resetHref, locale, onSignIn, labels, errorMessage, bare, className, }) {
     const L = labelsFor(locale, labels);
     const [tab, setTab] = useState('email');
     const [email, setEmail] = useState('');
@@ -96,9 +96,11 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
         setLoading(false);
     }
     const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';
-    return (_jsx("div", { className: cn('flex min-h-svh items-center justify-center px-4', className), style: {
-            background: 'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #BF2227) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
-        }, children: _jsxs("div", { className: "w-full max-w-sm rounded-2xl border p-8", style: {
+    return (_jsx("div", { className: cn(bare ? 'w-full' : 'flex min-h-svh items-center justify-center px-4', className), style: bare
+            ? undefined
+            : {
+                background: 'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #BF2227) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
+            }, children: _jsxs("div", { className: cn('w-full rounded-2xl border p-8', !bare && 'max-w-sm'), style: {
                 borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                 background: 'var(--mk-palette-bg-elevated, #1A1D27)',
                 boxShadow: 'var(--mk-shadow-xl, 0 20px 60px rgba(0,0,0,0.4))',

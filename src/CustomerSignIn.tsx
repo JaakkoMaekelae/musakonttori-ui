@@ -55,6 +55,8 @@ export interface CustomerSignInProps {
   labels?: Partial<CustomerSignInLabels>;
   /** External error message (e.g. from a server-action login failure). */
   errorMessage?: string;
+  /** Render only the card (no full-screen wrapper) for embedding in a product layout. */
+  bare?: boolean;
   className?: string;
 }
 
@@ -142,6 +144,7 @@ export function CustomerSignIn({
   onSignIn,
   labels,
   errorMessage,
+  bare,
   className,
 }: CustomerSignInProps) {
   const L = labelsFor(locale, labels);
@@ -174,14 +177,24 @@ export function CustomerSignIn({
 
   return (
     <div
-      className={cn('flex min-h-svh items-center justify-center px-4', className)}
-      style={{
-        background:
-          'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #BF2227) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
-      }}
+      className={cn(
+        bare ? 'w-full' : 'flex min-h-svh items-center justify-center px-4',
+        className,
+      )}
+      style={
+        bare
+          ? undefined
+          : {
+              background:
+                'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #BF2227) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
+            }
+      }
     >
       <div
-        className="w-full max-w-sm rounded-2xl border p-8"
+        className={cn(
+          'w-full rounded-2xl border p-8',
+          !bare && 'max-w-sm',
+        )}
         style={{
           borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
           background: 'var(--mk-palette-bg-elevated, #1A1D27)',
