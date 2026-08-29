@@ -219,6 +219,18 @@ export {
   type SignInLayoutProps,
   type SignInLayoutBenefit,
 } from "./SignInLayout";
+export {
+  CustomerSignIn,
+  type CustomerSignInProps,
+  type CustomerSignInLabels,
+  type CustomerSignInProvider,
+} from "./CustomerSignIn";
+export {
+  CustomerRegister,
+  type CustomerRegisterProps,
+  type CustomerRegisterLabels,
+  type CustomerAccountType,
+} from "./CustomerRegister";
 export { PageSkeleton } from "./PageSkeleton";
 export {
   NotFoundPage,

@@ -40,6 +40,8 @@ export { Lockup } from "./Lockup";
 export { cn } from "./utils";
 export { safeHref } from "./safeHref";
 export { SignInLayout, } from "./SignInLayout";
+export { CustomerSignIn, } from "./CustomerSignIn";
+export { CustomerRegister, } from "./CustomerRegister";
 export { PageSkeleton } from "./PageSkeleton";
 export { NotFoundPage, } from "./NotFoundPage";
 export { MARKETS, MARKET_CURRENCIES, APP_LOCALES, getMarketByCountry, getMarketByLocale, getLocaleForCountry, getCurrencyForCountry, COUNTRY_COOKIE, LOCALE_COOKIE, CURRENCY_COOKIE, } from "./markets";

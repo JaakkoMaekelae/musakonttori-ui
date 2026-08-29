@@ -229,6 +229,16 @@
       "default": "./dist/SignInLayout.js",
       "types": "./dist/SignInLayout.d.ts"
     },
+    "./customer-sign-in": {
+      "import": "./dist/CustomerSignIn.js",
+      "default": "./dist/CustomerSignIn.js",
+      "types": "./dist/CustomerSignIn.d.ts"
+    },
+    "./customer-register": {
+      "import": "./dist/CustomerRegister.js",
+      "default": "./dist/CustomerRegister.js",
+      "types": "./dist/CustomerRegister.d.ts"
+    },
     "./app-header": {
       "import": "./dist/AppHeader.js",
       "default": "./dist/AppHeader.js",
