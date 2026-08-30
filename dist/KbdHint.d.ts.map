@@ -1,1 +1,1 @@
-{"version":3,"file":"KbdHint.d.ts","sourceRoot":"","sources":["../src/KbdHint.tsx"],"names":[],"mappings":"AAEA,MAAM,WAAW,YAAY;IAC3B,IAAI,EAAE,MAAM,EAAE,CAAC;IACf,SAAS,CAAC,EAAE,MAAM,CAAC;CACpB;AAED;;;;;;;;GAQG;AACH,wBAAgB,OAAO,CAAC,EAAE,IAAI,EAAE,SAAS,EAAE,EAAE,YAAY,+BAiBxD"}
+{"version":3,"file":"KbdHint.d.ts","sourceRoot":"","sources":["../src/KbdHint.tsx"],"names":[],"mappings":"AAIA,MAAM,WAAW,YAAY;IAC3B,IAAI,EAAE,MAAM,EAAE,CAAC;IACf,SAAS,CAAC,EAAE,MAAM,CAAC;CACpB;AAED;;;;;;;;GAQG;AACH,wBAAgB,OAAO,CAAC,EAAE,IAAI,EAAE,SAAS,EAAE,EAAE,YAAY,+BAiBxD"}

@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "./utils";
 
 type AlertVariant = "info" | "success" | "warning" | "error";

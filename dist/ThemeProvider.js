@@ -1,6 +1,6 @@
 "use client";
 import { jsx as _jsx } from "react/jsx-runtime";
-import { createContext, useContext, useEffect, useSyncExternalStore, useCallback, } from "react";
+import { createContext, useContext, useEffect, useMemo, useSyncExternalStore, useCallback, } from "react";
 const ThemeContext = createContext({
     theme: "dark",
     toggle: () => { },
@@ -78,7 +78,8 @@ export function ThemeProvider({ children, defaultTheme = "dark", storageKey = DE
     const toggle = useCallback(() => {
         setTheme(theme === "dark" ? "light" : "dark");
     }, [theme, setTheme]);
-    return (_jsx(ThemeContext.Provider, { value: { theme, toggle, setTheme }, children: children }));
+    const value = useMemo(() => ({ theme, toggle, setTheme }), [theme, toggle, setTheme]);
+    return (_jsx(ThemeContext.Provider, { value: value, children: children }));
 }
 /**
  * useTheme - lue ja ohjaa teematilaa.

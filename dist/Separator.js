@@ -1,3 +1,4 @@
+"use client";
 import { jsx as _jsx } from "react/jsx-runtime";
 import * as React from "react";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";

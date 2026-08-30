@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, type ReactNode } from "react";
+import { useCallback, useMemo, useState, type ReactNode } from "react";
 import { cn } from "./utils";
 
 export type LogLevel = "debug" | "info" | "warn" | "error";
@@ -62,6 +62,7 @@ export function AdminLogStream({
   const [internal, setInternal] = useState<string[]>([]);
   const controlled = expandedIds != null;
   const open = controlled ? expandedIds : internal;
+  const openSet = useMemo(() => new Set(open), [open]);
 
   const toggle = useCallback(
     (id: string) => {
@@ -86,7 +87,7 @@ export function AdminLogStream({
       <ul aria-label={label}>
         {entries.map((entry) => {
           const meta = LEVEL[entry.level];
-          const isOpen = open.includes(entry.id);
+          const isOpen = openSet.has(entry.id);
           const expandable = entry.detail != null;
 
           return (

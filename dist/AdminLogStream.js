@@ -1,6 +1,6 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { cn } from "./utils";
 const LEVEL = {
     debug: { glyph: "·", word: "debug", tone: "var(--mk-palette-text-tertiary, #7E8292)" },
@@ -28,6 +28,7 @@ export function AdminLogStream({ entries, label, expandedIds, onToggle, footer, 
     const [internal, setInternal] = useState([]);
     const controlled = expandedIds != null;
     const open = controlled ? expandedIds : internal;
+    const openSet = useMemo(() => new Set(open), [open]);
     const toggle = useCallback((id) => {
         if (onToggle)
             onToggle(id);
@@ -42,7 +43,7 @@ export function AdminLogStream({ entries, label, expandedIds, onToggle, footer, 
         }
       ` }), _jsx("ul", { "aria-label": label, children: entries.map((entry) => {
                     const meta = LEVEL[entry.level];
-                    const isOpen = open.includes(entry.id);
+                    const isOpen = openSet.has(entry.id);
                     const expandable = entry.detail != null;
                     return (_jsxs("li", { className: "mk-log-row border-b border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))]", children: [expandable ? (_jsx("button", { type: "button", onClick: () => toggle(entry.id), "aria-expanded": isOpen, className: "flex w-full items-baseline gap-2.5 px-3 py-1.5 text-left transition-colors hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--mk-palette-accent-primary,#F44242)]", children: _jsx(Row, { entry: entry, meta: meta, caret: isOpen ? "▾" : "▸" }) })) : (_jsx("div", { className: "flex w-full items-baseline gap-2.5 px-3 py-1.5", children: _jsx(Row, { entry: entry, meta: meta, caret: " " }) })), isOpen && entry.detail && (_jsx("div", { className: "border-t border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))] bg-[var(--mk-palette-bg-inset,#0B0D12)] px-3 py-2.5", children: entry.detail }))] }, entry.id));
                 }) }), footer && _jsx("div", { className: "px-3 py-2.5", children: footer })] }));
