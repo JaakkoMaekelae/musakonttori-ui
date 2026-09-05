@@ -11,10 +11,9 @@ React 19 + TypeScript + Tailwind CSS + Radix UI primitives.
 
 ## Global standards (MANDATORY)
 
-Lue ennen koodausta:
-- `../../MUSAKONTTORI_TESTAUS_JA_LAADUNVARMISTUSSTANDARDI.md`
-- `../../MUSAKONTTORI_WCAG_2_1_2_2_ACCESSIBILITY_AUDIT_STANDARD.md`
-- `../../VERIFICATION.md`
+Lue ennen koodausta: **vain** `../MUSAKONTTORI_AGENT_QUICKREF.md` (tiivis pakollisten sääntöjen quickref).
+
+Isot standardit luetaan ON-DEMAND, vain kun tehtävä koskee aluetta — tiedostolista quickrefin lopussa.
 
 ## Commands
 
@@ -132,3 +131,9 @@ korjaa virhettä, se vain piilottaa sen seuraavalle, joka pullaa reposta.
 - Ei kieliin sidottuja merkkijonoja komponenteissa: JSX-teksti, `placeholder`, `title`, `aria-label`, `alt`, `label`, `description`.
 - Next.js-projekteissa `next-intl`: avaimet `messages/{locale}.json`, muoto `"page.section.key"`. Oletuskieli `fi`, toinen `en`.
 - Jaetut kirjastokomponentit: tekstit propseina tai kuluttajan `Intl`-kontekstista, ei kirjaston sisältä.
+
+### Git stash on kielletty
+
+`git stash` (ja `pop` / `apply` / `drop` / `push` / `clear`) on kielletty poikkeuksetta.
+Stash piilottaa työhakemiston muutokset → menetettyä työtä ja ristiriitoja.
+Keskeytä työ commitilla (WIP-branch) tai jätä muutokset paikalleen — ei stashia.
