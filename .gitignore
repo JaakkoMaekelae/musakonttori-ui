@@ -18,3 +18,5 @@ node_modules/
 /Product Matrix.md
 /Master Roadmap.md
 /Musakonttori HQ.md
+
+*.tsbuildinfo
