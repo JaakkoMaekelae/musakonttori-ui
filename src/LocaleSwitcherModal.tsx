@@ -371,15 +371,24 @@ export function LocaleSwitcherModal({
     setCountry(detectBrowserCountry());
   }, [currentCountry]);
 
-  // Load saved prefs on mount
+  // Load saved prefs on mount — currency and country only. The highlighted
+  // language must follow the URL locale (currentLocale), never the stored
+  // preference: the stored value is the user's last pick, but the page they
+  // are on is the source of truth for "current language".
   useEffect(() => {
     const prefs = readLocalePrefs();
     if (prefs) {
-      setLocale(prefs.locale);
       setCurrency(prefs.currency);
       if (prefs.country) setCountry(prefs.country);
     }
   }, []);
+
+  // Keep the selected language in sync with the URL locale. Without this the
+  // modal keeps its first-render value after a client-side navigation changes
+  // the locale, so it can highlight a language the URL no longer shows.
+  useEffect(() => {
+    setLocale(currentLocale);
+  }, [currentLocale]);
 
   // Animate open/close
   useEffect(() => {
