@@ -5,6 +5,7 @@ import { Menu, X, User, LogOut, Building2, ChevronDown } from "lucide-react";
 import { cn } from "./utils";
 import { safeHref } from "./safeHref";
 import { ThemeToggle } from "./ThemeToggle";
+import { Lockup } from "./Lockup";
 
 export interface AppHeaderLabels {
   mainNav?: string;
@@ -155,15 +156,12 @@ export function AppHeader({
       )}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6 lg:px-8">
-        {/* Left: Logo */}
+        {/* Left: Logo — shared Lockup (icon + product name + MUSAKONTTORI eyebrow) */}
         <a
           href={safeHref(productHref)}
-          className="flex shrink-0 items-center gap-2 text-[var(--mk-palette-text-primary,#0F0F11)] dark:text-[var(--mk-palette-text-primary,#F0F0F3)] no-underline"
+          className="flex shrink-0 items-center no-underline"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[var(--mk-palette-bg-brand,#DC2626)] text-white text-xs font-bold">
-            {productName[0]}
-          </div>
-          <span className="text-lg font-semibold tracking-tight">{productName}</span>
+          <Lockup product={productName} variant="full" />
         </a>
 
         {/* Center: Nav (desktop) */}
