@@ -7,6 +7,7 @@ export interface CustomerSignInLabels {
     passwordPlaceholder: string;
     forgotPassword: string;
     signInEmail: string;
+    signingIn: string;
     sendMagicLink: string;
     continueGoogle: string;
     continueFacebook: string;

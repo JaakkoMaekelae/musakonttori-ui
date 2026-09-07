@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { cn } from './utils';
+import { Spinner } from './Spinner';
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                     */
@@ -21,6 +22,7 @@ export interface CustomerSignInLabels {
   passwordPlaceholder: string;
   forgotPassword: string;
   signInEmail: string;
+  signingIn: string;
   sendMagicLink: string;
   continueGoogle: string;
   continueFacebook: string;
@@ -77,6 +79,7 @@ const FORM_LABELS: Record<string, Required<CustomerSignInLabels>> = {
     passwordPlaceholder: 'Salasana',
     forgotPassword: 'Unohditko salasanan?',
     signInEmail: 'Kirjaudu sähköpostilla',
+    signingIn: 'Kirjaudutaan…',
     sendMagicLink: 'Lähetä taikalinkki',
     continueGoogle: 'Jatka Googlella',
     continueFacebook: 'Jatka Facebookilla',
@@ -96,6 +99,7 @@ const FORM_LABELS: Record<string, Required<CustomerSignInLabels>> = {
     passwordPlaceholder: 'Password',
     forgotPassword: 'Forgot password?',
     signInEmail: 'Sign in with Email',
+    signingIn: 'Signing in…',
     sendMagicLink: 'Send Magic Link',
     continueGoogle: 'Continue with Google',
     continueFacebook: 'Continue with Facebook',
@@ -115,6 +119,7 @@ const FORM_LABELS: Record<string, Required<CustomerSignInLabels>> = {
     passwordPlaceholder: 'Lösenord',
     forgotPassword: 'Glömt lösenordet?',
     signInEmail: 'Logga in med e-post',
+    signingIn: 'Loggar in…',
     sendMagicLink: 'Skicka magisk länk',
     continueGoogle: 'Fortsätt med Google',
     continueFacebook: 'Fortsätt med Facebook',
@@ -309,13 +314,20 @@ export function CustomerSignIn({
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold"
+              className="flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-opacity disabled:cursor-not-allowed disabled:opacity-70"
               style={{
                 background: `linear-gradient(135deg, ${primary}, color-mix(in srgb, ${primary} 60%, #7C3AED))`,
                 color: 'var(--mk-palette-on-accent, #FFFFFF)',
               }}
             >
-              {L.signInEmail}
+              {loading ? (
+                <>
+                  <Spinner size="sm" variant="white" />
+                  {L.signingIn}
+                </>
+              ) : (
+                L.signInEmail
+              )}
             </button>
 
             {hasMagic && (

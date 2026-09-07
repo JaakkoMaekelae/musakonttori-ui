@@ -2,6 +2,7 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useState } from 'react';
 import { cn } from './utils';
+import { Spinner } from './Spinner';
 /* -------------------------------------------------------------------------- */
 /*  Built-in strings (fi / en / sv)                                           */
 /* -------------------------------------------------------------------------- */
@@ -14,6 +15,7 @@ const FORM_LABELS = {
         passwordPlaceholder: 'Salasana',
         forgotPassword: 'Unohditko salasanan?',
         signInEmail: 'Kirjaudu sähköpostilla',
+        signingIn: 'Kirjaudutaan…',
         sendMagicLink: 'Lähetä taikalinkki',
         continueGoogle: 'Jatka Googlella',
         continueFacebook: 'Jatka Facebookilla',
@@ -33,6 +35,7 @@ const FORM_LABELS = {
         passwordPlaceholder: 'Password',
         forgotPassword: 'Forgot password?',
         signInEmail: 'Sign in with Email',
+        signingIn: 'Signing in…',
         sendMagicLink: 'Send Magic Link',
         continueGoogle: 'Continue with Google',
         continueFacebook: 'Continue with Facebook',
@@ -52,6 +55,7 @@ const FORM_LABELS = {
         passwordPlaceholder: 'Lösenord',
         forgotPassword: 'Glömt lösenordet?',
         signInEmail: 'Logga in med e-post',
+        signingIn: 'Loggar in…',
         sendMagicLink: 'Skicka magisk länk',
         continueGoogle: 'Fortsätt med Google',
         continueFacebook: 'Fortsätt med Facebook',
@@ -128,10 +132,10 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
                                 borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                                 background: 'var(--mk-palette-bg-surface, #242838)',
                                 color: 'var(--mk-palette-text-primary, #F0F0F3)',
-                            } }), resetHref && (_jsx("div", { className: "flex justify-end", children: _jsx("a", { href: resetHref, className: "text-sm", style: { color: 'var(--mk-palette-accent-primary, #BF2227)' }, children: L.forgotPassword }) })), _jsx("button", { type: "submit", disabled: loading, className: "flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold", style: {
+                            } }), resetHref && (_jsx("div", { className: "flex justify-end", children: _jsx("a", { href: resetHref, className: "text-sm", style: { color: 'var(--mk-palette-accent-primary, #BF2227)' }, children: L.forgotPassword }) })), _jsx("button", { type: "submit", disabled: loading, className: "flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-opacity disabled:cursor-not-allowed disabled:opacity-70", style: {
                                 background: `linear-gradient(135deg, ${primary}, color-mix(in srgb, ${primary} 60%, #7C3AED))`,
                                 color: 'var(--mk-palette-on-accent, #FFFFFF)',
-                            }, children: L.signInEmail }), hasMagic && (_jsxs(_Fragment, { children: [_jsxs("div", { className: "my-1 flex items-center gap-3", children: [_jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } }), _jsx("span", { className: "text-xs", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: L.or }), _jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } })] }), _jsx("button", { type: "button", disabled: loading, onClick: handleMagicLink, className: "rounded-xl border px-4 py-2 text-sm transition-colors", style: {
+                            }, children: loading ? (_jsxs(_Fragment, { children: [_jsx(Spinner, { size: "sm", variant: "white" }), L.signingIn] })) : (L.signInEmail) }), hasMagic && (_jsxs(_Fragment, { children: [_jsxs("div", { className: "my-1 flex items-center gap-3", children: [_jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } }), _jsx("span", { className: "text-xs", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: L.or }), _jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } })] }), _jsx("button", { type: "button", disabled: loading, onClick: handleMagicLink, className: "rounded-xl border px-4 py-2 text-sm transition-colors", style: {
                                         borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                                         color: 'var(--mk-palette-text-primary, #F0F0F3)',
                                     }, children: L.sendMagicLink })] })), error || errorMessage ? (_jsx("p", { role: "alert", className: "text-center text-sm", style: {
