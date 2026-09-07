@@ -224,6 +224,51 @@
       "default": "./dist/AdminLogStream.js",
       "types": "./dist/AdminLogStream.d.ts"
     },
+    "./bar-chart": {
+      "import": "./dist/BarChart.js",
+      "default": "./dist/BarChart.js",
+      "types": "./dist/BarChart.d.ts"
+    },
+    "./funnel-chart": {
+      "import": "./dist/FunnelChart.js",
+      "default": "./dist/FunnelChart.js",
+      "types": "./dist/FunnelChart.d.ts"
+    },
+    "./health-meter": {
+      "import": "./dist/HealthMeter.js",
+      "default": "./dist/HealthMeter.js",
+      "types": "./dist/HealthMeter.d.ts"
+    },
+    "./activity-feed": {
+      "import": "./dist/ActivityFeed.js",
+      "default": "./dist/ActivityFeed.js",
+      "types": "./dist/ActivityFeed.d.ts"
+    },
+    "./quick-tile": {
+      "import": "./dist/QuickTile.js",
+      "default": "./dist/QuickTile.js",
+      "types": "./dist/QuickTile.d.ts"
+    },
+    "./market-admin": {
+      "import": "./dist/MarketAdmin.js",
+      "default": "./dist/MarketAdmin.js",
+      "types": "./dist/MarketAdmin.d.ts"
+    },
+    "./soundlaunch-admin": {
+      "import": "./dist/SoundLaunchAdmin.js",
+      "default": "./dist/SoundLaunchAdmin.js",
+      "types": "./dist/SoundLaunchAdmin.d.ts"
+    },
+    "./stageflow-admin": {
+      "import": "./dist/StageflowAdmin.js",
+      "default": "./dist/StageflowAdmin.js",
+      "types": "./dist/StageflowAdmin.d.ts"
+    },
+    "./ticketing-admin": {
+      "import": "./dist/TicketingAdmin.js",
+      "default": "./dist/TicketingAdmin.js",
+      "types": "./dist/TicketingAdmin.d.ts"
+    },
     "./sign-in-layout": {
       "import": "./dist/SignInLayout.js",
       "default": "./dist/SignInLayout.js",
