@@ -38,13 +38,17 @@ export const OPEN_LOCALE_MODAL_EVENT = "mk-open-locale-modal";
 const TRIGGER_CSS = `
 [data-mk-switcher="language"][data-mk-switcher] {
   box-sizing: border-box;
-  padding: 0.375rem 0.75rem;
-  border-radius: 9999px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   border: 1px solid var(--mk-palette-border-subtle, rgba(128,128,128,0.18));
   background: transparent;
   color: var(--mk-palette-text-secondary, #5F6068);
   cursor: pointer;
-  line-height: 1.25rem;
+  padding: 0;
 }
 [data-mk-switcher="language"][data-mk-switcher]:hover {
   border-color: var(--mk-palette-border-default, rgba(128,128,128,0.32));
@@ -55,7 +59,7 @@ const TRIGGER_CSS = `
   box-shadow: 0 0 0 2px var(--mk-palette-primary-ring, rgba(191,34,39,0.3));
 }
 [data-mk-switcher="language"] .mk-locale-trigger-flag {
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: 1;
 }
 `;
