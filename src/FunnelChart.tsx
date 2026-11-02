@@ -44,7 +44,7 @@ export function FunnelChart({
               height: `${Math.max(2, step.height)}px`,
               width: `${Math.max(20, Math.min(100, step.width))}%`,
               background:
-                "linear-gradient(180deg, var(--mk-palette-accent-primary,#F44242), var(--mk-brand-red-deep,#650506))",
+                "linear-gradient(180deg, var(--mk-palette-accent-primary,#C9252D), var(--mk-brand-red-deep,#720D0D))",
             }}
           />
           <span className="text-xs font-semibold text-[var(--mk-palette-text-primary,#F0F0F3)]">

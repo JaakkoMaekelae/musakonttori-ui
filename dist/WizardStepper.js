@@ -11,7 +11,7 @@ import { cn } from "./utils";
  */
 const STATE = {
     complete: { glyph: "✓", word: "valmis", tone: "var(--mk-status-success, #10B981)" },
-    current: { glyph: "●", word: "nykyinen", tone: "var(--mk-palette-accent-primary, #F44242)" },
+    current: { glyph: "●", word: "nykyinen", tone: "var(--mk-palette-accent-primary, #C9252D)" },
     hasErrors: { glyph: "!", word: "sisältää virheitä", tone: "var(--mk-status-error, #EF4444)" },
     inProgress: { glyph: "◐", word: "kesken", tone: "var(--mk-status-warning, #F59E0B)" },
     optional: { glyph: "○", word: "valinnainen", tone: "var(--mk-palette-text-tertiary, #7E8292)" },
@@ -36,8 +36,8 @@ export function WizardStepper({ steps, label, className, stateLabels }) {
                 const interactive = step.state !== "locked" && (step.href || step.onSelect);
                 const accessibleName = `${step.label} — ${word}${step.hint ? `, ${step.hint}` : ""}`;
                 const inner = (_jsxs(_Fragment, { children: [_jsx("span", { "aria-hidden": "true", className: "w-4 shrink-0 text-center text-[0.75rem] leading-none", style: { color: meta.tone }, children: meta.glyph }), _jsx("span", { className: cn("truncate", step.state === "current" && "font-semibold", step.state === "skipped" && "line-through"), children: step.label }), step.hint && (_jsx("span", { className: "ml-auto shrink-0 truncate text-[0.625rem] text-[var(--mk-palette-text-tertiary,#7E8292)]", children: step.hint })), _jsxs("span", { className: "sr-only", children: ["\u2014 ", word] })] }));
-                const classes = cn("flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#F44242)]", step.state === "current"
-                    ? "bg-[var(--mk-palette-accent-soft,rgba(244,66,66,0.16))] text-[var(--mk-palette-accent-primary,#F44242)]"
+                const classes = cn("flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#C9252D)]", step.state === "current"
+                    ? "bg-[var(--mk-palette-accent-soft,rgba(201,37,45,0.16))] text-[var(--mk-palette-accent-primary,#C9252D)]"
                     : meta.muted
                         ? "text-[var(--mk-palette-text-tertiary,#7E8292)]"
                         : "text-[var(--mk-palette-text-secondary,#B0B3C1)]", interactive &&

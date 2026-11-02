@@ -100,7 +100,7 @@ export function AdminLogStream({
                   type="button"
                   onClick={() => toggle(entry.id)}
                   aria-expanded={isOpen}
-                  className="flex w-full items-baseline gap-2.5 px-3 py-1.5 text-left transition-colors hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--mk-palette-accent-primary,#F44242)]"
+                  className="flex w-full items-baseline gap-2.5 px-3 py-1.5 text-left transition-colors hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--mk-palette-accent-primary,#C9252D)]"
                 >
                   <Row entry={entry} meta={meta} caret={isOpen ? "▾" : "▸"} />
                 </button>

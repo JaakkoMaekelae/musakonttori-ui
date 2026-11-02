@@ -74,9 +74,9 @@ export function AdminNav({
                     onClick={item.onSelect}
                     className={cn(
                       "flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#F44242)]",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#C9252D)]",
                       active
-                        ? "bg-[var(--mk-palette-accent-soft,rgba(244,66,66,0.16))] font-semibold text-[var(--mk-palette-accent-primary,#F44242)]"
+                        ? "bg-[var(--mk-palette-accent-soft,rgba(201,37,45,0.16))] font-semibold text-[var(--mk-palette-accent-primary,#C9252D)]"
                         : "text-[var(--mk-palette-text-secondary,#B0B3C1)] hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)] hover:text-[var(--mk-palette-text-primary,#F0F0F3)]",
                       "[&_svg]:size-3.5 [&_svg]:shrink-0",
                     )}
@@ -88,7 +88,7 @@ export function AdminNav({
                         className={cn(
                           "ml-auto shrink-0 font-[var(--mk-font-mono)] text-[0.6875rem] tabular-nums",
                           item.urgent
-                            ? "rounded-full bg-[var(--mk-palette-accent-primary,#F44242)] px-1.5 py-px font-semibold text-white"
+                            ? "rounded-full bg-[var(--mk-palette-accent-primary,#C9252D)] px-1.5 py-px font-semibold text-white"
                             : "text-[var(--mk-palette-text-tertiary,#7E8292)]",
                         )}
                       >

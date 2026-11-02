@@ -50,7 +50,7 @@ export const DialogContent = forwardRef<React.ElementRef<typeof DialogPrimitive.
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-[var(--mk-palette-bg-surface,#1E2130)] transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-bg-brand,#DC2626)] focus:ring-offset-2 disabled:pointer-events-none">
+        <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-[var(--mk-palette-bg-surface,#1E2130)] transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-bg-brand,#C9252D)] focus:ring-offset-2 disabled:pointer-events-none">
           <X className="h-4 w-4 text-[var(--mk-palette-text-secondary,#B0B3C1)]" />
           <span className="sr-only">{closeLabel}</span>
         </DialogPrimitive.Close>
@@ -121,7 +121,7 @@ export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
     >
       {children}
       {showCloseButton && (
-        <DialogPrimitive.Close className="rounded-sm opacity-70 ring-offset-[var(--mk-palette-bg-surface,#1E2130)] transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-bg-brand,#DC2626)] focus:ring-offset-2 disabled:pointer-events-none">
+        <DialogPrimitive.Close className="rounded-sm opacity-70 ring-offset-[var(--mk-palette-bg-surface,#1E2130)] transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-bg-brand,#C9252D)] focus:ring-offset-2 disabled:pointer-events-none">
           <X className="h-4 w-4 text-[var(--mk-palette-text-secondary,#B0B3C1)]" />
           <span className="sr-only">{closeLabel}</span>
         </DialogPrimitive.Close>

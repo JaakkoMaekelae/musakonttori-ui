@@ -56,7 +56,7 @@ export function AdminRail({
         className="flex size-7 shrink-0 items-center justify-center rounded-lg text-[0.8125rem] font-extrabold italic tracking-[-0.04em] text-white"
         style={{
           background: gradient ?? "var(--mk-brand-gradient)",
-          boxShadow: "0 4px 12px rgba(191,34,39,0.32)",
+          boxShadow: "0 4px 12px rgba(201,37,45,0.32)",
         }}
       >
         {initial}
@@ -77,9 +77,9 @@ export function AdminRail({
                 onClick={m.onSelect}
                 className={cn(
                   "flex size-7 items-center justify-center rounded-[7px] transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#F44242)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F1117]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#C9252D)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F1117]",
                   active
-                    ? "bg-[var(--mk-palette-accent-soft,rgba(244,66,66,0.16))] text-[var(--mk-palette-accent-primary,#F44242)] ring-1 ring-[var(--mk-palette-accent-primary,#F44242)]/45"
+                    ? "bg-[var(--mk-palette-accent-soft,rgba(201,37,45,0.16))] text-[var(--mk-palette-accent-primary,#C9252D)] ring-1 ring-[var(--mk-palette-accent-primary,#C9252D)]/45"
                     : "text-white/55 hover:bg-white/10 hover:text-white",
                   "[&_svg]:size-4",
                 )}
@@ -89,7 +89,7 @@ export function AdminRail({
               {m.badge != null && m.badge > 0 && (
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute -right-0.5 -top-0.5 size-2 rounded-full bg-[var(--mk-palette-accent-primary,#F44242)] ring-2 ring-[#0F1117]"
+                  className="pointer-events-none absolute -right-0.5 -top-0.5 size-2 rounded-full bg-[var(--mk-palette-accent-primary,#C9252D)] ring-2 ring-[#0F1117]"
                 />
               )}
             </li>

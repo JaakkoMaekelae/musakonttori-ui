@@ -7,7 +7,7 @@ import { cn } from "./utils";
  * lockup's structure and pass their own accent instead. Everyone else should
  * leave this alone; that is the point of a shared lockup.
  */
-const BRAND_ACCENT = ["#BF2227", "#E11D48"];
+const BRAND_ACCENT = ["#C9252D", "#720D0D"];
 /**
  * The Musakonttori lockup: icon, product name, MUSAKONTTORI.
  *
@@ -30,7 +30,7 @@ export function Lockup({ product, initial, accent = BRAND_ACCENT, variant = "ful
                     flex: "0 0 auto",
                     borderRadius: 10,
                     background: `linear-gradient(135deg, ${accent[0]}, ${accent[1]})`,
-                    boxShadow: "0 4px 12px rgba(191,34,39,0.32)",
+                    boxShadow: "0 4px 12px rgba(201,37,45,0.32)",
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",

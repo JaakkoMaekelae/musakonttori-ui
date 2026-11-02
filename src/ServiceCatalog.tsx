@@ -326,7 +326,7 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false, excludeKe
                   {isFi ? svc.taglineFi : svc.taglineEn}
                 </p>
 
-                <p className="text-sm font-semibold text-[var(--mk-palette-primary,#BF2227)] mb-4">
+                <p className="text-sm font-semibold text-[var(--mk-palette-primary,#C9252D)] mb-4">
                   {isFi ? svc.pricingSummaryFi : svc.pricingSummaryEn}
                 </p>
 
@@ -363,7 +363,7 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false, excludeKe
                       href={href}
                       target={href.startsWith("http") ? "_blank" : undefined}
                       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--mk-palette-primary,#BF2227)] text-white px-6 py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--mk-palette-primary,#C9252D)] text-white px-6 py-2.5 text-sm font-semibold hover:opacity-90 transition-opacity"
                     >
                       {isFi ? svc.ctaLabelFi : svc.ctaLabelEn}
                       {href.startsWith("http") ? (
@@ -396,12 +396,12 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false, excludeKe
                   key={pkg.count}
                   className={`rounded-2xl border p-6 text-center transition-shadow hover:shadow-md ${
                     pkg.highlighted
-                      ? "border-[var(--mk-palette-primary,#BF2227)] bg-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.04))] ring-1 ring-[var(--mk-palette-primary,#BF2227)]/20"
+                      ? "border-[var(--mk-palette-primary,#C9252D)] bg-[var(--mk-palette-primary-subtle,rgba(201,37,45,0.04))] ring-1 ring-[var(--mk-palette-primary,#C9252D)]/20"
                       : "border-gray-200 bg-white"
                   }`}
                 >
                   {pkg.highlighted && (
-                    <span className="inline-block mb-2 rounded-full bg-[var(--mk-palette-primary,#BF2227)] text-white text-xs font-bold px-3 py-0.5">
+                    <span className="inline-block mb-2 rounded-full bg-[var(--mk-palette-primary,#C9252D)] text-white text-xs font-bold px-3 py-0.5">
                       {isFi ? "Suosituin" : "Most Popular"}
                     </span>
                   )}
@@ -426,7 +426,7 @@ export function ServiceCatalog({ locale = "fi", hideFooterCta = false, excludeKe
             </div>
 
             {/* CTA */}
-            <div className="text-center p-8 rounded-2xl bg-gradient-to-r from-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.06))] to-transparent border border-gray-100">
+            <div className="text-center p-8 rounded-2xl bg-gradient-to-r from-[var(--mk-palette-primary-subtle,rgba(201,37,45,0.06))] to-transparent border border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-2">
                 {isFi ? "Haluatko useamman palvelun?" : "Want multiple services?"}
               </h3>

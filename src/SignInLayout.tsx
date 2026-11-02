@@ -140,7 +140,7 @@ function BrandMark() {
   return (
     <div
       className="relative grid h-[42px] w-[42px] place-items-center"
-      style={{ background: "var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))" }}
+      style={{ background: "var(--mk-palette-accent-primary, var(--mk-brand-red, #C9252D))" }}
       aria-hidden="true"
     >
       <span
@@ -292,9 +292,9 @@ export function SignInLayout({
   }
 
   /* ---- Token shorthands (with fallbacks for consumers that don't load every token) ---- */
-  const primary = "var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))";
-  const primaryGlow = "var(--mk-palette-primary-glow, rgba(191,34,39,0.3))";
-  const primarySubtle = "var(--mk-palette-accent-soft, rgba(191,34,39,0.12))";
+  const primary = "var(--mk-palette-accent-primary, var(--mk-brand-red, #C9252D))";
+  const primaryGlow = "var(--mk-palette-primary-glow, rgba(201,37,45,0.3))";
+  const primarySubtle = "var(--mk-palette-accent-soft, rgba(201,37,45,0.12))";
   const errorColor = "var(--mk-status-error, #EF4444)";
   const errorSubtle = "var(--mk-palette-error-subtle, rgba(239,68,68,0.08))";
 
@@ -410,7 +410,7 @@ export function SignInLayout({
             <div className="flex items-center gap-3">
               <span
                 className="grid h-[38px] w-[38px] place-items-center text-[#e9878a]"
-                style={{ background: "rgba(220,38,38,0.13)" }}
+                style={{ background: "rgba(201,37,45,0.13)" }}
               >
                 <SuccessCheckIcon />
               </span>
@@ -657,7 +657,7 @@ export function SignInLayout({
                 }}
                 onMouseEnter={(e) => {
                   if (!isPending) {
-                    e.currentTarget.style.background = "var(--mk-palette-accent-hover, #A51E23)";
+                    e.currentTarget.style.background = "var(--mk-palette-accent-hover, #981F20)";
                   }
                 }}
                 onMouseLeave={(e) => {

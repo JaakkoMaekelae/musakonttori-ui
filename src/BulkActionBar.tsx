@@ -48,7 +48,7 @@ export function BulkActionBar({
   return (
     <div
       className={cn(
-        "fixed bottom-4 left-[50%] translate-x-[-50%] z-50 flex items-center gap-3 rounded-lg border border-[var(--mk-palette-border-brand,rgba(220,38,38,0.2))] bg-[var(--mk-palette-bg-surface-elevated,#FFFFFF)] px-4 py-3 shadow-lg animate-in slide-in-from-bottom-2",
+        "fixed bottom-4 left-[50%] translate-x-[-50%] z-50 flex items-center gap-3 rounded-lg border border-[var(--mk-palette-border-brand,rgba(201,37,45,0.2))] bg-[var(--mk-palette-bg-surface-elevated,#FFFFFF)] px-4 py-3 shadow-lg animate-in slide-in-from-bottom-2",
         className,
       )}
     >

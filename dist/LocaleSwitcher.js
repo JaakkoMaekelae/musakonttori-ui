@@ -56,7 +56,7 @@ const TRIGGER_CSS = `
 }
 [data-mk-switcher="language"][data-mk-switcher]:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--mk-palette-primary-ring, rgba(191,34,39,0.3));
+  box-shadow: 0 0 0 2px var(--mk-palette-primary-ring, rgba(201,37,45,0.3));
 }
 [data-mk-switcher="language"] .mk-locale-trigger-flag {
   font-size: 1.25rem;

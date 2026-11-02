@@ -36,7 +36,7 @@ export function SkipLink({
     <a
       href={`#${targetId}`}
       onClick={handleClick}
-      className={`sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:rounded-lg focus:bg-[var(--mk-palette-bg-brand,#DC2626)] focus:px-4 focus:py-2 focus:text-white focus:text-sm focus:font-medium focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-primary,#BF2227)] focus:ring-offset-2 ${className}`}
+      className={`sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:rounded-lg focus:bg-[var(--mk-palette-bg-brand,#C9252D)] focus:px-4 focus:py-2 focus:text-white focus:text-sm focus:font-medium focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-primary,#C9252D)] focus:ring-offset-2 ${className}`}
     >
       {label}
     </a>

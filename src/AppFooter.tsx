@@ -43,7 +43,7 @@ export function AppFooter({
               href={safeHref("/")}
               className="inline-flex items-center gap-2 no-underline"
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[var(--mk-palette-bg-brand,#DC2626)] text-white text-xs font-bold">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[var(--mk-palette-bg-brand,#C9252D)] text-white text-xs font-bold">
                 {productName[0]}
               </div>
               <span className="text-lg font-semibold text-white">{productName}</span>

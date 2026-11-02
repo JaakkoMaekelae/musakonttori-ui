@@ -7,7 +7,7 @@ const chipVariants = cva([
     "inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap border font-medium",
     "transition-[background-color,border-color,color,box-shadow]",
     "focus-visible:outline-none focus-visible:ring-2",
-    "focus-visible:ring-[var(--mk-palette-accent-primary,#DC2626)]",
+    "focus-visible:ring-[var(--mk-palette-accent-primary,#C9252D)]",
     "focus-visible:ring-offset-2",
     "focus-visible:ring-offset-[var(--mk-palette-bg-canvas,#FAFAFA)]",
     "disabled:pointer-events-none disabled:opacity-45",
@@ -15,10 +15,10 @@ const chipVariants = cva([
     variants: {
         variant: {
             neutral: "border-[var(--mk-palette-border-default,#D4D4D8)] bg-[var(--mk-palette-bg-surface,#FFFFFF)] text-[var(--mk-palette-text-secondary,#52525B)] hover:border-[var(--mk-palette-border-hover,#A1A1AA)] hover:bg-[var(--mk-palette-bg-surface-hover,#F4F4F5)] hover:text-[var(--mk-palette-text-primary,#0F0F11)]",
-            brand: "border-[var(--mk-palette-accent-primary,#DC2626)]/25 bg-[var(--mk-palette-accent-soft,rgba(220,38,38,0.10))] text-[var(--mk-palette-accent-primary,#DC2626)] hover:border-[var(--mk-palette-accent-primary,#DC2626)]/45",
+            brand: "border-[var(--mk-palette-accent-primary,#C9252D)]/25 bg-[var(--mk-palette-accent-soft,rgba(201,37,45,0.10))] text-[var(--mk-palette-accent-primary,#C9252D)] hover:border-[var(--mk-palette-accent-primary,#C9252D)]/45",
             success: "border-[var(--mk-status-success,#10B981)]/30 bg-[var(--mk-status-success,#10B981)]/10 text-[var(--mk-status-success,#059669)]",
             warning: "border-[var(--mk-status-warning,#F59E0B)]/30 bg-[var(--mk-status-warning,#F59E0B)]/10 text-[var(--mk-status-warning,#B45309)]",
-            error: "border-[var(--mk-status-error,#EF4444)]/30 bg-[var(--mk-status-error,#EF4444)]/10 text-[var(--mk-status-error,#DC2626)]",
+            error: "border-[var(--mk-status-error,#EF4444)]/30 bg-[var(--mk-status-error,#EF4444)]/10 text-[var(--mk-status-error,#C9252D)]",
             info: "border-[var(--mk-status-info,#3B82F6)]/30 bg-[var(--mk-status-info,#3B82F6)]/10 text-[var(--mk-status-info,#2563EB)]",
         },
         size: {
@@ -26,7 +26,7 @@ const chipVariants = cva([
             md: "min-h-9 rounded-xl px-3 py-1.5 text-sm",
         },
         selected: {
-            true: "border-[var(--mk-palette-accent-primary,#DC2626)] bg-[var(--mk-palette-accent-primary,#DC2626)] text-white shadow-sm hover:border-[var(--mk-palette-bg-brand-hover,#BF2227)] hover:bg-[var(--mk-palette-bg-brand-hover,#BF2227)] hover:text-white",
+            true: "border-[var(--mk-palette-accent-primary,#C9252D)] bg-[var(--mk-palette-accent-primary,#C9252D)] text-white shadow-sm hover:border-[var(--mk-palette-bg-brand-hover,#C9252D)] hover:bg-[var(--mk-palette-bg-brand-hover,#C9252D)] hover:text-white",
             false: "",
         },
     },

@@ -235,7 +235,7 @@ export function CustomerRegister({
     step === 'account' ? 0 : step === 'organization' ? 1 : requiresOrg ? 2 : 1;
 
   const primary =
-    'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';
+    'var(--mk-palette-accent-primary, var(--mk-brand-red, #C9252D))';
 
   function handleRegister(e: React.FormEvent) {
     e.preventDefault();
@@ -288,7 +288,7 @@ export function CustomerRegister({
       className={cn('flex min-h-svh items-center justify-center px-4', className)}
       style={{
         background:
-          'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #BF2227) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
+          'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #C9252D) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
       }}
     >
       <div
@@ -644,7 +644,7 @@ function SubmitButton({
   disabled?: boolean;
 }) {
   const primary =
-    'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';
+    'var(--mk-palette-accent-primary, var(--mk-brand-red, #C9252D))';
   return (
     <button
       type="submit"

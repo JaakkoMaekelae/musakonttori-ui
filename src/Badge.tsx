@@ -52,7 +52,7 @@ const badgeVariants = cva(
         error: "bg-red-500/10 text-red-400 border-red-500/20",
         info: "bg-blue-500/10 text-blue-400 border-blue-500/20",
         brand:
-          "bg-[var(--mk-palette-bg-brand,#DC2626)]/10 text-[var(--mk-palette-bg-brand,#DC2626)] border-[var(--mk-palette-bg-brand,#DC2626)]/20",
+          "bg-[var(--mk-palette-bg-brand,#C9252D)]/10 text-[var(--mk-palette-bg-brand,#C9252D)] border-[var(--mk-palette-bg-brand,#C9252D)]/20",
         red: "bg-red-500/20 text-red-400 border-red-500/40",
         purple: "bg-purple-500/20 text-purple-400 border-purple-500/40",
         blue: "bg-blue-500/20 text-blue-400 border-blue-500/40",
@@ -64,7 +64,7 @@ const badgeVariants = cva(
         default:
           "bg-[var(--mk-palette-bg-surface,#1E2130)] text-[var(--mk-palette-text-secondary,#B0B3C1)] border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.06))]",
         primary:
-          "bg-[var(--mk-palette-bg-brand,#DC2626)]/10 text-[var(--mk-palette-bg-brand,#DC2626)] border-[var(--mk-palette-bg-brand,#DC2626)]/20",
+          "bg-[var(--mk-palette-bg-brand,#C9252D)]/10 text-[var(--mk-palette-bg-brand,#C9252D)] border-[var(--mk-palette-bg-brand,#C9252D)]/20",
         secondary: "bg-gray-500/20 text-gray-400 border-gray-500/40",
         destructive: "bg-red-500/10 text-red-400 border-red-500/20",
         outline:
@@ -99,9 +99,9 @@ const LIGHT_SURFACE: Record<string, string> = {
   info: "bg-blue-100 text-blue-700 border-blue-200",
   blue: "bg-blue-100 text-blue-700 border-blue-200",
   brand:
-    "bg-[var(--mk-palette-accent-primary,#DC2626)]/10 text-[var(--mk-palette-accent-primary,#DC2626)] border-[var(--mk-palette-accent-primary,#DC2626)]/25",
+    "bg-[var(--mk-palette-accent-primary,#C9252D)]/10 text-[var(--mk-palette-accent-primary,#C9252D)] border-[var(--mk-palette-accent-primary,#C9252D)]/25",
   primary:
-    "bg-[var(--mk-palette-accent-primary,#DC2626)]/10 text-[var(--mk-palette-accent-primary,#DC2626)] border-[var(--mk-palette-accent-primary,#DC2626)]/25",
+    "bg-[var(--mk-palette-accent-primary,#C9252D)]/10 text-[var(--mk-palette-accent-primary,#C9252D)] border-[var(--mk-palette-accent-primary,#C9252D)]/25",
   purple: "bg-purple-100 text-purple-700 border-purple-200",
   green: "bg-green-100 text-green-700 border-green-200",
   orange: "bg-orange-100 text-orange-800 border-orange-200",
@@ -155,7 +155,7 @@ function getDotColor(variant: BadgeVariant): string {
       return "bg-blue-500";
     case "brand":
     case "primary":
-      return "bg-[var(--mk-palette-bg-brand,#DC2626)]";
+      return "bg-[var(--mk-palette-bg-brand,#C9252D)]";
     case "purple":
       return "bg-purple-500";
     case "pink":

@@ -94,7 +94,7 @@ export function AdminDetailPanel({
                 type="button"
                 onClick={onToggleExpand}
                 aria-expanded={expanded}
-                className="rounded-lg border border-[var(--mk-palette-border-default,rgba(255,255,255,0.14))] px-2.5 py-1 text-[0.6875rem] font-medium text-[var(--mk-palette-text-primary,#F0F0F3)] transition-colors hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#F44242)]"
+                className="rounded-lg border border-[var(--mk-palette-border-default,rgba(255,255,255,0.14))] px-2.5 py-1 text-[0.6875rem] font-medium text-[var(--mk-palette-text-primary,#F0F0F3)] transition-colors hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#C9252D)]"
               >
                 {expanded ? collapseLabel : expandLabel}
               </button>
@@ -104,7 +104,7 @@ export function AdminDetailPanel({
                 type="button"
                 onClick={onClose}
                 aria-label={closeLabel}
-                className="rounded-lg p-1 text-[var(--mk-palette-text-tertiary,#7E8292)] transition-colors hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)] hover:text-[var(--mk-palette-text-primary,#F0F0F3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#F44242)]"
+                className="rounded-lg p-1 text-[var(--mk-palette-text-tertiary,#7E8292)] transition-colors hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)] hover:text-[var(--mk-palette-text-primary,#F0F0F3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#C9252D)]"
               >
                 <svg viewBox="0 0 20 20" fill="none" className="size-4" aria-hidden="true">
                   <path
@@ -138,9 +138,9 @@ export function AdminDetailPanel({
                 onClick={tab.onSelect}
                 className={cn(
                   "-mb-px border-b-2 px-2.5 py-2 text-xs transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#F44242)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#C9252D)]",
                   active
-                    ? "border-[var(--mk-palette-accent-primary,#F44242)] font-semibold text-[var(--mk-palette-accent-primary,#F44242)]"
+                    ? "border-[var(--mk-palette-accent-primary,#C9252D)] font-semibold text-[var(--mk-palette-accent-primary,#C9252D)]"
                     : "border-transparent text-[var(--mk-palette-text-secondary,#B0B3C1)] hover:text-[var(--mk-palette-text-primary,#F0F0F3)]",
                 )}
               >

@@ -505,7 +505,7 @@ export function LocaleSwitcherModal({
 
   // Selected/unselected class strings (theme-aware via CSS variable fallbacks)
   const selectedClass = cn(
-    "border-[var(--mk-palette-primary,#BF2227)] bg-[var(--mk-palette-primary-subtle,rgba(191,34,39,0.08))] ring-1 ring-[var(--mk-palette-primary-ring,rgba(191,34,39,0.3))]"
+    "border-[var(--mk-palette-primary,#C9252D)] bg-[var(--mk-palette-primary-subtle,rgba(201,37,45,0.08))] ring-1 ring-[var(--mk-palette-primary-ring,rgba(201,37,45,0.3))]"
   );
   const unselectedClass = cn(
     "border-[var(--mk-palette-border-subtle,rgba(128,128,128,0.12))] bg-[var(--mk-palette-bg-surface-secondary,#F4F4F5)]"
@@ -567,9 +567,9 @@ export function LocaleSwitcherModal({
         <div className="flex items-center gap-3 mb-6">
           <div
             className="flex h-10 w-10 items-center justify-center rounded-xl"
-            style={{ background: `var(--mk-palette-primary-subtle, rgba(191,34,39,0.08))` } as React.CSSProperties}
+            style={{ background: `var(--mk-palette-primary-subtle, rgba(201,37,45,0.08))` } as React.CSSProperties}
           >
-            <Globe className="h-5 w-5" style={{ color: `var(--mk-palette-primary, #BF2227)` } as React.CSSProperties} />
+            <Globe className="h-5 w-5" style={{ color: `var(--mk-palette-primary, #C9252D)` } as React.CSSProperties} />
           </div>
           <div>
             <h2 className="text-lg font-bold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>{l.title}</h2>
@@ -628,7 +628,7 @@ export function LocaleSwitcherModal({
                   <div className="flex w-full items-center justify-between">
                     <span className="text-2xl">{lang.flag}</span>
                     {locale === code && (
-                      <Check className="h-4 w-4 shrink-0" style={{ color: `var(--mk-palette-primary, #BF2227)` }} />
+                      <Check className="h-4 w-4 shrink-0" style={{ color: `var(--mk-palette-primary, #C9252D)` }} />
                     )}
                   </div>
                   <span className="mt-1 text-sm font-semibold" style={{ color: `var(--mk-palette-text-primary, #111113)` }}>
@@ -671,7 +671,7 @@ export function LocaleSwitcherModal({
                         <span className="text-xs">{cur.flag}</span>
                       </div>
                       {currency === code && (
-                        <Check className="h-4 w-4 shrink-0" style={{ color: `var(--mk-palette-primary, #BF2227)` }} />
+                        <Check className="h-4 w-4 shrink-0" style={{ color: `var(--mk-palette-primary, #C9252D)` }} />
                       )}
                     </button>
                   );

@@ -123,7 +123,7 @@ export function CookieConsentBanner({ privacyHref, locale, labels }) {
           width: 34px;
           height: 34px;
           border-radius: 8px;
-          background: #f44242;
+          background: #C9252D;
           color: #ffffff;
           font-size: 11px;
           font-weight: 800;
@@ -176,11 +176,11 @@ export function CookieConsentBanner({ privacyHref, locale, labels }) {
         }
         .mk-cookie-button:focus-visible,
         .mk-cookie-link:focus-visible {
-          outline: 2px solid #f44242;
+          outline: 2px solid #C9252D;
           outline-offset: 3px;
         }
         .mk-cookie-primary {
-          background: #f44242;
+          background: #C9252D;
           color: #ffffff;
         }
         .mk-cookie-primary:hover {

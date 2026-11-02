@@ -36,7 +36,7 @@ const avatarVariants = cva(
       tone: {
         neutral: "",
         brand:
-          "border-[var(--mk-palette-accent-primary,#DC2626)]/20 bg-[var(--mk-palette-accent-soft,rgba(220,38,38,0.10))] text-[var(--mk-palette-accent-primary,#DC2626)]",
+          "border-[var(--mk-palette-accent-primary,#C9252D)]/20 bg-[var(--mk-palette-accent-soft,rgba(201,37,45,0.10))] text-[var(--mk-palette-accent-primary,#C9252D)]",
       },
     },
     defaultVariants: {

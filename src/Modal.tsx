@@ -142,7 +142,7 @@ export function Modal({
             <button
               data-modal-close
               onClick={onClose}
-              className="rounded-lg p-1 text-[var(--mk-palette-text-secondary,#B0B3C1)] transition-colors hover:bg-[var(--mk-palette-bg-surface,#1E2130)] hover:text-[var(--mk-palette-text-primary,#F0F0F3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-bg-brand,#DC2626)]"
+              className="rounded-lg p-1 text-[var(--mk-palette-text-secondary,#B0B3C1)] transition-colors hover:bg-[var(--mk-palette-bg-surface,#1E2130)] hover:text-[var(--mk-palette-text-primary,#F0F0F3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-bg-brand,#C9252D)]"
               aria-label={closeLabel}
             >
               <svg

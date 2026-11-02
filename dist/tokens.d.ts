@@ -17,11 +17,11 @@
  */
 export declare const brand: {
     /** Identity red — logo, lockup gradient start. */
-    readonly red: "#BF2227";
-    readonly redDark: "#A51E23";
-    readonly redDeep: "#650506";
+    readonly red: "#C9252D";
+    readonly redDark: "#981F20";
+    readonly redDeep: "#720D0D";
     /** Lockup gradient end. */
-    readonly rose: "#E11D48";
+    readonly rose: "#720D0D";
 };
 export declare const status: {
     readonly success: "#10B981";
@@ -82,7 +82,8 @@ export declare const radius: {
 };
 export declare const type: {
     readonly family: {
-        readonly sans: "\"Inter Variable\", Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif";
+        readonly sans: "\"Manrope\", Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif";
+        readonly display: "\"Sora\", sans-serif";
         /** Numbers, identifiers, money. Always with tabular-nums. */
         readonly mono: "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, monospace";
     };
@@ -124,11 +125,11 @@ export declare function tokensCss(): string;
 export declare const tokens: {
     readonly brand: {
         /** Identity red — logo, lockup gradient start. */
-        readonly red: "#BF2227";
-        readonly redDark: "#A51E23";
-        readonly redDeep: "#650506";
+        readonly red: "#C9252D";
+        readonly redDark: "#981F20";
+        readonly redDeep: "#720D0D";
         /** Lockup gradient end. */
-        readonly rose: "#E11D48";
+        readonly rose: "#720D0D";
     };
     readonly status: {
         readonly success: "#10B981";
@@ -162,7 +163,7 @@ export declare const tokens: {
     };
     readonly type: {
         readonly family: {
-            readonly sans: "\"Inter Variable\", Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif";
+        readonly sans: "\"Manrope\", Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif";
             /** Numbers, identifiers, money. Always with tabular-nums. */
             readonly mono: "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, monospace";
         };

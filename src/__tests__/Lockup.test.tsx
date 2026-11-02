@@ -29,7 +29,7 @@ describe("Lockup", () => {
     // jsdom normalises hex to rgb(); #7C3AED is rgb(124, 58, 237).
     expect(mark.style.background).toContain("rgb(124, 58, 237)");
     // and it must not have fallen back to the brand red
-    expect(mark.style.background).not.toContain("rgb(191, 34, 39)");
+    expect(mark.style.background).not.toContain("rgb(201, 37, 45)");
   });
 
   it("drops the eyebrow when compact, and the text entirely when mark", () => {

@@ -91,7 +91,7 @@ export function EmptyState({
             (action as EmptyStateAction).href ? (
               <a
                 href={(action as EmptyStateAction).href}
-                className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-semibold transition-colors bg-[var(--mk-palette-bg-brand,#DC2626)] text-white hover:bg-[var(--mk-palette-bg-brand-hover,#B91C1C)]"
+                className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-semibold transition-colors bg-[var(--mk-palette-bg-brand,#C9252D)] text-white hover:bg-[var(--mk-palette-bg-brand-hover,#B91C1C)]"
               >
                 {(action as EmptyStateAction).label}
               </a>

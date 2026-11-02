@@ -123,7 +123,7 @@ export function CustomerRegister({ productName, registerTitle, accountTypes, wor
         ? [L.stepAccount, L.stepOrganization, L.stepWorkspace]
         : [L.stepAccount, L.stepWorkspace];
     const stepIndex = step === 'account' ? 0 : step === 'organization' ? 1 : requiresOrg ? 2 : 1;
-    const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';
+    const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #C9252D))';
     function handleRegister(e) {
         e.preventDefault();
         setError('');
@@ -168,7 +168,7 @@ export function CustomerRegister({ productName, registerTitle, accountTypes, wor
         onFinish();
     }
     return (_jsx("div", { className: cn('flex min-h-svh items-center justify-center px-4', className), style: {
-            background: 'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #BF2227) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
+            background: 'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #C9252D) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
         }, children: _jsxs("div", { className: "w-full max-w-sm rounded-2xl border p-8", style: {
                 borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                 background: 'var(--mk-palette-bg-elevated, #1A1D27)',
@@ -217,7 +217,7 @@ function InputBase({ type = 'text', value, onChange, disabled, required, minLeng
         } }));
 }
 function SubmitButton({ children, disabled, }) {
-    const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';
+    const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #C9252D))';
     return (_jsx("button", { type: "submit", disabled: disabled, className: "flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50", style: {
             background: `linear-gradient(135deg, ${primary}, color-mix(in srgb, ${primary} 60%, #7C3AED))`,
             color: 'var(--mk-palette-on-accent, #FFFFFF)',

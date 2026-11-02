@@ -18,7 +18,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
  *
  * @example
  * <Button variant="primary" size="lg">Tallenna</Button>
- * <Button loading>Ladataan...</Button>
+ * <Button loading>Ladataan</Button>
  */
 export declare const Button: import("react").ForwardRefExoticComponent<ButtonProps & import("react").RefAttributes<HTMLButtonElement>>;
 export { buttonVariants };

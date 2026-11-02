@@ -22,7 +22,7 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
  * <Skeleton variant="circular" className="h-12 w-12" />
  * <Skeleton variant="rectangular" className="h-32 w-full" />
  */
-export function Skeleton({ variant = "text", className, label = "Ladataan...", ...props }: SkeletonProps) {
+export function Skeleton({ variant = "text", className, label = "Ladataan", ...props }: SkeletonProps) {
   return (
     <div
       className={cn(
@@ -56,7 +56,7 @@ export interface TableSkeletonProps {
  * @example
  * <TableSkeleton rows={5} cols={4} />
  */
-export function TableSkeleton({ rows = 5, cols = 4, className, label = "Ladataan taulukkoa..." }: TableSkeletonProps) {
+export function TableSkeleton({ rows = 5, cols = 4, className, label = "Ladataan taulukkoa" }: TableSkeletonProps) {
   return (
     <div className={cn("space-y-3", className)} role="status" aria-label={label}>
       {Array.from({ length: rows }).map((_, i) => (

@@ -75,7 +75,12 @@ describe("LocaleSwitcherTrigger", () => {
     // Doubled attribute selector: one copy ties with `.mk-landing-root button`
     // and loses on source order.
     expect(css).toContain('[data-mk-switcher="language"][data-mk-switcher]');
-    expect(css).toMatch(/padding:\s*0\.375rem 0\.75rem/);
+    // Round, flag-only trigger: the box model above is what a scoped
+    // `.mk-landing-root *` reset would otherwise flatten to a bare glyph.
+    expect(css).toMatch(/width:\s*2\.5rem/);
+    expect(css).toMatch(/height:\s*2\.5rem/);
+    expect(css).toMatch(/border-radius:\s*50%/);
+    expect(css).toMatch(/padding:\s*0/);
     expect(css).toMatch(/border:\s*1px solid/);
     // !important would leave consumers no way to override at all.
     expect(css).not.toContain("!important");

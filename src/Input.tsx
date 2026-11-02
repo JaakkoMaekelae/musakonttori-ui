@@ -76,7 +76,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               "bg-[var(--mk-palette-bg-surface-secondary,#F4F4F5)] text-[var(--mk-palette-text-primary,#111113)]",
               "placeholder:text-[var(--mk-palette-text-muted,#9CA3AF)]",
               "hover:bg-[var(--mk-palette-bg-surface-hover,#EBEBEE)]",
-              "focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-primary,#BF2227)] focus:ring-offset-0 focus:bg-[var(--mk-palette-bg,#FFFFFF)]",
+              "focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-primary,#C9252D)] focus:ring-offset-0 focus:bg-[var(--mk-palette-bg,#FFFFFF)]",
               "disabled:opacity-50 disabled:cursor-not-allowed",
               error && "border-red-500 focus:ring-red-500",
               leftIcon && "pl-10",

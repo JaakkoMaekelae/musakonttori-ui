@@ -186,7 +186,7 @@ export function CustomerSignIn({
     setLoading(false);
   }
 
-  const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';
+  const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #C9252D))';
 
   return (
     <div
@@ -199,7 +199,7 @@ export function CustomerSignIn({
           ? undefined
           : {
               background:
-                'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #BF2227) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
+                'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #C9252D) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
             }
       }
     >
@@ -304,7 +304,7 @@ export function CustomerSignIn({
                 <a
                   href={resetHref}
                   className="text-sm"
-                  style={{ color: 'var(--mk-palette-accent-primary, #BF2227)' }}
+                  style={{ color: 'var(--mk-palette-accent-primary, #C9252D)' }}
                 >
                   {L.forgotPassword}
                 </a>
@@ -385,7 +385,7 @@ export function CustomerSignIn({
           <a
             href={registerHref}
             className="hover:underline"
-            style={{ color: 'var(--mk-palette-accent-primary, #BF2227)' }}
+            style={{ color: 'var(--mk-palette-accent-primary, #C9252D)' }}
           >
             {L.createOne}
           </a>

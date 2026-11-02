@@ -101,11 +101,11 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
         await onSignIn('nodemailer', { email });
         setLoading(false);
     }
-    const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';
+    const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #C9252D))';
     return (_jsx("div", { className: cn(bare ? 'w-full' : 'flex min-h-svh items-center justify-center px-4', className), style: bare
             ? undefined
             : {
-                background: 'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #BF2227) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
+                background: 'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #C9252D) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
             }, children: _jsxs("div", { className: cn('w-full rounded-2xl border p-8', !bare && 'max-w-sm'), style: {
                 borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                 background: 'var(--mk-palette-bg-elevated, #1A1D27)',
@@ -132,7 +132,7 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
                                 borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                                 background: 'var(--mk-palette-bg-surface, #242838)',
                                 color: 'var(--mk-palette-text-primary, #F0F0F3)',
-                            } }), resetHref && (_jsx("div", { className: "flex justify-end", children: _jsx("a", { href: resetHref, className: "text-sm", style: { color: 'var(--mk-palette-accent-primary, #BF2227)' }, children: L.forgotPassword }) })), _jsx("button", { type: "submit", disabled: loading, className: "flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-opacity disabled:cursor-not-allowed disabled:opacity-70", style: {
+                            } }), resetHref && (_jsx("div", { className: "flex justify-end", children: _jsx("a", { href: resetHref, className: "text-sm", style: { color: 'var(--mk-palette-accent-primary, #C9252D)' }, children: L.forgotPassword }) })), _jsx("button", { type: "submit", disabled: loading, className: "flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-opacity disabled:cursor-not-allowed disabled:opacity-70", style: {
                                 background: `linear-gradient(135deg, ${primary}, color-mix(in srgb, ${primary} 60%, #7C3AED))`,
                                 color: 'var(--mk-palette-on-accent, #FFFFFF)',
                             }, children: loading ? (_jsxs(_Fragment, { children: [_jsx(Spinner, { size: "sm", variant: "white" }), L.signingIn] })) : (L.signInEmail) }), hasMagic && (_jsxs(_Fragment, { children: [_jsxs("div", { className: "my-1 flex items-center gap-3", children: [_jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } }), _jsx("span", { className: "text-xs", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: L.or }), _jsx("div", { className: "flex-1", style: { height: 1, background: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))' } })] }), _jsx("button", { type: "button", disabled: loading, onClick: handleMagicLink, className: "rounded-xl border px-4 py-2 text-sm transition-colors", style: {
@@ -142,7 +142,7 @@ export function CustomerSignIn({ productName, registerHref, resetHref, locale, o
                                 color: error === L.errorCheckEmail
                                     ? 'var(--mk-status-success, #22C55E)'
                                     : 'var(--mk-status-error, #EF4444)',
-                            }, children: error || errorMessage })) : null] })) : (_jsxs("div", { className: "flex flex-col gap-3", children: [_jsx(SocialButton, { onClick: () => onSignIn('google'), children: L.continueGoogle }), _jsx(SocialButton, { onClick: () => onSignIn('facebook'), children: L.continueFacebook })] })), _jsxs("p", { className: "mt-6 text-center text-sm", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: [L.noAccount, ' ', _jsx("a", { href: registerHref, className: "hover:underline", style: { color: 'var(--mk-palette-accent-primary, #BF2227)' }, children: L.createOne })] })] }) }));
+                            }, children: error || errorMessage })) : null] })) : (_jsxs("div", { className: "flex flex-col gap-3", children: [_jsx(SocialButton, { onClick: () => onSignIn('google'), children: L.continueGoogle }), _jsx(SocialButton, { onClick: () => onSignIn('facebook'), children: L.continueFacebook })] })), _jsxs("p", { className: "mt-6 text-center text-sm", style: { color: 'var(--mk-palette-text-secondary, #B0B3C1)' }, children: [L.noAccount, ' ', _jsx("a", { href: registerHref, className: "hover:underline", style: { color: 'var(--mk-palette-accent-primary, #C9252D)' }, children: L.createOne })] })] }) }));
 }
 function SocialButton({ children, onClick, }) {
     return (_jsx("button", { type: "button", onClick: onClick, className: "flex items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm transition-colors", style: {

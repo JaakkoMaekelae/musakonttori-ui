@@ -46,7 +46,7 @@ const STATE: Record<
   { glyph: string; word: string; tone: string; muted?: boolean }
 > = {
   complete: { glyph: "✓", word: "valmis", tone: "var(--mk-status-success, #10B981)" },
-  current: { glyph: "●", word: "nykyinen", tone: "var(--mk-palette-accent-primary, #F44242)" },
+  current: { glyph: "●", word: "nykyinen", tone: "var(--mk-palette-accent-primary, #C9252D)" },
   hasErrors: { glyph: "!", word: "sisältää virheitä", tone: "var(--mk-status-error, #EF4444)" },
   inProgress: { glyph: "◐", word: "kesken", tone: "var(--mk-status-warning, #F59E0B)" },
   optional: { glyph: "○", word: "valinnainen", tone: "var(--mk-palette-text-tertiary, #7E8292)" },
@@ -105,9 +105,9 @@ export function WizardStepper({ steps, label, className, stateLabels }: WizardSt
 
           const classes = cn(
             "flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#F44242)]",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-accent-primary,#C9252D)]",
             step.state === "current"
-              ? "bg-[var(--mk-palette-accent-soft,rgba(244,66,66,0.16))] text-[var(--mk-palette-accent-primary,#F44242)]"
+              ? "bg-[var(--mk-palette-accent-soft,rgba(201,37,45,0.16))] text-[var(--mk-palette-accent-primary,#C9252D)]"
               : meta.muted
                 ? "text-[var(--mk-palette-text-tertiary,#7E8292)]"
                 : "text-[var(--mk-palette-text-secondary,#B0B3C1)]",

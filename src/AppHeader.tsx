@@ -306,9 +306,9 @@ export function AppHeader({
               href={safeHref(signInHref)}
               className={cn(
                 "hidden sm:inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-colors h-9 px-4",
-                "bg-[var(--mk-palette-bg-brand,#DC2626)] text-white",
-                "hover:bg-[var(--mk-palette-bg-brand-hover,#BF2227)]",
-                "active:bg-[var(--mk-palette-bg-brand-active,#A51E23)]",
+                "bg-[var(--mk-palette-bg-brand,#C9252D)] text-white",
+                "hover:bg-[var(--mk-palette-bg-brand-hover,#C9252D)]",
+                "active:bg-[var(--mk-palette-bg-brand-active,#981F20)]",
               )}
             >
               {L.signIn}
@@ -361,8 +361,8 @@ export function AppHeader({
                 onClick={() => setMobileOpen(false)}
                 className={cn(
                   "block rounded-lg px-3 py-2.5 text-center text-sm font-semibold transition-colors mt-2",
-                  "bg-[var(--mk-palette-bg-brand,#DC2626)] text-white",
-                  "hover:bg-[var(--mk-palette-bg-brand-hover,#BF2227)]",
+                  "bg-[var(--mk-palette-bg-brand,#C9252D)] text-white",
+                  "hover:bg-[var(--mk-palette-bg-brand-hover,#C9252D)]",
                 )}
               >
                 {L.signIn}

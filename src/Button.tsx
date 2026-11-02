@@ -6,14 +6,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-bg-brand,#DC2626)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--mk-palette-bg,#FFFFFF)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--mk-palette-bg-brand,#C9252D)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--mk-palette-bg,#FFFFFF)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4",
   {
     variants: {
       variant: {
         primary:
-          "bg-[var(--mk-palette-bg-brand,#DC2626)] text-white hover:bg-[var(--mk-palette-bg-brand-hover,#B91C1C)] active:bg-[var(--mk-palette-bg-brand-active,#991B1B)]",
+          "bg-[var(--mk-palette-bg-brand,#C9252D)] text-white hover:bg-[var(--mk-palette-bg-brand-hover,#981F20)] active:bg-[var(--mk-palette-bg-brand-active,#720D0D)]",
         default:
-          "bg-[var(--mk-palette-bg-brand,#DC2626)] text-white hover:bg-[var(--mk-palette-bg-brand-hover,#B91C1C)] active:bg-[var(--mk-palette-bg-brand-active,#991B1B)]",
+          "bg-[var(--mk-palette-bg-brand,#C9252D)] text-white hover:bg-[var(--mk-palette-bg-brand-hover,#981F20)] active:bg-[var(--mk-palette-bg-brand-active,#720D0D)]",
         secondary:
           "bg-[var(--mk-palette-bg-surface,#F4F4F5)] text-[var(--mk-palette-text-primary,#111113)] border border-[var(--mk-palette-border-default,rgba(128,128,128,0.2))] hover:bg-[var(--mk-palette-bg-surface-hover,#E5E5E8)]",
         outline:
@@ -25,10 +25,10 @@ const buttonVariants = cva(
       },
       size: {
         sm: "h-8 rounded-md px-3 text-xs",
-        md: "h-10 px-4 text-sm",
+        md: "min-h-11 px-4 py-2.5 text-sm",
         lg: "h-12 rounded-xl px-6 text-base",
-        default: "h-10 px-4 text-sm",
-        icon: "h-10 w-10",
+        default: "min-h-11 px-4 py-2.5 text-sm",
+        icon: "h-11 w-11",
         "icon-sm": "h-8 w-8",
         "icon-xs": "h-6 w-6",
         xs: "h-6 rounded-md px-2 text-xs",
@@ -59,7 +59,7 @@ export interface ButtonProps
  *
  * @example
  * <Button variant="primary" size="lg">Tallenna</Button>
- * <Button loading>Ladataan...</Button>
+ * <Button loading>Ladataan</Button>
  */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, loading = false, disabled, children, ...props }, ref) => {

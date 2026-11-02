@@ -29,7 +29,7 @@ export function AdminSystemState({ kind, title, description, action, size = "zon
               left: 0;
               width: 42%;
               border-radius: 999px;
-              background: var(--mk-palette-accent-primary, #F44242);
+              background: var(--mk-palette-accent-primary, #C9252D);
               animation: mk-state-sweep 1.25s cubic-bezier(0.65, 0, 0.35, 1) infinite;
             }
             @keyframes mk-state-sweep {

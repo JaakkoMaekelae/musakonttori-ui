@@ -1,15 +1,14 @@
 /**
  * Musakonttori design tokens — the single source of truth.
  *
- * Values come from musakonttori-hq/docs/BRAND.md, which is canonical. The
- * competing "Product Experience Standard v1.0" red (#C9252D) is legacy and is
- * being replaced by these tokens across all products.
+ * Values follow the current Musakonttori family baseline and product brand
+ * guides so shared components and product shells use one palette.
  *
  * Two levels of red, deliberately:
  *   - `brand.*`  identity. Logo lockup, gradients, marketing. Same in both
  *                themes, because a logo does not change colour with a theme.
- *   - `accent.*` application. Active nav, primary action, critical numbers.
- *                Brightened in dark mode so it keeps the same visual weight.
+ *   - `accent.*` application actions. The same red ladder is used in both
+ *                themes; semantic status colors remain separate.
  *
  * Consumers should never read these values directly — they read the CSS
  * variables emitted by `tokensCss()` (or `tokens.css`). This file exists so
@@ -18,11 +17,11 @@
 
 export const brand = {
   /** Identity red — logo, lockup gradient start. */
-  red: "#BF2227",
-  redDark: "#A51E23",
-  redDeep: "#650506",
+  red: "#C9252D",
+  redDark: "#981F20",
+  redDeep: "#720D0D",
   /** Lockup gradient end. */
-  rose: "#E11D48",
+  rose: "#720D0D",
 } as const;
 
 export const status = {
@@ -79,10 +78,10 @@ export const light: ThemePalette = {
     hover: "#A1A1AA",
   },
   accent: {
-    primary: "#DC2626",
-    hover: "#BF2227",
-    active: "#A51E23",
-    soft: "rgba(220, 38, 38, 0.10)",
+    primary: "#C9252D",
+    hover: "#981F20",
+    active: "#720D0D",
+    soft: "rgba(201, 37, 45, 0.10)",
   },
 };
 
@@ -106,10 +105,10 @@ export const dark: ThemePalette = {
     hover: "rgba(255, 255, 255, 0.20)",
   },
   accent: {
-    primary: "#F44242",
-    hover: "#FB7185",
-    active: "#DC2626",
-    soft: "rgba(244, 66, 66, 0.16)",
+    primary: "#C9252D",
+    hover: "#981F20",
+    active: "#720D0D",
+    soft: "rgba(201, 37, 45, 0.16)",
   },
 };
 
@@ -132,15 +131,16 @@ export const space = {
 export const radius = {
   sm: "6px",
   md: "8px",
-  lg: "10px",
-  xl: "12px",
+  lg: "12px",
+  xl: "16px",
   "2xl": "16px",
   full: "999px",
 } as const;
 
 export const type = {
   family: {
-    sans: '"Inter Variable", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    sans: '"Manrope", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    display: '"Sora", sans-serif',
     /** Numbers, identifiers, money. Always with tabular-nums. */
     mono: '"JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace',
   },
@@ -219,6 +219,7 @@ const constants: Record<string, string> = {
   "--mk-status-error": status.error,
   "--mk-status-info": status.info,
   "--mk-font-sans": type.family.sans,
+  "--mk-font-display": type.family.display,
   "--mk-font-mono": type.family.mono,
   "--mk-shell-rail-width": shell.railWidth,
   "--mk-shell-nav-width": shell.navWidth,

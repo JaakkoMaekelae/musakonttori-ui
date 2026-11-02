@@ -40,7 +40,7 @@ export function BarChart({
             style={{
               height: `${Math.max(2, Math.min(100, value))}%`,
               background:
-                "linear-gradient(180deg, var(--mk-palette-accent-primary,#F44242), var(--mk-brand-red-deep,#650506))",
+                "linear-gradient(180deg, var(--mk-palette-accent-primary,#C9252D), var(--mk-brand-red-deep,#720D0D))",
             }}
           />
         ))}
@@ -52,7 +52,7 @@ export function BarChart({
               <span
                 aria-hidden="true"
                 className="size-2 rounded-full"
-                style={{ background: "var(--mk-palette-accent-primary,#F44242)" }}
+                style={{ background: "var(--mk-palette-accent-primary,#C9252D)" }}
               />
               {entry}
             </span>

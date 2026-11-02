@@ -105,7 +105,7 @@ function Demo() {
                     "block w-full border-b border-l-2 px-3 py-2.5 text-left transition-colors",
                     "border-b-[var(--mk-palette-border-subtle,rgba(255,255,255,0.08))]",
                     active
-                      ? "border-l-[var(--mk-palette-accent-primary,#F44242)] bg-[var(--mk-palette-accent-soft,rgba(244,66,66,0.16))]"
+                      ? "border-l-[var(--mk-palette-accent-primary,#C9252D)] bg-[var(--mk-palette-accent-soft,rgba(201,37,45,0.16))]"
                       : "border-l-transparent hover:bg-[var(--mk-palette-bg-surface-hover,#2A2E3D)]",
                   ].join(" ")}
                 >

@@ -9,7 +9,10 @@ import tailwindcss from "@tailwindcss/vite";
  */
 const config: StorybookConfig = {
   stories: ["../src/**/*.stories.@(ts|tsx)"],
-  addons: ["@storybook/addon-essentials", "@storybook/addon-interactions"],
+  // Storybook 10 ships controls, actions, docs, viewport and backgrounds in
+  // core — the 8.x addon-essentials/addon-interactions packages have no 9/10
+  // release and would fail to load here.
+  addons: [],
   framework: {
     name: "@storybook/react-vite",
     options: {},

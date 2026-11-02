@@ -11,7 +11,7 @@ const badgeVariants = cva("inline-flex items-center gap-1.5 rounded-full border 
             warning: "bg-amber-500/10 text-amber-400 border-amber-500/20",
             error: "bg-red-500/10 text-red-400 border-red-500/20",
             info: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-            brand: "bg-[var(--mk-palette-bg-brand,#DC2626)]/10 text-[var(--mk-palette-bg-brand,#DC2626)] border-[var(--mk-palette-bg-brand,#DC2626)]/20",
+            brand: "bg-[var(--mk-palette-bg-brand,#C9252D)]/10 text-[var(--mk-palette-bg-brand,#C9252D)] border-[var(--mk-palette-bg-brand,#C9252D)]/20",
             red: "bg-red-500/20 text-red-400 border-red-500/40",
             purple: "bg-purple-500/20 text-purple-400 border-purple-500/40",
             blue: "bg-blue-500/20 text-blue-400 border-blue-500/40",
@@ -21,7 +21,7 @@ const badgeVariants = cva("inline-flex items-center gap-1.5 rounded-full border 
             pink: "bg-pink-500/20 text-pink-400 border-pink-500/40",
             gray: "bg-gray-500/20 text-gray-400 border-gray-500/40",
             default: "bg-[var(--mk-palette-bg-surface,#1E2130)] text-[var(--mk-palette-text-secondary,#B0B3C1)] border-[var(--mk-palette-border-subtle,rgba(255,255,255,0.06))]",
-            primary: "bg-[var(--mk-palette-bg-brand,#DC2626)]/10 text-[var(--mk-palette-bg-brand,#DC2626)] border-[var(--mk-palette-bg-brand,#DC2626)]/20",
+            primary: "bg-[var(--mk-palette-bg-brand,#C9252D)]/10 text-[var(--mk-palette-bg-brand,#C9252D)] border-[var(--mk-palette-bg-brand,#C9252D)]/20",
             secondary: "bg-gray-500/20 text-gray-400 border-gray-500/40",
             destructive: "bg-red-500/10 text-red-400 border-red-500/20",
             outline: "border-[var(--mk-palette-border-default,rgba(255,255,255,0.12))] bg-transparent text-[var(--mk-palette-text-secondary,#B0B3C1)]",
@@ -52,8 +52,8 @@ const LIGHT_SURFACE = {
     red: "bg-red-100 text-red-800 border-red-200",
     info: "bg-blue-100 text-blue-700 border-blue-200",
     blue: "bg-blue-100 text-blue-700 border-blue-200",
-    brand: "bg-[var(--mk-palette-accent-primary,#DC2626)]/10 text-[var(--mk-palette-accent-primary,#DC2626)] border-[var(--mk-palette-accent-primary,#DC2626)]/25",
-    primary: "bg-[var(--mk-palette-accent-primary,#DC2626)]/10 text-[var(--mk-palette-accent-primary,#DC2626)] border-[var(--mk-palette-accent-primary,#DC2626)]/25",
+    brand: "bg-[var(--mk-palette-accent-primary,#C9252D)]/10 text-[var(--mk-palette-accent-primary,#C9252D)] border-[var(--mk-palette-accent-primary,#C9252D)]/25",
+    primary: "bg-[var(--mk-palette-accent-primary,#C9252D)]/10 text-[var(--mk-palette-accent-primary,#C9252D)] border-[var(--mk-palette-accent-primary,#C9252D)]/25",
     purple: "bg-purple-100 text-purple-700 border-purple-200",
     green: "bg-green-100 text-green-700 border-green-200",
     orange: "bg-orange-100 text-orange-800 border-orange-200",
@@ -86,7 +86,7 @@ function getDotColor(variant) {
             return "bg-blue-500";
         case "brand":
         case "primary":
-            return "bg-[var(--mk-palette-bg-brand,#DC2626)]";
+            return "bg-[var(--mk-palette-bg-brand,#C9252D)]";
         case "purple":
             return "bg-purple-500";
         case "pink":

@@ -77,7 +77,7 @@ export const SelectTrigger = forwardRef<React.ElementRef<typeof SelectPrimitive.
       className={cn(
         "flex h-10 w-full items-center justify-between rounded-lg border border-[var(--mk-palette-border-default,rgba(255,255,255,0.12))] bg-[var(--mk-palette-bg,#0D0F17)] px-3 py-2 text-sm text-[var(--mk-palette-text-primary,#F0F0F3)]",
         "hover:border-[var(--mk-palette-border-hover,rgba(255,255,255,0.2))]",
-        "focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-bg-brand,#DC2626)] focus:border-transparent",
+        "focus:outline-none focus:ring-2 focus:ring-[var(--mk-palette-bg-brand,#C9252D)] focus:border-transparent",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "[&>span]:line-clamp-1",
         className,
@@ -136,7 +136,7 @@ export const SelectItem = forwardRef<React.ElementRef<typeof SelectPrimitive.Ite
       ref={ref}
       className={cn(
         "relative flex w-full cursor-default select-none items-center rounded-md py-1.5 pl-8 pr-2 text-sm text-[var(--mk-palette-text-primary,#F0F0F3)] outline-none",
-        "focus:bg-[var(--mk-palette-bg-brand,#DC2626)]/10 focus:text-[var(--mk-palette-text-primary,#F0F0F3)]",
+        "focus:bg-[var(--mk-palette-bg-brand,#C9252D)]/10 focus:text-[var(--mk-palette-text-primary,#F0F0F3)]",
         "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className,
       )}
@@ -145,7 +145,7 @@ export const SelectItem = forwardRef<React.ElementRef<typeof SelectPrimitive.Ite
       <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
           <svg
-            className="h-4 w-4 text-[var(--mk-palette-bg-brand,#DC2626)]"
+            className="h-4 w-4 text-[var(--mk-palette-bg-brand,#C9252D)]"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

@@ -53,7 +53,7 @@ export function CustomerRegisterSimple({ productName, registerTitle, locale, sig
     const [loading, setLoading] = useState(false);
     const [submitError, setSubmitError] = useState('');
     const error = submitError || errorMessage;
-    const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #BF2227))';
+    const primary = 'var(--mk-palette-accent-primary, var(--mk-brand-red, #C9252D))';
     async function handleSubmit(e) {
         e.preventDefault();
         setLoading(true);
@@ -69,7 +69,7 @@ export function CustomerRegisterSimple({ productName, registerTitle, locale, sig
         }
     }
     return (_jsx("div", { className: cn('flex min-h-svh items-center justify-center px-4', className), style: {
-            background: 'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #BF2227) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
+            background: 'linear-gradient(135deg, color-mix(in srgb, var(--mk-palette-accent-primary, #C9252D) 6%, transparent), transparent 55%), var(--mk-palette-bg-canvas, #0D0F17)',
         }, children: _jsx("div", { className: "w-full max-w-sm rounded-2xl border p-8", style: {
                 borderColor: 'var(--mk-palette-border-subtle, rgba(255,255,255,0.08))',
                 background: 'var(--mk-palette-bg-elevated, #1A1D27)',
