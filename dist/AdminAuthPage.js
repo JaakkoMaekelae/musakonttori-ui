@@ -65,6 +65,10 @@ export function AdminAuthPage({ brand, labels, endpoints, product, returnTo, suc
         try {
             const result = await postJson(urls.login, { identifier, password });
             setMustChangePassword(Boolean(result.mustChangePassword));
+            if (result.enrollmentOptional) {
+                finish(result);
+                return;
+            }
             if (result.enrollmentRequired) {
                 const start = await postJson(urls.mfaEnroll, { step: "start" });
                 setSecret(start.secret);

@@ -147,9 +147,14 @@ export function AdminAuthPage({
     try {
       const result = await postJson<{
         enrollmentRequired?: boolean;
+        enrollmentOptional?: boolean;
         mustChangePassword?: boolean;
       }>(urls.login, { identifier, password });
       setMustChangePassword(Boolean(result.mustChangePassword));
+      if (result.enrollmentOptional) {
+        finish(result);
+        return;
+      }
       if (result.enrollmentRequired) {
         const start = await postJson<{
           secret: string;
