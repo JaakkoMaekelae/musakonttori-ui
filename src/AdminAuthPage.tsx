@@ -118,7 +118,9 @@ export function AdminAuthPage({
   const [busy, setBusy] = useState(false);
 
   const errorText = error
-    ? (labels.errors[error] ?? labels.genericError)
+    ? (labels.errors[error] ??
+      labels.errors[error.replace(":", "_")] ??
+      labels.genericError)
     : null;
 
   function finish(result: { mustChangePassword?: boolean }) {
