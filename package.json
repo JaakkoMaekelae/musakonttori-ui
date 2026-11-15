@@ -3,13 +3,27 @@
   "version": "0.3.0",
   "private": true,
   "packageManager": "pnpm@11.18.0",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "engines": {
     "node": ">=24"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
+    "./customer-auth": {
+      "types": "./dist/CustomerAuth.d.ts",
+      "import": "./dist/CustomerAuth.js",
+      "default": "./dist/CustomerAuth.js"
+    },
+    "./customer-auth.css": "./dist/customer-auth.css",
+    "./admin-auth": {
+      "types": "./dist/AdminAuth.d.ts",
+      "import": "./dist/AdminAuth.js",
+      "default": "./dist/AdminAuth.js"
+    },
+    "./admin-auth.css": "./dist/customer-auth.css",
     ".": {
       "import": "./dist/index.js",
       "default": "./dist/index.js",
