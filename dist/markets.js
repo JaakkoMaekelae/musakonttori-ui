@@ -69,9 +69,14 @@ export function getMarketByLocale(locale) {
     const found = MARKETS.find((m) => m.locale === locale);
     return found ?? MARKETS[0];
 }
-/** Get the default locale for a country: Suomi → fi, muut maat → en. */
+/** Get the default locale for a country: Suomi → fi, Ruotsi → sv, muut maat → en. */
 export function getLocaleForCountry(country) {
-    return country === "FI" ? "fi" : "en";
+    const upper = country?.toUpperCase();
+    if (upper === "FI")
+        return "fi";
+    if (upper === "SE")
+        return "sv";
+    return "en";
 }
 /** Get the currency for a country. */
 export function getCurrencyForCountry(country) {

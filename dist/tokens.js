@@ -182,7 +182,7 @@ const constants = {
     "--mk-status-error": status.error,
     "--mk-status-info": status.info,
     "--mk-font-sans": type.family.sans,
-        "--mk-font-display": type.family.display,
+    "--mk-font-display": type.family.display,
     "--mk-font-mono": type.family.mono,
     "--mk-shell-rail-width": shell.railWidth,
     "--mk-shell-nav-width": shell.navWidth,

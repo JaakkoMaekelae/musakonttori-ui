@@ -1,15 +1,14 @@
 /**
  * Musakonttori design tokens — the single source of truth.
  *
- * Values come from musakonttori-hq/docs/BRAND.md, which is canonical. The
- * competing "Product Experience Standard v1.0" red (#C9252D) is legacy and is
- * being replaced by these tokens across all products.
+ * Values follow the current Musakonttori family baseline and product brand
+ * guides so shared components and product shells use one palette.
  *
  * Two levels of red, deliberately:
  *   - `brand.*`  identity. Logo lockup, gradients, marketing. Same in both
  *                themes, because a logo does not change colour with a theme.
- *   - `accent.*` application. Active nav, primary action, critical numbers.
- *                Brightened in dark mode so it keeps the same visual weight.
+ *   - `accent.*` application actions. The same red ladder is used in both
+ *                themes; semantic status colors remain separate.
  *
  * Consumers should never read these values directly — they read the CSS
  * variables emitted by `tokensCss()` (or `tokens.css`). This file exists so
@@ -75,17 +74,17 @@ export declare const space: {
 export declare const radius: {
     readonly sm: "6px";
     readonly md: "8px";
-    readonly lg: "10px";
-    readonly xl: "12px";
+    readonly lg: "12px";
+    readonly xl: "16px";
     readonly "2xl": "16px";
     readonly full: "999px";
 };
 export declare const type: {
     readonly family: {
-        readonly sans: "\"Manrope\", Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif";
-        readonly display: "\"Sora\", sans-serif";
+        readonly sans: '"Manrope", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        readonly display: '"Sora", sans-serif';
         /** Numbers, identifiers, money. Always with tabular-nums. */
-        readonly mono: "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, monospace";
+        readonly mono: '"JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
     };
     readonly size: {
         readonly xs: "0.6875rem";
@@ -156,16 +155,17 @@ export declare const tokens: {
     readonly radius: {
         readonly sm: "6px";
         readonly md: "8px";
-        readonly lg: "10px";
-        readonly xl: "12px";
+        readonly lg: "12px";
+        readonly xl: "16px";
         readonly "2xl": "16px";
         readonly full: "999px";
     };
     readonly type: {
         readonly family: {
-        readonly sans: "\"Manrope\", Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif";
+            readonly sans: '"Manrope", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            readonly display: '"Sora", sans-serif';
             /** Numbers, identifiers, money. Always with tabular-nums. */
-            readonly mono: "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, monospace";
+            readonly mono: '"JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
         };
         readonly size: {
             readonly xs: "0.6875rem";

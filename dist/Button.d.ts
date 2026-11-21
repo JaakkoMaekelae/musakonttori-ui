@@ -1,7 +1,7 @@
 import { type VariantProps } from "class-variance-authority";
 declare const buttonVariants: (props?: ({
-    variant?: "primary" | "default" | "secondary" | "outline" | "ghost" | "destructive" | null | undefined;
-    size?: "default" | "sm" | "md" | "lg" | "icon" | "icon-sm" | "icon-xs" | "xs" | null | undefined;
+    variant?: "default" | "destructive" | "ghost" | "outline" | "primary" | "secondary" | null | undefined;
+    size?: "default" | "icon" | "icon-sm" | "icon-xs" | "lg" | "md" | "sm" | "xs" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
     /** Render as a different element using the Slot component */

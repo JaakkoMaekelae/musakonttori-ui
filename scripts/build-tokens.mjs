@@ -9,7 +9,7 @@
  * Runs before tsc in `pnpm build`, and writes into src/ so the file is also
  * available to Storybook and to `pnpm dev`.
  */
-import { mkdirSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -42,3 +42,4 @@ for (const out of [resolve(root, "src/tokens.css"), resolve(root, "dist/tokens.c
   writeFileSync(out, css, "utf8");
   console.log(`wrote ${out.replace(root + "/", "")}`);
 }
+copyFileSync(resolve(root, 'src/customer-auth.css'), resolve(root, 'dist/customer-auth.css'));

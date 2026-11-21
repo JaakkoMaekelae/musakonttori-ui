@@ -1,8 +1,8 @@
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { type VariantProps } from "class-variance-authority";
 declare const chipVariants: (props?: ({
-    variant?: "success" | "warning" | "error" | "info" | "neutral" | "brand" | null | undefined;
-    size?: "sm" | "md" | null | undefined;
+    variant?: "brand" | "error" | "info" | "neutral" | "success" | "warning" | null | undefined;
+    size?: "md" | "sm" | null | undefined;
     selected?: boolean | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 interface ChipCommonProps extends VariantProps<typeof chipVariants> {
@@ -35,6 +35,6 @@ export type ChipProps = StaticChipProps | SelectableChipProps | RemovableChipPro
  * select or remove. Selection and removal are intentionally mutually
  * exclusive so the component never creates nested buttons.
  */
-export declare const Chip: import("react").NamedExoticComponent<ChipProps>;
+export declare const Chip: import("react").MemoExoticComponent<(props: ChipProps) => import("react").JSX.Element>;
 export { chipVariants };
 //# sourceMappingURL=Chip.d.ts.map

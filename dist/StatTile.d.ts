@@ -38,11 +38,11 @@ export interface StatTileProps {
  *    grayscale print and forced-colors mode. `upIsGood` exists because for
  *    churn, error rate or cost, a rise is the bad news.
  */
-export declare const StatTile: import("react").NamedExoticComponent<StatTileProps>;
+export declare const StatTile: import("react").MemoExoticComponent<({ label, value, delta, trend, hero, className, }: StatTileProps) => import("react").JSX.Element>;
 export interface StatRowProps {
     children: ReactNode;
     className?: string;
 }
 /** Equal-width tiles that wrap instead of shrinking below readability. */
-export declare const StatRow: import("react").NamedExoticComponent<StatRowProps>;
+export declare const StatRow: import("react").MemoExoticComponent<({ children, className }: StatRowProps) => import("react").JSX.Element>;
 //# sourceMappingURL=StatTile.d.ts.map

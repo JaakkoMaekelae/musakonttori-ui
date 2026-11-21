@@ -37,10 +37,10 @@ declare const DropdownMenuSeparator: React.ForwardRefExoticComponent<Omit<Dropdo
 declare const DropdownMenuLabel: React.ForwardRefExoticComponent<Omit<DropdownMenuPrimitive.DropdownMenuLabelProps & React.RefAttributes<HTMLDivElement>, "ref"> & {
     inset?: boolean;
 } & React.RefAttributes<HTMLDivElement>>;
-declare const DropdownMenuShortcut: {
-    ({ className, ...props }: React.ComponentProps<"span">): React.JSX.Element;
-    displayName: string;
-};
+declare function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<"span">): React.JSX.Element;
+declare namespace DropdownMenuShortcut {
+    var displayName: string;
+}
 declare const DropdownMenuSubTrigger: React.ForwardRefExoticComponent<Omit<DropdownMenuPrimitive.DropdownMenuSubTriggerProps & React.RefAttributes<HTMLDivElement>, "ref"> & {
     inset?: boolean;
 } & React.RefAttributes<HTMLDivElement>>;
